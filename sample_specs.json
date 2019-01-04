@@ -1,0 +1,74 @@
+{
+    "definitions": {
+        "empty_model": {
+            "type": "object"
+        },
+        "property_model": {
+            "properties": {
+                "enum_property": {
+                    "enum": [
+                        "VALUE2",
+                        "VALUE1"
+                    ],
+                    "type": "string"
+                },
+                "string_property": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "info": {
+        "title": "Specs used as a sample for the generator.",
+        "version": "1.2.3"
+    },
+    "paths": {
+        "/empty_endpoint": {
+            "get": {
+                "operationId": "get_empty_endpoint",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/empty_model"
+                        }
+                    }
+                },
+                "summary": "Just an empty endpoint",
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/property_endpoint/{property_format}": {
+            "get": {
+                "operationId": "get_property_endpoint",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "property_format",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/property_model"
+                        }
+                    }
+                },
+                "summary": "Just a simple endpoint",
+                "tags": [
+                    "resource"
+                ]
+            }
+        }
+    },
+    "produces": [
+        "application/json"
+    ],
+    "swagger": "2.0"
+}

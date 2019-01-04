@@ -1,0 +1,49 @@
+{{>file_header}}
+package {{package}}
+
+import okhttp3.RequestBody
+
+{{#imports}}import {{import}}
+{{/imports}}
+
+{{#operations}}
+@JvmSuppressWildcards
+interface {{classname}} {
+  {{#operation}}
+  /**{{#summary}} {{{newline}}}   * {{{summary}}}{{/summary}}{{#notes}}{{{newline}}}   * {{{<br/>}}}{{{notes}}}{{/notes}}
+   * The endpoint is owned by {{{vendorExtensions.x-team-owners}}}{{^vendorExtensions.x-team-owners}}{{service_name}} service owner{{/vendorExtensions.x-team-owners}}
+{{#allParams}}
+   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+{{/allParams}}
+{{#externalDocs}}
+   * {{description}}
+   * @see [{{url}}"][{{summary}} Documentation]
+{{/externalDocs}}
+   */
+  {{#formParams}}
+  {{#-first}}
+  {{#isMultipart}}@retrofit2.http.Multipart{{/isMultipart}}{{^isMultipart}}@retrofit2.http.FormUrlEncoded{{/isMultipart}}
+  {{/-first}}
+  {{/formParams}}
+  {{^formParams}}
+  {{#prioritizedContentTypes}}
+  {{#-first}}
+  @Headers({
+    "Content-Type:{{{mediaType}}}"
+  })
+  {{/-first}}
+  {{/prioritizedContentTypes}}
+  {{/formParams}}
+  @Headers({{#vendorExtensions.x-operation-id}}{{{newline}}}    "X-Operation-ID: {{vendorExtensions.x-operation-id}}"{{/vendorExtensions.x-operation-id}}{{^formParams}}{{#prioritizedContentTypes}}{{#-first}},
+    "Content-Type:{{{mediaType}}}"{{/-first}}{{/prioritizedContentTypes}}{{/formParams}}
+  )
+  @{{httpMethod}}("{{{path}}}"){{#isDeprecated}}
+  @Deprecated(message = "Deprecated"){{/isDeprecated}}
+  fun {{operationId}}({{^allParams}}){{/allParams}}
+    {{#allParams}}{{>retrofit2/queryParams}}{{>retrofit2/pathParams}}{{>retrofit2/headerParams}}{{>retrofit2/bodyParams}}{{>retrofit2/formParams}}{{#hasMore}},
+    {{/hasMore}}{{^hasMore}}
+  ){{/hasMore}}{{/allParams}}: {{{returnType}}}
+
+  {{/operation}}
+}
+{{/operations}}

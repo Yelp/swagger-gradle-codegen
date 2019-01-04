@@ -1,0 +1,13 @@
+{{#description}}/**
+ * {{{description}}}
+ */{{/description}}
+typealias {{classname}} = {{{dataType}}}
+{{#hasEnums}}{{#vars}}
+/**
+  * {{{description}}}
+  * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}
+  */
+enum class {{enumName}}(val value: String) {
+    {{#allowableValues}}{{#enumVars}}@Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}}{{/-last}}{{/enumVars}}{{/allowableValues}}
+}
+{{/vars}}{{/hasEnums}}
