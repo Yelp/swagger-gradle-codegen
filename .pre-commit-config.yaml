@@ -1,0 +1,27 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v2.0.0
+  hooks:
+  - id: check-merge-conflict
+  - id: trailing-whitespace
+    exclude: .*\.mustache$
+  - id: end-of-file-fixer
+    exclude: .*\.mustache$
+  - id: pretty-format-json
+    args: [--autofix, --indent, '4']
+  - id: check-yaml
+  - id: check-executables-have-shebangs
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v1.2.2
+  hooks:
+  - id: pretty-format-java
+    args: [--autofix]
+  - id: pretty-format-kotlin
+    args: [--autofix]
+  - id: pretty-format-yaml
+    args: [--autofix, --indent, '2']
+- repo: https://github.com/Yelp/detect-secrets
+  rev: v0.11.0
+  hooks:
+  - id: detect-secrets
+    args: [--baseline, .secrets.baseline]

@@ -1,0 +1,6 @@
+*.iml
+.*
+local.properties
+venv/
+build/
+out/
