@@ -2,13 +2,13 @@
 
 [![License](https://img.shields.io/badge/license-Apache2.0%20License-brightgreen.svg)](https://opensource.org/licenses/Apache2.0) [![Twitter](https://img.shields.io/badge/Twitter-@YelpEngineering-blue.svg?style=flat)](https://twitter.com/YelpEngineering)
 
-A Gradle plugin to generate networking code from a Swagger spec file.
+A Gradle plugin to **generate networking code** from a **Swagger spec file**.
 
-This plugin wraps [swagger-codegen](https://github.com/swagger-api/swagger-codegen), and exposes a configurable `generateSwagger` gradle task taht you can plug inside your gradle build/workflows.
+This plugin wraps [swagger-codegen](https://github.com/swagger-api/swagger-codegen), and exposes a configurable `generateSwagger` gradle task that you can plug inside your gradle build/workflows.
 
 ## Getting Started
 
-**Swagger Gradle Codegen** is distributed through [<TODO>](https://TODO/). To use it you need to add the following dependency to your gradle files. Please note that those code needs to be added the gradle file of the module where you want to generate the code (**not the top level** build.gradle\[.kts\] file).
+**Swagger Gradle Codegen** is distributed through [TODO](https://TODO/). To use it you need to add the following dependency to your gradle files. Please note that those code needs to be added the gradle file of the module where you want to generate the code (**not the top level** build.gradle\[.kts\] file).
 
 If you're using the Groovy Gradle files:
 ```groovy
@@ -53,7 +53,7 @@ Once you setup the plugin correctly, you can call the `:generateSwagger` gradle 
 
 ## Supported platforms
 
-The Swagger Gradle Codegen is designed to support multiple platforms. For every platform we provide **templates** that are tested and generates opinionated code.
+The Swagger Gradle Codegen is designed to support multiple platforms. For every platform, we provide **templates** that are tested and generates opinionated code.
 
 Here the list of the supported platforms:
 
@@ -61,7 +61,7 @@ Here the list of the supported platforms:
 | -------- | ------------------------------------------ |
 | `kotlin` | Generates Kotlin code, with RxJava2 for async calls, Moshi for serialization and ThreeTenABP for Data management |
 
-We're looking forward more platforms to support in the future. Contributions are more than welcome.
+We're looking forward to more platforms to support in the future. Contributions are more than welcome.
 
 ## Configuration
 
@@ -89,7 +89,7 @@ And here a table with all the properties and their command line flags:
 | -------- | ----------- | ------- | ------------ |
 | `inputFile` | Defines the path to the Swagger spec file | **REQUIRED** | `--inputFile=` |
 | `platform` | Defines the platform/templates that will be used. See [Supported platforms](#Supported-platforms-) for a list of them. | `"kotlin"` | `--platform=` |
-| `packageName` | Defines the fully qualified package name that will be used as a root when generating the code. | `"com.codegen.default"` | `--packageName=` |
+| `packageName` | Defines the fully qualified package name that will be used as root when generating the code. | `"com.codegen.default"` | `--packageName=` |
 | `specName` | Defines the name of the service that is going to be built. | `"defaultname"` | `--specName=` |
 | `specVersion` | Defines the version of the spec that is going to be used. | If not provided, the version will be read from the specfile. If version is missing will default to `"0.0.0"` | `--specVersion=` |
 | `outputDir` | Defines the output root folder for the generated files. | `$buildDir/gen` | `--outputDir=` |
@@ -107,15 +107,15 @@ Here a list of all the supported features:
 
 ## Examples
 
-You can find some **examples** in this repository to help you setup your generator environment.
+You can find some **examples** in this repository to help you set up your generator environment.
 
 * [sample-groovy-android](/sample-groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using Groovy as scripting language.
 
-* [sample-kotlin-android](/sample-groovy-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
+* [sample-kotlin-android](/sample-kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
 ## Building
 
-To contribute or to start developing the Swagger Codegen Plugin, you need to setup your environment.
+To contribute or to start developing the Swagger Codegen Plugin, you need to set up your environment.
 
 Make sure you have:
 - Python (needed for pre-commit hook)
