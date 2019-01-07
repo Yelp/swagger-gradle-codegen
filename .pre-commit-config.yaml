@@ -21,7 +21,7 @@ repos:
   - id: pretty-format-yaml
     args: [--autofix, --indent, '2']
 - repo: https://github.com/Yelp/detect-secrets
-  rev: v0.11.0
+  rev: v0.11.3
   hooks:
   - id: detect-secrets
     args: [--baseline, .secrets.baseline]
