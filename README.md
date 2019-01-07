@@ -65,9 +65,7 @@ We're looking forward to more platforms to support in the future. Contributions 
 
 ## Configuration
 
-To configure the generator, please use the `generateSwagger { }` block. Every property can also be configured with a command line parameter.
-
-Here an example of the `generateSwagger { }` block with all the properties.
+To configure the generator, please use the `generateSwagger { }` block. Here an example of this block with all the properties.
 
 ```kotlin
 generateSwagger {
@@ -83,17 +81,23 @@ generateSwagger {
 }
 ```
 
-And here a table with all the properties and their command line flags:
+And here a table with all the properties and their default values:
 
-| Property | Description | Default | Command line |
-| -------- | ----------- | ------- | ------------ |
-| `inputFile` | Defines the path to the Swagger spec file | **REQUIRED** | `--inputFile=` |
-| `platform` | Defines the platform/templates that will be used. See [Supported platforms](#Supported-platforms-) for a list of them. | `"kotlin"` | `--platform=` |
-| `packageName` | Defines the fully qualified package name that will be used as root when generating the code. | `"com.codegen.default"` | `--packageName=` |
-| `specName` | Defines the name of the service that is going to be built. | `"defaultname"` | `--specName=` |
-| `specVersion` | Defines the version of the spec that is going to be used. | If not provided, the version will be read from the specfile. If version is missing will default to `"0.0.0"` | `--specVersion=` |
-| `outputDir` | Defines the output root folder for the generated files. | `$buildDir/gen` | `--outputDir=` |
-| `extraFiles` | Defines a folder with extra files that will be copied over after the generation (e.g. util classes or overrides). | not set by default | `--extraFiles=` |
+| Property | Description | Default |
+| -------- | ----------- | ------- |
+| `inputFile` | Defines the path to the Swagger spec file | **REQUIRED** |
+| `platform` | Defines the platform/templates that will be used. See [Supported platforms](#Supported-platforms-) for a list of them. | `"kotlin"` |
+| `packageName` | Defines the fully qualified package name that will be used as root when generating the code. | `"com.codegen.default"` |
+| `specName` | Defines the name of the service that is going to be built. | `"defaultname"` |
+| `specVersion` | Defines the version of the spec that is going to be used. | If not provided, the version will be read from the specfile. If version is missing will default to `"0.0.0"` |
+| `outputDir` | Defines the output root folder for the generated files. | `$buildDir/gen` |
+| `extraFiles` | Defines a folder with extra files that will be copied over after the generation (e.g. util classes or overrides). | not set by default |
+
+Please note that all those properties can be configured with **command line flags** that mirrors 1:1 the property name. E.g.:
+
+```bash
+./gradlew generateSwagger --inputFile=./sample/specs.json
+```
 
 ### Extra Features
 
