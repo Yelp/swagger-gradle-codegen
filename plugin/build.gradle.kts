@@ -7,7 +7,7 @@ plugins {
     id("java")
     id("maven-publish")
     `kotlin-dsl`
-    kotlin("jvm") version "1.3.11"
+    kotlin("jvm") version "1.3.20"
 }
 
 dependencies {
