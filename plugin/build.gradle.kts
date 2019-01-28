@@ -4,10 +4,10 @@ group = rootProject.group
 version = rootProject.version
 
 plugins {
-    id("java")
-    id("maven-publish")
+    java
     `kotlin-dsl`
     kotlin("jvm") version "1.3.20"
+    id("com.gradle.plugin-publish") version "0.10.0"
 }
 
 dependencies {
@@ -19,4 +19,23 @@ dependencies {
     implementation("com.google.guava:guava:27.0-jre")
     implementation("io.swagger:swagger-codegen:2.3.1")
     implementation("org.json:json:20180813")
+}
+
+tasks.register<Jar>("sourcesJar") {
+    from(sourceSets.main.get().allJava)
+    classifier = "sources"
+}
+
+// Configuration Block for the Plugin Marker artifact on Plugin Central
+pluginBundle {
+    website = "https://github.com/Yelp/swagger-gradle-codegen"
+    vcsUrl = "https://github.com/Yelp/swagger-gradle-codegen"
+    description = "A Gradle plugin to generate networking code from Swagger Specs"
+    tags = listOf("swagger", "codegen", "retrofit", "android", "kotlin", "networking")
+
+    plugins {
+        getByName("com.yelp.codegen.plugin") {
+            displayName = "Swagger Gradle Codegen"
+        }
+    }
 }
