@@ -1,0 +1,2 @@
+gradle.publish.key=<GRADLE PUBLISH API KEY HERE>
+gradle.publish.secret=<GRADLE PUBLISH API SECRET HERE>

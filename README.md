@@ -8,13 +8,13 @@ This plugin wraps [swagger-codegen](https://github.com/swagger-api/swagger-codeg
 
 ## Getting Started
 
-**Swagger Gradle Codegen** is distributed through [TODO](https://TODO/). To use it you need to add the following dependency to your gradle files. Please note that those code needs to be added the gradle file of the module where you want to generate the code (**not the top level** build.gradle\[.kts\] file).
+**Swagger Gradle Codegen** is distributed through [Gradle Plugin Portal](https://plugins.gradle.org/). To use it you need to add the following dependency to your gradle files. Please note that those code needs to be added the gradle file of the module where you want to generate the code (**not the top level** build.gradle\[.kts\] file).
 
 If you're using the Groovy Gradle files:
 ```groovy
 buildscript {
     repositories {
-        TODO()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
