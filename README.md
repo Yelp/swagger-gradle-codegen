@@ -59,7 +59,7 @@ Here the list of the supported platforms:
 
 | Platform | Description                                |
 | -------- | ------------------------------------------ |
-| `kotlin` | Generates Kotlin code, with RxJava2 for async calls, Moshi for serialization and ThreeTenABP for Data management |
+| `kotlin` | Generates Kotlin code and Retrofit interfaces, with RxJava2 for async calls, Moshi for serialization and ThreeTenABP for Data management |
 
 We're looking forward to more platforms to support in the future. Contributions are more than welcome.
 
