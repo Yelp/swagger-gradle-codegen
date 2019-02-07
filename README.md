@@ -63,6 +63,136 @@ Here the list of the supported platforms:
 
 We're looking forward to more platforms to support in the future. Contributions are more than welcome.
 
+## Examples
+
+You can find some **examples** in this repository to help you set up your generator environment.
+
+* [sample-generated-code](/sample-generated-code) Contains an example of an Android Library where the code is generated inside the `/scr/main/java` folder. You can use this example to see how the generate code will _look like_ (like [here](/sample-generated-code/src/min/java/com/yelp/codegen/generatecodesamples/apis/ResourceApi.kt))
+
+* [sample-groovy-android](/sample-groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using Groovy as scripting language.
+
+* [sample-kotlin-android](/sample-kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
+
+## How the generated code will look like
+
+Here you can find some example of how the generated code will look like in your project:
+
+### `kotlin` platform
+
+<table>
+<tr>
+<th>Spec</th><th>Code</th>
+</tr>
+<tr>
+<td>
+
+```json
+  {
+      "definitions": {
+          ...
+          "property_model": {
+              "properties": {
+                  "enum_property": {
+                      "enum": [
+                          "VALUE2",
+                          "VALUE1"
+                      ],
+                      "type": "string"
+                  },
+                  "string_property": {
+                      "type": "string"
+                  }
+              },
+              "type": "object"
+          }
+      }
+```
+</td>
+<td>
+
+```kotlin
+/**
+ * @property enumProperty
+ * @property stringProperty
+ */
+data class PropertyModel(
+    @Json(name = "enum_property")
+    @field:Json(name = "enum_property")
+    var enumProperty: PropertyModel.EnumPropertyEnum? = null,
+    @Json(name = "string_property")
+    @field:Json(name = "string_property")
+    var stringProperty: String? = null
+) {
+    /**
+     * Values: VALUE2, VALUE1
+     */
+    enum class EnumPropertyEnum(val value: String) {
+        @Json(name = "VALUE2") VALUE2("VALUE2"),
+        @Json(name = "VALUE1") VALUE1("VALUE1")
+    }
+}
+```
+</td>
+</tr>
+<tr>
+<td>
+
+```json
+{
+  "paths": {
+      ...
+      "/property_endpoint/{property_format}": {
+          "get": {
+              "operationId": "get_property_endpoint",
+              "parameters": [
+                  {
+                      "in": "path",
+                      "name": "property_format",
+                      "required": true,
+                      "type": "string"
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "",
+                      "schema": {
+                          "$ref": "#/definitions/property_model"
+                      }
+                  }
+              },
+              "summary": "Just a simple endpoint",
+              "tags": [
+                  "resource"
+              ]
+          }
+      }
+  },
+```
+</td>
+<td>
+
+```kotlin
+@JvmSuppressWildcards
+interface ResourceApi {
+    /**
+     * Just a simple endpoint
+     * The endpoint is owned by generatecodesamples service owner
+     * @param propertyFormat (required)
+     */
+    @Headers(
+            "X-Operation-ID: get_property_endpoint"
+    )
+    @GET("/property_endpoint/{property_format}")
+    fun getPropertyEndpoint(
+        @retrofit2.http.Path("property_format") propertyFormat: String
+    ): Single<PropertyModel>
+}
+```
+</td>
+</tr>
+</table>
+
+
 ## Configuration
 
 To configure the generator, please use the `generateSwagger { }` block. Here an example of this block with all the properties.
@@ -109,13 +239,6 @@ Here a list of all the supported features:
 | -------- | ----------- | ------------ |
 | `headersToRemove` | List of headers that needs to be ignored for every endpoints. The headers in this list will be dropped and not generated as parameters for the endpoints. | `--featureHeaderToRemove=` |
 
-## Examples
-
-You can find some **examples** in this repository to help you set up your generator environment.
-
-* [sample-groovy-android](/sample-groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using Groovy as scripting language.
-
-* [sample-kotlin-android](/sample-kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
 ## Building
 
