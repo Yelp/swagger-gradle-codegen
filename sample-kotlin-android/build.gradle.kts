@@ -1,6 +1,6 @@
 plugins {
     id("com.android.library") version "3.2.1"
-    kotlin("android") version "1.3.20"
+    kotlin("android") version "1.3.21"
     id("com.yelp.codegen.plugin") version "1.0.0"
 }
 
@@ -16,8 +16,8 @@ android {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.11")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.11")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.21")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.21")
 
     // Moshi
     implementation("com.squareup.moshi:moshi:1.8.0")
