@@ -51,8 +51,7 @@ generateSwagger {
     platform = "kotlin"
     packageName = "com.yelp.codegen.generatecodesamples"
     specName = "generatecodesamples"
-    specVersion = "1.0.0"
-    inputFile = file("../sample_specs.json")
+    inputFile = file("./simplified_pet_store.json")
     outputDir = file("./src/main/java/")
     features {
         headersToRemove = ["Accept-Language"]
