@@ -86,7 +86,7 @@ And here a table with all the properties and their default values:
 | Property | Description | Default |
 | -------- | ----------- | ------- |
 | `inputFile` | Defines the path to the Swagger spec file | **REQUIRED** |
-| `platform` | Defines the platform/templates that will be used. See [Supported platforms](#Supported-platforms-) for a list of them. | `"kotlin"` |
+| `platform` | Defines the platform/templates that will be used. See [Supported platforms](#supported-platforms) for a list of them. | `"kotlin"` |
 | `packageName` | Defines the fully qualified package name that will be used as root when generating the code. | `"com.codegen.default"` |
 | `specName` | Defines the name of the service that is going to be built. | `"defaultname"` |
 | `specVersion` | Defines the version of the spec that is going to be used. | If not provided, the version will be read from the specfile. If version is missing will default to `"0.0.0"` |
