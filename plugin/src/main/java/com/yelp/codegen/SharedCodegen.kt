@@ -12,6 +12,7 @@ import io.swagger.codegen.SupportingFile
 import io.swagger.models.ArrayModel
 import io.swagger.models.Model
 import io.swagger.models.ModelImpl
+import io.swagger.models.Operation
 import io.swagger.models.Swagger
 import io.swagger.models.properties.ArrayProperty
 import io.swagger.models.properties.MapProperty
@@ -30,12 +31,14 @@ const val HEADERS_TO_IGNORE = "headers_to_ignore"
 internal const val X_NULLABLE = "x-nullable"
 internal const val X_MODEL = "x-model"
 internal const val X_OPERATION_ID = "x-operation-id"
+internal const val X_UNSAFE_OPERATION = "x-unsafe-operation"
 
 abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
 
     // Reference to the Swagger Specs
     protected var swagger: Swagger? = null
     private val xModelMatches = mutableMapOf<String, String>()
+    lateinit var unsafeOperations: List<String>
 
     override fun getTag() = CodegenType.CLIENT
 
@@ -80,6 +83,11 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
 
     override fun preprocessSwagger(swagger: Swagger) {
         super.preprocessSwagger(swagger)
+
+        unsafeOperations = when (val it = swagger.info.vendorExtensions.get("x-operation-ids-unsafe-to-use")) {
+            is List<*> -> it.filterIsInstance()
+            else -> listOf()
+        }
 
         mapXModel(swagger)
         this.swagger = swagger
@@ -356,6 +364,21 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         }
 
         return codegenModel.dataType
+    }
+
+    override fun fromOperation(
+        path: String?,
+        httpMethod: String?,
+        operation: Operation?,
+        definitions: MutableMap<String, Model>?,
+        swagger: Swagger?
+    ): CodegenOperation {
+        val codegenOperation = super.fromOperation(path, httpMethod, operation, definitions, swagger)
+        codegenOperation.vendorExtensions[X_OPERATION_ID] = operation?.operationId
+        if (unsafeOperations.contains(operation?.operationId)) {
+            codegenOperation.vendorExtensions[X_UNSAFE_OPERATION] = true
+        }
+        return codegenOperation
     }
 
     /**
