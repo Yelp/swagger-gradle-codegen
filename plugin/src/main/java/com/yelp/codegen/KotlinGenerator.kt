@@ -319,7 +319,7 @@ class KotlinGenerator : SharedCodegen() {
             name
         } else {
             matchXModel(name)
-                    .split(".").last()
+                    .replace(Regex("(\\.|\\s)"), "_")
                     .toPascalCase()
                     .sanitizeKotlinSpecificNames(specialCharReplacements)
                     .apply { escapeReservedWord(this) }
