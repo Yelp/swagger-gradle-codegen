@@ -1,6 +1,7 @@
 *.iml
 .*
-local.properties
-venv/
 build/
+java_pid*.hprof
+local.properties
 out/
+venv/
