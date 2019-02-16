@@ -1,0 +1,104 @@
+{
+    "definitions": {
+        "Category": {
+            "description": "A Category used to group pets",
+            "properties": {
+                "id": {
+                    "description": "Unique ID of the Category",
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name of this category",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Pet": {
+            "description": "Represents a specific Pet in the store",
+            "properties": {
+                "category": {
+                    "$ref": "#/definitions/Category",
+                    "description": "Optional category of the pet"
+                },
+                "id": {
+                    "description": "Unique ID of this Pet",
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name of this specific pet",
+                    "type": "string"
+                },
+                "photoUrls": {
+                    "description": "Photo URls for this Pet on the bucket",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "tags": {
+                    "description": "Pet status in the store",
+                    "items": {
+                        "$ref": "#/definitions/Tag"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "name",
+                "photoUrls"
+            ],
+            "type": "object"
+        },
+        "Tag": {
+            "description": "A Tag used to group entities",
+            "properties": {
+                "id": {
+                    "description": "Unique ID of the Tag",
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "name": {
+                    "description": "Name of this Tag",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "info": {
+        "description": "This is a simplified version of the sample server Petstore server.",
+        "title": "Swagger Petstore",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/pet/{petId}": {
+            "get": {
+                "description": "Returns a single pet",
+                "operationId": "getPetById",
+                "parameters": [
+                    {
+                        "description": "ID of pet to return",
+                        "format": "int64",
+                        "in": "path",
+                        "name": "petId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Pet"
+                        }
+                    }
+                },
+                "summary": "Find pet by ID"
+            }
+        }
+    },
+    "swagger": "2.0"
+}

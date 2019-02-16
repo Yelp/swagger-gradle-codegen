@@ -63,6 +63,20 @@ Here the list of the supported platforms:
 
 We're looking forward to more platforms to support in the future. Contributions are more than welcome.
 
+## Examples
+
+You can find some **examples** in this repository to help you set up your generator environment.
+
+* [sample-generated-code](/sample-generated-code) Contains an example of an Android Library where the code is generated inside the `/scr/main/java` folder. You can use this example to see how the generated code will _look like_ (like [here](/sample-generated-code/src/main/java/com/yelp/codegen/generatecodesamples/apis/DefaultApi.kt))
+
+* [sample-groovy-android](/sample-groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
+
+* [sample-kotlin-android](/sample-kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
+
+## How the generated code will look like
+
+[Here](/SAMPLES.md) you can find some examples of how the generated code will look like in your project.
+
 ## Configuration
 
 To configure the generator, please use the `generateSwagger { }` block. Here an example of this block with all the properties.
@@ -109,13 +123,6 @@ Here a list of all the supported features:
 | -------- | ----------- | ------------ |
 | `headersToRemove` | List of headers that needs to be ignored for every endpoints. The headers in this list will be dropped and not generated as parameters for the endpoints. | `--featureHeaderToRemove=` |
 
-## Examples
-
-You can find some **examples** in this repository to help you set up your generator environment.
-
-* [sample-groovy-android](/sample-groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using Groovy as scripting language.
-
-* [sample-kotlin-android](/sample-kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
 ## Building
 
