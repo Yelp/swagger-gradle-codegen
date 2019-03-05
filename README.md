@@ -67,11 +67,11 @@ We're looking forward to more platforms to support in the future. Contributions 
 
 You can find some **examples** in this repository to help you set up your generator environment.
 
-* [sample-generated-code](/sample-generated-code) Contains an example of an Android Library where the code is generated inside the `/scr/main/java` folder. You can use this example to see how the generated code will _look like_ (like [here](/sample-generated-code/src/main/java/com/yelp/codegen/generatecodesamples/apis/DefaultApi.kt))
+* [samples/generated-code](/samples/generated-code) Contains an example of an Android Library where the code is generated inside the `/scr/main/java` folder. You can use this example to see how the generated code will _look like_ (like [here](/samples/generated-code/src/main/java/com/yelp/codegen/generatecodesamples/apis/DefaultApi.kt))
 
-* [sample-groovy-android](/sample-groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
+* [samples/groovy-android](/samples/groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
 
-* [sample-kotlin-android](/sample-kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
+* [samples/kotlin-android](/samples/kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
 ## How the generated code will look like
 
