@@ -15,4 +15,4 @@ pluginManagement {
     }
 }
 
-include(":plugin", ":samples:kotlin-android", ":samples:groovy-android")
+include(":plugin", ":samples:kotlin-android", ":samples:groovy-android", ":samples:generated-code")
