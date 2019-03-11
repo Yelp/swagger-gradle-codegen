@@ -38,7 +38,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     // Reference to the Swagger Specs
     protected var swagger: Swagger? = null
     private val xModelMatches = mutableMapOf<String, String>()
-    lateinit var unsafeOperations: List<String>
+    private val unsafeOperations: MutableList<String> = mutableListOf()
 
     override fun getTag() = CodegenType.CLIENT
 
@@ -84,10 +84,10 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     override fun preprocessSwagger(swagger: Swagger) {
         super.preprocessSwagger(swagger)
 
-        unsafeOperations = when (val it = swagger.info.vendorExtensions.get("x-operation-ids-unsafe-to-use")) {
+        unsafeOperations.addAll(when (val it = swagger.info.vendorExtensions["x-operation-ids-unsafe-to-use"]) {
             is List<*> -> it.filterIsInstance()
             else -> listOf()
-        }
+        })
 
         mapXModel(swagger)
         this.swagger = swagger
@@ -366,6 +366,17 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         return codegenModel.dataType
     }
 
+    /**
+     * Convert Swagger Operation object to Codegen Operation object
+     *
+     * The function takes care of adding additional vendor extensions on the Codegen Operation
+     * to better support the swagger-gradle-codegen use-case
+     *  1) X_OPERATION_ID : added as we want to render operation ids on the final API artifacts
+     *  2) X_UNSAFE_OPERATION : added as we want to mark as deprecated APIs for which we're not sure
+     *                          that will work exactly as expected in the generated code
+     *
+     * @return the converted codegen operation
+     */
     override fun fromOperation(
         path: String?,
         httpMethod: String?,
