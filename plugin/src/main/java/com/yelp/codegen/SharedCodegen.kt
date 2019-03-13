@@ -122,10 +122,14 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     }
 
     /**
-     * Returns the x-model alternative name if it was defined
+     * Returns the x-model alternative name if it was defined.
+     * If the x-model alternative name is not found then the call will
+     * use the defined title, if any, or returns the input name
      */
     fun matchXModel(name: String): String {
-        return xModelMatches[name] ?: name
+        return xModelMatches[name] ?: (
+            this.swagger?.definitions?.get(name)?.title ?: name
+        )
     }
 
     /**
