@@ -130,8 +130,8 @@ open class GenerateTask : DefaultTask() {
                 version
             }
             else -> {
-                println("Issue in reading version from Swagger Spec file. Falling back to 0.0.0")
-                "0.0.0"
+                println("Issue in reading version from Swagger Spec file. Falling back to $DEFAULT_VERSION")
+                DEFAULT_VERSION
             }
         }
     }
