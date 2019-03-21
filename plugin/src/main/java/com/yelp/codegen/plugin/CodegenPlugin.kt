@@ -1,6 +1,7 @@
 package com.yelp.codegen.plugin
 
 import com.yelp.codegen.main
+import io.swagger.parser.SwaggerParser
 import org.gradle.api.DefaultTask
 import org.gradle.api.plugins.BasePlugin
 import org.gradle.api.tasks.Input
@@ -11,11 +12,7 @@ import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import org.json.JSONException
-import org.json.JSONObject
-import org.json.JSONTokener
 import java.io.File
-import java.io.FileInputStream
 
 const val DEFAULT_PLATFORM = "kotlin"
 const val DEFAULT_VERSION = "0.0.0"
@@ -126,15 +123,16 @@ open class GenerateTask : DefaultTask() {
     }
 
     private fun readVersionFromSpecfile(specFile: File) {
-        try {
-            FileInputStream(specFile).use {
-                val jsonObject = JSONTokener(it).nextValue() as JSONObject
-                val version = jsonObject.getJSONObject("info").getString("version")
+        val swaggerSpec = SwaggerParser().readWithInfo(specFile.absolutePath, listOf(), false).swagger
+        specVersion = when (val version = swaggerSpec.info.version) {
+            is String -> {
                 println("Successfully read version from Swagger Spec file: $version")
-                specVersion = version
+                version
             }
-        } catch (e: JSONException) {
-            System.err.println("Failed to parse $specFile to read spec version")
+            else -> {
+                println("Issue in reading version from Swagger Spec file. Falling back to 0.0.0")
+                "0.0.0"
+            }
         }
     }
 }
