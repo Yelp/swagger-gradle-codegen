@@ -371,6 +371,15 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     }
 
     /**
+     * Determine if the swagger operation consumes mutipart content.
+     */
+    private fun isMultipartOperation(operation: Operation?): Boolean {
+        return operation?.consumes != null && operation.consumes.any {
+            consume -> consume == "multipart/form-data"
+        }
+    }
+
+    /**
      * Convert Swagger Operation object to Codegen Operation object
      *
      * The function takes care of adding additional vendor extensions on the Codegen Operation
@@ -393,6 +402,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         if (unsafeOperations.contains(operation?.operationId)) {
             codegenOperation.vendorExtensions[X_UNSAFE_OPERATION] = true
         }
+        codegenOperation.isMultipart = isMultipartOperation(operation)
         return codegenOperation
     }
 
