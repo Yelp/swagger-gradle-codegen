@@ -374,9 +374,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * Determine if the swagger operation consumes mutipart content.
      */
     private fun isMultipartOperation(operation: Operation?): Boolean {
-        return operation?.consumes != null && operation.consumes.any {
-            consume -> consume == "multipart/form-data"
-        }
+        return operation?.consumes?.any { it == "multipart/form-data" } ?: false
     }
 
     /**
