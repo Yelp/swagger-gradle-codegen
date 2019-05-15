@@ -10,9 +10,11 @@ import io.swagger.codegen.CodegenType
 import io.swagger.codegen.DefaultCodegen
 import io.swagger.codegen.SupportingFile
 import io.swagger.models.ArrayModel
+import io.swagger.models.ComposedModel
 import io.swagger.models.Model
 import io.swagger.models.ModelImpl
 import io.swagger.models.Operation
+import io.swagger.models.RefModel
 import io.swagger.models.Swagger
 import io.swagger.models.properties.ArrayProperty
 import io.swagger.models.properties.MapProperty
@@ -164,14 +166,65 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         }
     }
 
+    /**
+     * Given a model determine what is the underlying data type ensuring.
+     * The method takes care of:
+     *  * references to references
+     *  * composed models where only one of the allOf items is responsible for type definition
+     */
+    private fun getModelDataType(model: Model?): String? {
+        return when (model) {
+            is ModelImpl -> {
+                if (model.type != null) {
+                    model.type
+                } else {
+                    if (false == model.properties?.isEmpty() ||
+                            model.additionalProperties != null) {
+                        "object"
+                    } else {
+                        null
+                    }
+                }
+            }
+            is RefModel -> toModelName(model.simpleRef)
+            is ComposedModel -> {
+                val allOfModelDefinitions = model.allOf.mapNotNull { allOfItem ->
+                    when (allOfItem) {
+                        is Model, is RefModel -> getModelDataType(allOfItem)
+                        else -> null
+                    }
+                }
+                if (allOfModelDefinitions.size == 1) {
+                    allOfModelDefinitions[0]
+                } else {
+                    null
+                }
+            }
+            else -> null
+        }
+    }
+
     override fun fromModel(name: String, model: Model, allDefinitions: MutableMap<String, Model>?): CodegenModel {
         propagateXNullable(model, allDefinitions)
         val codegenModel = super.fromModel(name, model, allDefinitions)
+
+        // Deal with composed models (models with allOf) that are meant to override descriptions and
+        // with references to references
+        if (model is ComposedModel || model is RefModel) {
+            getModelDataType(model)?.let {
+                codegenModel.isAlias = true
+                codegenModel.dataType = it
+                // This workaround is done to prevent regeneration of enums that would not be used anyway as
+                // the current codegenModel is a pure type alias
+                codegenModel.hasEnums = false
+            }
+        }
 
         // Top level array Models should generate a typealias.
         if (codegenModel.isArrayModel) {
             codegenModel.isAlias = true
         }
+
         // If model is an Alias will generate a typealias. We need to check if the type is aliasing
         // to any 'x-nullable' annotated model.
         if (codegenModel.isAlias) {
