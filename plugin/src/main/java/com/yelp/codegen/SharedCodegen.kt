@@ -175,14 +175,15 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     private fun getModelDataType(model: Model?): String? {
         return when (model) {
             is ModelImpl -> {
-                if (model.type == null) {
-                    if (false == model.properties?.isEmpty() || model.additionalProperties != null) {
+                if (model.type != null) {
+                    model.type
+                } else {
+                    if (false == model.properties?.isEmpty() ||
+                            model.additionalProperties != null) {
                         "object"
                     } else {
                         null
                     }
-                } else {
-                    model.type
                 }
             }
             is RefModel -> toModelName(model.simpleRef)
@@ -210,10 +211,9 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         // Deal with composed models (models with allOf) that are meant to override descriptions and
         // with references to references
         if (model is ComposedModel || model is RefModel) {
-            val modelDataType = getModelDataType(model)
-            if (modelDataType != null) {
+            getModelDataType(model)?.let {
                 codegenModel.isAlias = true
-                codegenModel.dataType = modelDataType
+                codegenModel.dataType = it
                 // This workaround is done to prevent regeneration of enums that would not be used anyway as
                 // the current codegenModel is a pure type alias
                 codegenModel.hasEnums = false
