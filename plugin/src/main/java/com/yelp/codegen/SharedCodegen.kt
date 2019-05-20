@@ -259,7 +259,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
 
     /**
      * Private method to investigate all the properties of a models, filter only the [RefProperty] and eventually
-     * propagate the `x-nullable` vendor config.
+     * propagate the `x-nullable` vendor extension.
      */
     private fun propagateXNullableToProperties(model: Model, allDefinitions: MutableMap<String, Model>) {
         model.properties
@@ -269,7 +269,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     }
 
     /**
-     * Private method to propagate the `x-nullable` vendor config form the global definitions to the usage.
+     * Private method to propagate the `x-nullable` vendor extension form the global definitions to the usage.
      */
     private fun propagateXNullableVendorExtension(
         refProperty: RefProperty,
@@ -424,6 +424,13 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     }
 
     /**
+     * Determine if the swagger operation consumes mutipart content.
+     */
+    private fun isMultipartOperation(operation: Operation?): Boolean {
+        return operation?.consumes?.any { it == "multipart/form-data" } ?: false
+    }
+
+    /**
      * Convert Swagger Operation object to Codegen Operation object
      *
      * The function takes care of adding additional vendor extensions on the Codegen Operation
@@ -446,6 +453,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         if (unsafeOperations.contains(operation?.operationId)) {
             codegenOperation.vendorExtensions[X_UNSAFE_OPERATION] = true
         }
+        codegenOperation.isMultipart = isMultipartOperation(operation)
         return codegenOperation
     }
 
