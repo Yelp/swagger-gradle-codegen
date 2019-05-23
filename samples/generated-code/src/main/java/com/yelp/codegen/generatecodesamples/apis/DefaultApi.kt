@@ -22,7 +22,7 @@ interface DefaultApi {
     @Headers(
             "X-Operation-ID: getPetById"
     )
-    @GET("pet/{petId}")
+    @GET("/pet/{petId}")
     fun getPetById(
         @retrofit2.http.Path("petId") petId: Long
     ): Single<Pet>

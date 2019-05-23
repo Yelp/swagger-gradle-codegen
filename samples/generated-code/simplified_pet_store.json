@@ -69,13 +69,12 @@
         }
     },
     "info": {
-        "basePath": "/v2",
         "description": "This is a simplified version of the sample server Petstore server.",
         "title": "Swagger Petstore",
         "version": "1.0.0"
     },
     "paths": {
-        "pet/{petId}": {
+        "/pet/{petId}": {
             "get": {
                 "description": "Returns a single pet",
                 "operationId": "getPetById",
