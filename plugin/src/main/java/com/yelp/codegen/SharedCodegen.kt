@@ -36,6 +36,7 @@ const val HEADERS_TO_IGNORE = "headers_to_ignore"
 internal const val X_NULLABLE = "x-nullable"
 internal const val X_MODEL = "x-model"
 internal const val X_OPERATION_ID = "x-operation-id"
+internal const val X_FUNCTION_QUALIFIER = "x-function-qualifier"
 internal const val X_UNSAFE_OPERATION = "x-unsafe-operation"
 
 // Headers Names

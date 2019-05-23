@@ -21,7 +21,7 @@ import io.swagger.models.Swagger
 import io.swagger.models.properties.Property
 import java.io.File
 
-class KotlinGenerator : SharedCodegen() {
+open class KotlinGenerator : SharedCodegen() {
 
     companion object {
         /**
@@ -406,19 +406,16 @@ class KotlinGenerator : SharedCodegen() {
             }
         }
 
-        when {
+        codegenOperation.returnType = when {
             codegenOperation.isResponseFile -> {
-                codegenOperation.returnType = "Single<ResponseBody>"
                 codegenOperation.imports.add("okhttp3.ResponseBody")
-                codegenOperation.imports.add("io.reactivex.Single")
+                wrapResponseType(codegenOperation.imports, "ResponseBody")
             }
             codegenOperation.returnType == null -> {
-                codegenOperation.returnType = "Completable"
-                codegenOperation.imports.add("io.reactivex.Completable")
+                getNoResponseType(codegenOperation.imports)
             }
             else -> {
-                codegenOperation.returnType = "Single<${codegenOperation.returnType}>"
-                codegenOperation.imports.add("io.reactivex.Single")
+                wrapResponseType(codegenOperation.imports, codegenOperation.returnType)
             }
         }
 
@@ -508,5 +505,23 @@ class KotlinGenerator : SharedCodegen() {
 
         operation.vendorExtensions[HAS_OPERATION_HEADERS] = topLevelHeaders.isNotEmpty()
         operation.vendorExtensions[OPERATION_HEADERS] = topLevelHeaders
+    }
+
+    /**
+     * Wraps the return type of an operation with the proper type (e.g. Single, Observable, Future, etc.)
+     * Use this method to eventually add imports if needed in the [imports] param.
+     */
+    protected open fun wrapResponseType(imports: MutableSet<String>, responsePrimitiveType: String): String {
+        imports.add("io.reactivex.Single")
+        return "Single<$responsePrimitiveType>"
+    }
+
+    /**
+     * Get the return type of operations with no ResponseType set (void, Unit, Completables).
+     * Use this method to eventually add imports if needed in the [imports] param.
+     */
+    protected open fun getNoResponseType(imports: MutableSet<String>): String {
+        imports.add("io.reactivex.Completable")
+        return "Completable"
     }
 }

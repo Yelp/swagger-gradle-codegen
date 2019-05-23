@@ -37,7 +37,7 @@ interface {{classname}} {
   {{/vendorExtensions.x-unsafe-operation}}{{^vendorExtensions.x-unsafe-operation}}{{#isDeprecated}}
       @Deprecated(message = "Deprecated"){{/isDeprecated}}
   {{/vendorExtensions.x-unsafe-operation}}
-  fun {{operationId}}({{^allParams}}){{/allParams}}
+  {{vendorExtensions.x-function-qualifier}} fun {{operationId}}({{^allParams}}){{/allParams}}
     {{#allParams}}{{>retrofit2/queryParams}}{{>retrofit2/pathParams}}{{>retrofit2/headerParams}}{{>retrofit2/bodyParams}}{{>retrofit2/formParams}}{{#hasMore}},
     {{/hasMore}}{{^hasMore}}
   ){{/hasMore}}{{/allParams}}: {{{returnType}}}
