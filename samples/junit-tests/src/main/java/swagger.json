@@ -1,0 +1,61 @@
+{
+    "definitions": {},
+    "info": {
+        "description": "This spec is used to have JUnit Tests to check the generated code.",
+        "title": "JUnit Tests",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/brackets/in/parameter/name": {
+            "get": {
+                "description": "Make sure that brackets in parameter name are treated properly",
+                "operationId": "getBracketsInParameterName",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "page[]",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "datePosted[before]",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "datePosted[strictly_before]",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "datePosted[after]",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "datePosted[strictly_after]",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                },
+                "summary": "Test brackets in parameter name"
+            }
+        }
+    },
+    "swagger": "2.0"
+}

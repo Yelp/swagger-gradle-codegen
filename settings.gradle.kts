@@ -15,4 +15,8 @@ pluginManagement {
     }
 }
 
-include(":plugin", ":samples:kotlin-android", ":samples:groovy-android", ":samples:generated-code")
+include(":plugin",
+        ":samples:junit-tests",
+        ":samples:kotlin-android",
+        ":samples:groovy-android",
+        ":samples:generated-code")
