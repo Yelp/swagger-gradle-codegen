@@ -11,4 +11,14 @@ class KotlinGeneratorTest {
         assert(KotlinGenerator().toModelName("model with dot.s") == "ModelWithDotS")
         assert(KotlinGenerator().toModelName("model with userscore_s") == "ModelWithUserscoreS")
     }
+
+    @Test
+    fun removeNonNameElementToCamelCase_withSquareBrackets() {
+        assert(KotlinGenerator().removeNonNameElementToCamelCase("type[]") == "type")
+        assert(KotlinGenerator().removeNonNameElementToCamelCase("type[value]") == "typeValue")
+        assert(KotlinGenerator().removeNonNameElementToCamelCase("type[") == "type")
+        assert(KotlinGenerator().removeNonNameElementToCamelCase("type]") == "type")
+        assert(KotlinGenerator().removeNonNameElementToCamelCase("[type]") == "type")
+        assert(KotlinGenerator().removeNonNameElementToCamelCase("[type]key") == "typeKey")
+    }
 }
