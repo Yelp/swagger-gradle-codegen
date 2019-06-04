@@ -75,6 +75,8 @@ You can find some **examples** in this repository to help you set up your genera
 
 * [samples/kotlin-android](/samples/kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
+* [samples/junit-tests](/samples/junit-tests) This sample contains specs used to test edge cases and scenarios that have been reported in the issue tracker or that are worth testing.
+
 ## How the generated code will look like
 
 [Here](/SAMPLES.md) you can find some examples of how the generated code will look like in your project.
