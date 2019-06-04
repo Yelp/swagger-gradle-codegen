@@ -425,4 +425,15 @@ class KotlinGenerator : SharedCodegen() {
         // Override the swagger version with the one provided from command line.
         swagger.info.version = additionalProperties[SPEC_VERSION] as String
     }
+
+    /**
+     * Function used to sanitize the name for operation generations.
+     * The superclass is not providing the correct string pattern (See #31).
+     *
+     * Here we override the provided pattern to include also square brackets in during the
+     * parameter name generation.
+     */
+    override fun removeNonNameElementToCamelCase(name: String?): String {
+        return super.removeNonNameElementToCamelCase(name, "[-_:;#\\[\\]]")
+    }
 }
