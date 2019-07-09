@@ -10,7 +10,6 @@ This plugin wraps [swagger-codegen](https://github.com/swagger-api/swagger-codeg
 
 **Swagger Gradle Codegen** is distributed through [Gradle Plugin Portal](https://plugins.gradle.org/). To use it you need to add the following dependency to your gradle files.
 Please note that those code needs to be added the gradle file of the module where you want to generate the code (**not the top level** build.gradle\[.kts\] file).
-Please also note that the plugin uses gradle 5.+ features, and you will need to setup your gradle wrapper to use 5.0 or more.
 
 If you're using the Groovy Gradle files:
 ```groovy
@@ -52,6 +51,13 @@ generateSwagger {
 Please note that the `generateSwagger { }` block is **needed** in order to let the plugin work.
 
 Once you setup the plugin correctly, you can call the `:generateSwagger` gradle task, that will run the code generation with the configuration you provided.
+
+## Requirements
+
+In order to run this gradle plugin you need to fulfill the following requirements:
+
+* Gradle 5.x - This plugin uses Gradle 5 features, and you will need to setup your Gradle wrapper to use 5.0 or more.
+* Java 8+
 
 ## Supported platforms
 
