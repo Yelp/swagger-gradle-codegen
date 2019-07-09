@@ -2,6 +2,12 @@
 
 Here you can find the release notes for this project. Please note that list of releases is available also in the [releases](https://github.com/Yelp/swagger-gradle-codegen/releases) page on Github.
 
+## v1.1.1 (2019-07-09)
+
+* 🐛 Specify Java source and target compatibility version to Java8 [#39]
+
+Thanks to @cortinico for the support with this release.
+
 ## v1.1.0 (2019-06-05)
 
 * 🎁 Update SharedCodegen to fallback to title usage if x-model is not present [#21]
@@ -29,3 +35,4 @@ Thanks to @cortinico, @MatthewTPage, @GuilhE, @macisamuele and @redwarp for the 
 [#26]: https://github.com/Yelp/swagger-gradle-codegen/pull/26/
 [#30]: https://github.com/Yelp/swagger-gradle-codegen/pull/30/
 [#32]: https://github.com/Yelp/swagger-gradle-codegen/pull/32/
+[#39]: https://github.com/Yelp/swagger-gradle-codegen/pull/39/
