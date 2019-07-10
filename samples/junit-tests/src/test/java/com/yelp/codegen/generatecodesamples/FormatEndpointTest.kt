@@ -73,7 +73,8 @@ class FormatEndpointTest {
         """.trimIndent()))
 
         // 10000000 nanoseconds == 0.01 seconds.
-        val returned = rule.getApi<ResourceApi>().getFormatEndpoint("datetime_with_fractionalsec_and_timezone").blockingGet()
+        val returned = rule.getApi<ResourceApi>()
+                .getFormatEndpoint("datetime_with_fractionalsec_and_timezone").blockingGet()
         assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 10000000, ZoneId.of("+01:00")), returned.datetimeProperty)
     }
 
