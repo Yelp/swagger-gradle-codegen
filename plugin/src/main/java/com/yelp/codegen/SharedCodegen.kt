@@ -87,7 +87,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         super.preprocessSwagger(swagger)
 
         unsafeOperations.addAll(when (val it = swagger.info.vendorExtensions["x-operation-ids-unsafe-to-use"]) {
-            is List<*> -> it.filterIsInstance()
+            is List<*> -> it.filterIsInstance<String>()
             else -> listOf()
         })
 
