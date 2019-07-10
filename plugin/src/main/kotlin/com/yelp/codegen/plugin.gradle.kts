@@ -13,6 +13,7 @@ tasks {
         specVersion = config.specVersion
         inputFile = config.inputFile
         outputDir = config.outputDir
+
         extraFiles = config.extraFiles
         features = config.features
     }
