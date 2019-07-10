@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.library") version "3.4.1"
+    id("com.android.library") version "3.4.2"
     kotlin("android") version "1.3.41"
     id("com.yelp.codegen.plugin") version "1.1.1"
 }
