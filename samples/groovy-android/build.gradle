@@ -21,8 +21,8 @@ apply plugin: "com.yelp.codegen.plugin"
 android {
     compileSdkVersion = 28
     defaultConfig {
-        minSdkVersion = 21
-        targetSdkVersion = 28
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode = 1
         versionName = "1.0"
     }
