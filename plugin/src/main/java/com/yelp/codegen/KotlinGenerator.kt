@@ -1,4 +1,4 @@
-@file:Suppress("NOTHING_TO_INLINE")
+@file:Suppress("TooManyFunctions", "NOTHING_TO_INLINE")
 
 package com.yelp.codegen
 

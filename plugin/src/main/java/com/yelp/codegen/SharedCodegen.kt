@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package com.yelp.codegen
 
 import com.yelp.codegen.utils.InlineModelResolver
@@ -130,8 +132,8 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      */
     fun matchXModel(name: String): String {
         return xModelMatches[name] ?: (
-            this.swagger?.definitions?.get(name)?.title ?: name
-        )
+                this.swagger?.definitions?.get(name)?.title ?: name
+                )
     }
 
     /**
@@ -322,16 +324,12 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * Header Interceptor) and is helpful to remove the header from the endpoints to avoid confusion.
      */
     protected fun getHeadersToIgnore(): List<String> {
-        return try {
-            val headerList = mutableListOf<String>()
-            val headerParam = additionalProperties[HEADERS_TO_IGNORE] as? String
-            if (headerParam != null) {
-                headerList.addAll(headerParam.split(','))
-            }
-            headerList.toList()
-        } catch (e: Throwable) {
-            listOf()
+        val headerList = mutableListOf<String>()
+        val headerParam = additionalProperties[HEADERS_TO_IGNORE] as? String
+        if (headerParam != null) {
+            headerList.addAll(headerParam.split(','))
         }
+        return headerList.toList()
     }
 
     /**

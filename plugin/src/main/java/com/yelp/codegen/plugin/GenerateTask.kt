@@ -58,7 +58,8 @@ open class GenerateTask : DefaultTask() {
 
     @InputFiles
     @Optional
-    @Option(option = "extraFiles", description = "Configures path of the extra files directory to be added to the Generated code.")
+    @Option(option = "extraFiles",
+            description = "Configures path of the extra files directory to be added to the Generated code.")
     var extraFiles: File? = null
 
     @Nested
