@@ -1,9 +1,400 @@
 {
-    "definitions": {},
+    "definitions": {
+        "empty_model": {
+            "type": "object",
+            "x-model": "empty_model"
+        },
+        "format_responses": {
+            "properties": {
+                "date_property": {
+                    "format": "date",
+                    "type": "string"
+                },
+                "datetime_property": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "enum_property": {
+                    "enum": [
+                        "VALUE1",
+                        "VALUE2"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "x-model": "format_responses"
+        },
+        "nested_additional_properties": {
+            "additionalProperties": {
+                "$ref": "#/definitions/top_level_map"
+            },
+            "type": "object",
+            "x-model": "nested_additional_properties"
+        },
+        "nested_additional_properties_custom_description": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/nested_additional_properties"
+                },
+                {
+                    "description": "This is a workaroud to override the description provided by nested_additional_properties"
+                }
+            ],
+            "type": "object",
+            "x-model": "nested_additional_properties_custom_description"
+        },
+        "property_array": {
+            "properties": {
+                "number_array": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                "string_array": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object",
+            "x-model": "property_array"
+        },
+        "property_map": {
+            "properties": {
+                "number_map": {
+                    "additionalProperties": {
+                        "type": "number"
+                    },
+                    "type": "object",
+                    "x-model": "number_map"
+                },
+                "object_map": {
+                    "type": "object",
+                    "x-model": "object_map"
+                },
+                "string_map": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object",
+                    "x-model": "string_map"
+                }
+            },
+            "type": "object",
+            "x-model": "property_map"
+        },
+        "required_type_responses": {
+            "properties": {
+                "boolean_property": {
+                    "type": "boolean"
+                },
+                "enum_property": {
+                    "enum": [
+                        "VALUE1",
+                        "VALUE2"
+                    ],
+                    "type": "string"
+                },
+                "integer_property": {
+                    "type": "integer"
+                },
+                "number_property": {
+                    "type": "number"
+                },
+                "string_property": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "boolean_property",
+                "enum_property",
+                "integer_property",
+                "number_property",
+                "string_property"
+            ],
+            "type": "object",
+            "x-model": "required_type_responses"
+        },
+        "reserved_keywords": {
+            "properties": {
+                "class": {
+                    "type": "string"
+                },
+                "for": {
+                    "type": "string"
+                },
+                "operator": {
+                    "type": "string"
+                },
+                "val": {
+                    "type": "string"
+                },
+                "var": {
+                    "type": "string"
+                },
+                "when": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "x-model": "reserved_keywords"
+        },
+        "top_level_enum": {
+            "enum": [
+                "TOP_LEVEL_VALUE1",
+                "TOP_LEVEL_VALUE2"
+            ],
+            "type": "string",
+            "x-model": "top_level_enum"
+        },
+        "top_level_map": {
+            "additionalProperties": {
+                "type": "string"
+            },
+            "type": "object",
+            "x-model": "top_level_map"
+        },
+        "type_responses": {
+            "properties": {
+                "boolean_property": {
+                    "type": "boolean"
+                },
+                "integer_property": {
+                    "type": "integer"
+                },
+                "number_property": {
+                    "type": "number"
+                },
+                "string_property": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "x-model": "type_responses"
+        },
+        "xnullable_format_responses": {
+            "properties": {
+                "date_property": {
+                    "format": "date",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "datetime_property": {
+                    "format": "date-time",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "double_property": {
+                    "format": "double",
+                    "type": "number",
+                    "x-nullable": true
+                }
+            },
+            "type": "object",
+            "x-model": "xnullable_format_responses"
+        },
+        "xnullable_map": {
+            "additionalProperties": {
+                "type": "string",
+                "x-nullable": true
+            },
+            "type": "object",
+            "x-model": "xnullable_map",
+            "x-nullable": true
+        },
+        "xnullable_nested_additional_properties": {
+            "additionalProperties": {
+                "$ref": "#/definitions/xnullable_map"
+            },
+            "type": "object",
+            "x-model": "xnullable_nested_additional_properties"
+        },
+        "xnullable_property_array": {
+            "properties": {
+                "number_array": {
+                    "items": {
+                        "type": "number",
+                        "x-nullable": true
+                    },
+                    "type": "array",
+                    "x-nullable": true
+                },
+                "string_array": {
+                    "items": {
+                        "type": "string",
+                        "x-nullable": true
+                    },
+                    "type": "array",
+                    "x-nullable": true
+                }
+            },
+            "type": "object",
+            "x-model": "xnullable_property_array"
+        },
+        "xnullable_property_map": {
+            "properties": {
+                "number_map": {
+                    "additionalProperties": {
+                        "type": "number",
+                        "x-nullable": true
+                    },
+                    "type": "object",
+                    "x-model": "number_map",
+                    "x-nullable": true
+                },
+                "object_map": {
+                    "type": "object",
+                    "x-model": "object_map",
+                    "x-nullable": true
+                },
+                "string_map": {
+                    "additionalProperties": {
+                        "type": "string",
+                        "x-nullable": true
+                    },
+                    "type": "object",
+                    "x-model": "string_map",
+                    "x-nullable": true
+                }
+            },
+            "type": "object",
+            "x-model": "xnullable_property_map"
+        },
+        "xnullable_required_property_array": {
+            "properties": {
+                "number_array": {
+                    "items": {
+                        "type": "number",
+                        "x-nullable": true
+                    },
+                    "type": "array",
+                    "x-nullable": true
+                },
+                "string_array": {
+                    "items": {
+                        "type": "string",
+                        "x-nullable": true
+                    },
+                    "type": "array",
+                    "x-nullable": true
+                }
+            },
+            "required": [
+                "number_array",
+                "string_array"
+            ],
+            "type": "object",
+            "x-model": "xnullable_required_property_array"
+        },
+        "xnullable_required_property_map": {
+            "properties": {
+                "number_map": {
+                    "additionalProperties": {
+                        "type": "number",
+                        "x-nullable": true
+                    },
+                    "type": "object",
+                    "x-model": "number_map",
+                    "x-nullable": true
+                },
+                "object_map": {
+                    "type": "object",
+                    "x-model": "object_map",
+                    "x-nullable": true
+                },
+                "string_map": {
+                    "additionalProperties": {
+                        "type": "string",
+                        "x-nullable": true
+                    },
+                    "type": "object",
+                    "x-model": "string_map",
+                    "x-nullable": true
+                }
+            },
+            "required": [
+                "number_map",
+                "object_map",
+                "string_map"
+            ],
+            "type": "object",
+            "x-model": "xnullable_required_property_map"
+        },
+        "xnullable_required_type_responses": {
+            "properties": {
+                "boolean_property": {
+                    "type": "boolean",
+                    "x-nullable": true
+                },
+                "enum_property": {
+                    "enum": [
+                        "VALUE1",
+                        "VALUE2"
+                    ],
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "integer_property": {
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "number_property": {
+                    "type": "number",
+                    "x-nullable": true
+                },
+                "string_property": {
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "required": [
+                "boolean_property",
+                "enum_property",
+                "integer_property",
+                "number_property",
+                "string_property"
+            ],
+            "type": "object",
+            "x-model": "xnullable_required_type_responses"
+        },
+        "xnullable_type_responses": {
+            "properties": {
+                "boolean_property": {
+                    "type": "boolean",
+                    "x-nullable": true
+                },
+                "enum_property": {
+                    "enum": [
+                        "VALUE1",
+                        "VALUE2"
+                    ],
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "integer_property": {
+                    "type": "integer",
+                    "x-nullable": true
+                },
+                "number_property": {
+                    "type": "number",
+                    "x-nullable": true
+                },
+                "string_property": {
+                    "type": "string",
+                    "x-nullable": true
+                }
+            },
+            "type": "object",
+            "x-model": "xnullable_type_responses"
+        }
+    },
     "info": {
         "description": "This spec is used to have JUnit Tests to check the generated code.",
         "title": "JUnit Tests",
-        "version": "1.0.0"
+        "version": "1.1.0"
     },
     "paths": {
         "/brackets/in/parameter/name": {
@@ -53,9 +444,439 @@
                         "description": "successful operation"
                     }
                 },
-                "summary": "Test brackets in parameter name"
+                "summary": "Test brackets in parameter name",
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/empty_endpoint": {
+            "get": {
+                "operationId": "get_empty_endpoint",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/empty_model"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/format_endpoint/{property_format}": {
+            "get": {
+                "operationId": "get_format_endpoint",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "property_format",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/format_responses"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/nested_additional_properties": {
+            "get": {
+                "operationId": "get_nested_additional_properties",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/nested_additional_properties"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/nested_additional_properties/custom_description": {
+            "get": {
+                "operationId": "get_nested_additional_properties_custom_description",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/nested_additional_properties_custom_description"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/property_array/{value_type}/{size}": {
+            "get": {
+                "operationId": "get_property_array",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "value_type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "size",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/property_array"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/property_map/{value_type}/{size}": {
+            "get": {
+                "operationId": "get_property_map",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "value_type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "size",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/property_map"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/required/type_endpoint": {
+            "get": {
+                "operationId": "get_required_type_endpoint",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/required_type_responses"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/reserved_keywords": {
+            "get": {
+                "operationId": "get_reserved_keywords",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/reserved_keywords"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/top_level_enum": {
+            "get": {
+                "operationId": "get_top_level_enum",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/top_level_enum"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/top_level_map/{size}": {
+            "get": {
+                "operationId": "get_top_level_map",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "size",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/top_level_map"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/type_endpoint/{property_type}": {
+            "get": {
+                "operationId": "get_type_endpoint",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "property_type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/type_responses"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/xnullable/format_endpoint/{property_format}": {
+            "get": {
+                "operationId": "get_xnullable_format_endpoint",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "property_format",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_format_responses"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            }
+        },
+        "/xnullable/nested_additional_properties": {
+            "get": {
+                "operationId": "get_xnullable_nested_additional_properties",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_nested_additional_properties"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            }
+        },
+        "/xnullable/property_array/{value_type}/{size}": {
+            "get": {
+                "operationId": "get_xnullable_property_array",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "value_type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "size",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_property_array"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            }
+        },
+        "/xnullable/property_map/{value_type}/{size}": {
+            "get": {
+                "operationId": "get_xnullable_property_map",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "value_type",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "path",
+                        "name": "size",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_property_map"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            }
+        },
+        "/xnullable/required/property_array/{size}": {
+            "get": {
+                "operationId": "get_xnullable_required_property_array",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "size",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_required_property_array"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            }
+        },
+        "/xnullable/required/property_map/{size}": {
+            "get": {
+                "operationId": "get_xnullable_required_property_map",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "size",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_required_property_map"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            }
+        },
+        "/xnullable/required/type_endpoint/{property_type}": {
+            "get": {
+                "operationId": "get_xnullable_required_type_endpoint",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "property_type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_required_type_responses"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            }
+        },
+        "/xnullable/type_endpoint/{property_type}": {
+            "get": {
+                "operationId": "get_xnullable_type_endpoint",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "property_type",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_type_responses"
+                        }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
             }
         }
     },
+    "produces": [
+        "application/json"
+    ],
     "swagger": "2.0"
 }

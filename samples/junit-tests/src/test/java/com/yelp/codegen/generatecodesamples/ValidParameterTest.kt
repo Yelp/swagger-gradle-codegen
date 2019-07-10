@@ -1,30 +1,23 @@
 package com.yelp.codegen.generatecodesamples
 
-import com.yelp.codegen.generatecodesamples.apis.DefaultApi
-import com.yelp.codegen.generatecodesamples.tools.GeneratedCodeConverters
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.Assert.assertNotNull
+import com.yelp.codegen.generatecodesamples.apis.ResourceApi
+import com.yelp.codegen.generatecodesamples.tools.MockServerApiRule
+import okhttp3.mockwebserver.MockResponse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 
 class ValidParameterTest {
 
     @get:Rule
-    val mockWebServer = MockWebServer()
+    val mockServerRule = MockServerApiRule()
 
     @Test
     fun bracketsInParameterName() {
+        mockServerRule.server.enqueue(MockResponse())
 
-        val retrofit: Retrofit = Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GeneratedCodeConverters.converterFactory())
-                .baseUrl(mockWebServer.url("/"))
-                .build()
-
-        val defaultApi = retrofit.create(DefaultApi::class.java)
+        val defaultApi = mockServerRule.getApi<ResourceApi>()
         val pet = defaultApi.getBracketsInParameterName(
                 page = "testPage",
                 page2 = "testPage2",
@@ -34,9 +27,8 @@ class ValidParameterTest {
                 datePostedStrictlyBefore = "testDatePostedStrictlyBefore"
         ).blockingGet()
 
-        val requestPath = mockWebServer.takeRequest().path
-
-        assertNotNull(pet)
+        val requestPath = mockServerRule.server.takeRequest().path
+        assertNull(pet)
 
         // Let's check if the query parameters are encoded properly.
         assertTrue("page=testPage" in requestPath)
