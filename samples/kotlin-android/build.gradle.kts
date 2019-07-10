@@ -19,12 +19,14 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.41")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.41")
 
-    // Moshi
+    // Moshi + OkHttp + Retrofit
     implementation("com.squareup.moshi:moshi:1.8.0")
     implementation("com.squareup.moshi:moshi-adapters:1.8.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.5.0")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.5.0")
+    implementation("com.squareup.okhttp3:okhttp:3.12.3")
+    implementation("com.squareup.retrofit2:retrofit:2.6.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.6.0")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.6.0")
 
     // Date Support
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
