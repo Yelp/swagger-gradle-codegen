@@ -1,24 +1,329 @@
 package com.yelp.codegen
 
+import io.swagger.codegen.CodegenModel
+import io.swagger.codegen.CodegenProperty
+import io.swagger.models.Info
+import io.swagger.models.Swagger
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class KotlinGeneratorTest {
 
     @Test
-    fun toModelName_doesNotTrimTooMuch() {
-        assert(KotlinGenerator().toModelName("model") == "Model")
-        assert(KotlinGenerator().toModelName("model with space") == "ModelWithSpace")
-        assert(KotlinGenerator().toModelName("model with dot.s") == "ModelWithDotS")
-        assert(KotlinGenerator().toModelName("model with userscore_s") == "ModelWithUserscoreS")
+    fun propertiesAreCorrect() {
+        val generator = KotlinGenerator()
+        generator.additionalProperties()[GROUP_ID] = "com.yelp"
+        generator.additionalProperties()[ARTIFACT_ID] = "test"
+
+        assertEquals("android", generator.platform)
+        assertEquals("kotlin", generator.name)
+        assertEquals("Generates code for a Kotlin Android client.", generator.help)
+        assertEquals("com.yelp.test.models", generator.modelPackage())
+        assertEquals("com.yelp.test.apis", generator.apiPackage())
+    }
+
+    @Test
+    fun listTypeWrapper_withSimpleType() {
+        assertEquals("List<String>", KotlinGenerator().listTypeWrapper("List", "String"))
+    }
+
+    @Test
+    fun listTypeWrapper_withMultipleNesting() {
+        assertEquals("List<List<String>>", KotlinGenerator().listTypeWrapper("List", "List<String>"))
+    }
+
+    @Test
+    fun mapTypeWrapper_withSimpleType() {
+        assertEquals("Map<String, Any>", KotlinGenerator().mapTypeWrapper("Map", "Any"))
+    }
+
+    @Test
+    fun mapTypeWrapper_withMultipleNesting() {
+        assertEquals("HashMap<String, List<Any?>?>", KotlinGenerator().mapTypeWrapper("HashMap", "List<Any?>?"))
+    }
+
+    @Test
+    fun nullableTypeWrapper_withSimpleType() {
+        assertEquals("String?", KotlinGenerator().nullableTypeWrapper("String"))
+    }
+
+    @Test
+    fun escapeUnsafeCharacters_withNothingToEscape() {
+        assertEquals("Nothing", KotlinGenerator().escapeUnsafeCharacters("Nothing"))
+    }
+
+    @Test
+    fun escapeUnsafeCharacters_withAComment() {
+        assertEquals("/_* A risky string *_/", KotlinGenerator().escapeUnsafeCharacters("/* A risky string */"))
+    }
+
+    @Test
+    fun addRequiredImports_withModelwithVars() {
+        val model = CodegenModel()
+        val property = CodegenProperty()
+        property.vendorExtensions = mutableMapOf()
+        model.vars.add(property)
+
+        KotlinGenerator().addRequiredImports(model)
+
+        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
+    }
+
+    @Test
+    fun addRequiredImports_withEnum() {
+        val model = CodegenModel()
+        model.isEnum = true
+
+        KotlinGenerator().addRequiredImports(model)
+
+        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
+    }
+
+    @Test
+    fun addRequiredImports_withXNullable() {
+        val generator = KotlinGenerator()
+        generator.additionalProperties()[GROUP_ID] = "com.yelp"
+        generator.additionalProperties()[ARTIFACT_ID] = "test"
+        val model = CodegenModel()
+        val xNullableProperty = CodegenProperty()
+        xNullableProperty.vendorExtensions = mutableMapOf()
+        xNullableProperty.vendorExtensions[X_NULLABLE] = true
+        model.allVars.add(xNullableProperty)
+
+        generator.addRequiredImports(model)
+
+        assertTrue(model.imports.contains("com.yelp.test.tools.XNullable"))
+    }
+
+    @Test
+    fun postProcessModelProperty() {
+        val generator = KotlinGenerator()
+        val model = CodegenModel()
+        val property = CodegenProperty()
+        model.classname = "com.yelp.test.models.Model"
+        property.isEnum = true
+        property.datatypeWithEnum = null
+
+        generator.postProcessModelProperty(model, property)
+
+        assertNotNull(property.datatypeWithEnum)
+    }
+
+    @Test
+    fun isReservedWord_withReservedWord() {
+        assertTrue(KotlinGenerator().isReservedWord("abstract"))
+    }
+
+    @Test
+    fun isReservedWord_withNotReserved() {
+        assertFalse(KotlinGenerator().isReservedWord("something"))
+    }
+
+    @Test
+    fun escapeReservedWord_withReservedWord() {
+        assertEquals("`abstract`", KotlinGenerator().escapeReservedWord("abstract"))
+    }
+
+    @Test
+    fun escapeReservedWord_withNotReserved() {
+        assertEquals("something", KotlinGenerator().escapeReservedWord("something"))
+    }
+
+    @Test
+    fun escapeQuotationMark() {
+        assertEquals("hello", KotlinGenerator().escapeQuotationMark("\"hello\""))
+    }
+
+    @Test
+    fun modelDocFileFolder() {
+        val generator = KotlinGenerator()
+        generator.additionalProperties()[GROUP_ID] = "com.yelp"
+        generator.additionalProperties()[ARTIFACT_ID] = "test"
+        assertTrue(generator.modelDocFileFolder().endsWith("docs/"))
+    }
+
+    @Test
+    fun modelFileFolder() {
+        val generator = KotlinGenerator()
+        generator.additionalProperties()[GROUP_ID] = "com.yelp"
+        generator.additionalProperties()[ARTIFACT_ID] = "test"
+        assertTrue(generator.modelFileFolder().endsWith("com/yelp/test/models"))
+    }
+
+    @Test
+    fun toEnumVarName_withEmptyValue() {
+        assertEquals("EMPTY", KotlinGenerator().toEnumVarName("", ""))
+    }
+
+    @Test
+    fun toEnumVarName_withUnderscore() {
+        assertEquals("UNDERSCORE", KotlinGenerator().toEnumVarName("_", ""))
+    }
+
+    @Test
+    fun toEnumVarName_withAnEnumValue() {
+        assertEquals("USER", KotlinGenerator().toEnumVarName("user", ""))
+    }
+
+    @Test
+    fun toVarName() {
+        assertEquals("property", KotlinGenerator().toVarName("property"))
+    }
+
+    @Test
+    fun toVarName_withUnderscores() {
+        assertEquals("userProperty", KotlinGenerator().toVarName("user_property"))
+    }
+
+    @Test
+    fun toVarName_withReservedKeywork() {
+        assertEquals("`object`", KotlinGenerator().toVarName("object"))
+    }
+
+    @Test
+    fun toModelImport_withFullyQualifiedImport() {
+        assertEquals("java.util.UUID", KotlinGenerator().toModelImport("java.util.UUID"))
+    }
+
+    @Test
+    fun toModelImport_withNotFullyQualifiedImport() {
+        val generator = KotlinGenerator()
+        generator.additionalProperties()[GROUP_ID] = "com.yelp"
+        generator.additionalProperties()[ARTIFACT_ID] = "test"
+
+        assertEquals("com.yelp.test.models.Model", generator.toModelImport("Model"))
+    }
+
+    @Test
+    fun addImport_withNullType() {
+        val model = CodegenModel()
+        KotlinGenerator().addImport(model, null)
+        assertTrue(model.imports.isEmpty())
+    }
+
+    @Test
+    fun addImport_withBlankType() {
+        val model = CodegenModel()
+        KotlinGenerator().addImport(model, "")
+        assertTrue(model.imports.isEmpty())
+    }
+
+    @Test
+    fun addImport_withDefaultIncludes() {
+        val model = CodegenModel()
+        KotlinGenerator().addImport(model, "kotlin.collections.Map")
+        KotlinGenerator().addImport(model, "kotlin.collections.Set")
+        KotlinGenerator().addImport(model, "kotlin.collections.List")
+        assertTrue(model.imports.isEmpty())
+    }
+
+    @Test
+    fun addImport_withLanguageSpecificPrimitive() {
+        val model = CodegenModel()
+        val generator = KotlinGenerator()
+        generator.languageSpecificPrimitives().clear()
+        generator.languageSpecificPrimitives().add("kotlin.AnotherType")
+        generator.addImport(model, "kotlin.AnotherType")
+        assertTrue(model.imports.isEmpty())
+    }
+
+    @Test
+    fun addImport_withJavaUUID() {
+        val model = CodegenModel()
+        KotlinGenerator().addImport(model, "UUID")
+        assertEquals(1, model.imports.size)
+        assertTrue(model.imports.contains("UUID"))
+    }
+
+    @Test
+    fun toModelName_willCapitalize() {
+        assertEquals("Model", KotlinGenerator().toModelName("model"))
+    }
+
+    @Test
+    fun toModelName_withImportMapping() {
+        val generator = KotlinGenerator()
+        generator.importMapping()["threeten"] = "org.threeten.bp.LocalDate"
+        assertEquals("threeten", generator.toModelName("threeten"))
+    }
+
+    @Test
+    fun toModelName_withSpace() {
+        assertEquals("ModelWithSpace", KotlinGenerator().toModelName("model with space"))
+    }
+
+    @Test
+    fun toModelName_withDots() {
+        assertEquals("ModelWithDotS", KotlinGenerator().toModelName("model with dot.s"))
+    }
+
+    @Test
+    fun toModelName_withUnderscores() {
+        assertEquals("ModelWithUserscoreS", KotlinGenerator().toModelName("model with userscore_s"))
+    }
+
+    @Test
+    fun toModelFilename_withSpace() {
+        assertEquals("ModelWithSpace", KotlinGenerator().toModelFilename("model with space"))
+    }
+
+    @Test
+    fun toModelFilename_withDots() {
+        assertEquals("ModelWithDotS", KotlinGenerator().toModelFilename("model with dot.s"))
+    }
+
+    @Test
+    fun toModelFilename_withUnderscores() {
+        assertEquals("ModelWithUserscoreS", KotlinGenerator().toModelFilename("model with userscore_s"))
+    }
+
+    @Test
+    fun toEnumName_willCapitalize() {
+        val property = CodegenProperty().apply { name = "model" }
+        assertEquals("ModelEnum", KotlinGenerator().toEnumName(property))
+    }
+
+    @Test
+    fun toEnumName_withSpace() {
+        val property = CodegenProperty().apply { name = "model with space" }
+        assertEquals("ModelWithSpaceEnum", KotlinGenerator().toEnumName(property))
+    }
+
+    @Test
+    fun toEnumName_withDots() {
+        val property = CodegenProperty().apply { name = "model with dot.s" }
+        assertEquals("ModelWithDotSEnum", KotlinGenerator().toEnumName(property))
+    }
+
+    @Test
+    fun toEnumName_withUnderscores() {
+        val property = CodegenProperty().apply { name = "model with underscore_s" }
+        assertEquals("ModelWithUnderscoreSEnum", KotlinGenerator().toEnumName(property))
     }
 
     @Test
     fun removeNonNameElementToCamelCase_withSquareBrackets() {
-        assert(KotlinGenerator().removeNonNameElementToCamelCase("type[]") == "type")
-        assert(KotlinGenerator().removeNonNameElementToCamelCase("type[value]") == "typeValue")
-        assert(KotlinGenerator().removeNonNameElementToCamelCase("type[") == "type")
-        assert(KotlinGenerator().removeNonNameElementToCamelCase("type]") == "type")
-        assert(KotlinGenerator().removeNonNameElementToCamelCase("[type]") == "type")
-        assert(KotlinGenerator().removeNonNameElementToCamelCase("[type]key") == "typeKey")
+        assertEquals("type", KotlinGenerator().removeNonNameElementToCamelCase("type[]"))
+        assertEquals("typeValue", KotlinGenerator().removeNonNameElementToCamelCase("type[value]"))
+        assertEquals("type", KotlinGenerator().removeNonNameElementToCamelCase("type["))
+        assertEquals("type", KotlinGenerator().removeNonNameElementToCamelCase("type]"))
+        assertEquals("type", KotlinGenerator().removeNonNameElementToCamelCase("[type]"))
+        assertEquals("typeKey", KotlinGenerator().removeNonNameElementToCamelCase("[type]key"))
+    }
+
+    @Test
+    fun preprocessSwagger() {
+        val generator = KotlinGenerator()
+        generator.additionalProperties()[SPEC_VERSION] = "42.0.0"
+
+        val swagger = Swagger()
+        swagger.info = Info()
+        swagger.info.version = "1.0.0"
+        generator.preprocessSwagger(swagger)
+
+        assertEquals("42.0.0", swagger.info.version)
     }
 }

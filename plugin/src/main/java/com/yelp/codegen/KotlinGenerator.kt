@@ -2,6 +2,7 @@
 
 package com.yelp.codegen
 
+import com.google.common.annotations.VisibleForTesting
 import com.yelp.codegen.utils.KotlinLangUtils
 import com.yelp.codegen.utils.safeSuffix
 import com.yelp.codegen.utils.sanitizeKotlinSpecificNames
@@ -62,7 +63,8 @@ class KotlinGenerator : SharedCodegen() {
      * ABSTRACT FIELDS AND CONFIG FUNCTIONS
      ==================================================== */
 
-    override val platform = "android"
+    @VisibleForTesting
+    public override val platform = "android"
 
     override fun getName() = "kotlin"
 
@@ -131,13 +133,16 @@ class KotlinGenerator : SharedCodegen() {
     /** No testing files are needed on Kotlin Generator */
     override val testingSupportFiles = listOf<SupportingFile>()
 
-    override fun listTypeWrapper(listType: String, innerType: String) =
+    @VisibleForTesting
+    public override fun listTypeWrapper(listType: String, innerType: String) =
             "$listType<$innerType>"
 
-    override fun mapTypeWrapper(mapType: String, innerType: String) =
+    @VisibleForTesting
+    public override fun mapTypeWrapper(mapType: String, innerType: String) =
             "$mapType<${typeMapping["string"]}, $innerType>"
 
-    override fun nullableTypeWrapper(baseType: String) =
+    @VisibleForTesting
+    public override fun nullableTypeWrapper(baseType: String) =
             baseType.safeSuffix("?")
 
     /*
@@ -151,7 +156,8 @@ class KotlinGenerator : SharedCodegen() {
         specialCharReplacements.remove("_")
     }
 
-    override fun isReservedWord(word: String?) = word in reservedWords
+    @VisibleForTesting
+    public override fun isReservedWord(word: String?) = word in reservedWords
 
     // remove " to avoid code injection
     override fun escapeQuotationMark(input: String) = input.replace("\"", "")
@@ -176,7 +182,8 @@ class KotlinGenerator : SharedCodegen() {
         return codegenModel
     }
 
-    private fun addRequiredImports(codegenModel: CodegenModel) {
+    @VisibleForTesting
+    internal fun addRequiredImports(codegenModel: CodegenModel) {
         // If there are any vars, we will mark them with the @Json annotation so we have to make sure to import it
         if (codegenModel.vars.isNotEmpty() || codegenModel.isEnum) {
             codegenModel.imports.add("com.squareup.moshi.Json")
@@ -301,7 +308,8 @@ class KotlinGenerator : SharedCodegen() {
         }
     }
 
-    override fun addImport(model: CodegenModel, type: String?) {
+    @VisibleForTesting
+    public override fun addImport(model: CodegenModel, type: String?) {
         if (type != null && needToImport(type) && type in importMapping) {
             model.imports.add(type)
         }
