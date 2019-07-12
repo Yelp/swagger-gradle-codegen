@@ -50,7 +50,7 @@ pluginBundle {
 
 detekt {
     toolVersion = "1.0.0-RC16"
-    input = files("src/main")
+    input = files("src/")
     config = files("./detekt-config.yml")
     buildUponDefaultConfig = true
     filters = ".*/resources/.*,.*/build/.*"
