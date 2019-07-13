@@ -33,6 +33,7 @@ class KotlinGenerator : SharedCodegen() {
 
     private val apiDocPath = "docs/"
     private val modelDocPath = "docs/"
+    private var basePath: String? = null
 
     private val retrofitImport = mapOf(
             "GET" to "retrofit2.http.GET",
@@ -407,6 +408,11 @@ class KotlinGenerator : SharedCodegen() {
         getHeadersToIgnore().forEach { headerName ->
             ignoreHeaderParameter(headerName, codegenOperation)
         }
+
+        // Let's remove the leading
+        if (!basePath.isNullOrBlank()) {
+            codegenOperation.path = codegenOperation.path.removePrefix("/")
+        }
         return codegenOperation
     }
 
@@ -432,6 +438,7 @@ class KotlinGenerator : SharedCodegen() {
 
         // Override the swagger version with the one provided from command line.
         swagger.info.version = additionalProperties[SPEC_VERSION] as String
+        this.basePath = swagger.basePath
     }
 
     /**
