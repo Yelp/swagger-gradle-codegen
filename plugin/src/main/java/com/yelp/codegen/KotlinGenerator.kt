@@ -33,7 +33,7 @@ class KotlinGenerator : SharedCodegen() {
 
     private val apiDocPath = "docs/"
     private val modelDocPath = "docs/"
-    private var basePath: String? = null
+    internal var basePath: String? = null
 
     private val retrofitImport = mapOf(
             "GET" to "retrofit2.http.GET",
