@@ -1,6 +1,7 @@
 package com.yelp.codegen
 
 import io.swagger.codegen.CodegenModel
+import io.swagger.codegen.CodegenOperation
 import io.swagger.codegen.CodegenProperty
 import io.swagger.models.Info
 import io.swagger.models.Operation
@@ -352,5 +353,15 @@ class KotlinGeneratorTest {
 
         assertEquals("42.0.0", swagger.info.version)
         assertEquals("/v2", generator.basePath)
+    }
+
+    @Test
+    fun processTopLevelHeaders_withNoHeaders() {
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(false, operation.vendorExtensions["hasOperationHeaders"])
     }
 }
