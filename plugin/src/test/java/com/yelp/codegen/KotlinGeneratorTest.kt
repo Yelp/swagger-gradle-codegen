@@ -2,6 +2,7 @@ package com.yelp.codegen
 
 import io.swagger.codegen.CodegenModel
 import io.swagger.codegen.CodegenOperation
+import io.swagger.codegen.CodegenParameter
 import io.swagger.codegen.CodegenProperty
 import io.swagger.models.Info
 import io.swagger.models.Operation
@@ -356,12 +357,87 @@ class KotlinGeneratorTest {
     }
 
     @Test
-    fun processTopLevelHeaders_withNoHeaders() {
+    fun processTopLevelHeaders_withNoHeaders_hasOperationHeadersIsFalse() {
         val generator = KotlinGenerator()
         val operation = CodegenOperation()
+        operation.vendorExtensions = mutableMapOf()
 
         generator.processTopLevelHeaders(operation)
 
         assertEquals(false, operation.vendorExtensions["hasOperationHeaders"])
+    }
+
+    @Test
+    fun processTopLevelHeaders_withOperationId_hasXOperationIdHeader() {
+        val testOperationId = "aTestOperationId"
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        operation.vendorExtensions = mutableMapOf(X_OPERATION_ID to (testOperationId as Any))
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(true, operation.vendorExtensions["hasOperationHeaders"])
+        val headerMap = operation.vendorExtensions["operationHeaders"] as List<*>
+        assertEquals(1, headerMap.size)
+        val firstPair = headerMap[0] as Pair<*, *>
+        assertEquals(HEADER_X_OPERATION_ID, firstPair.first as String)
+        assertEquals(testOperationId, firstPair.second as String)
+    }
+
+    @Test
+    fun processTopLevelHeaders_withConsumes_hasContentTypeHeader() {
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        operation.vendorExtensions = mutableMapOf()
+        operation.consumes = listOf(
+                mapOf("mediaType" to "application/json")
+        )
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(true, operation.vendorExtensions["hasOperationHeaders"])
+        val headerMap = operation.vendorExtensions["operationHeaders"] as List<*>
+        assertEquals(1, headerMap.size)
+        val firstPair = headerMap[0] as Pair<*, *>
+        assertEquals(HEADER_CONTENT_TYPE, firstPair.first as String)
+        assertEquals("application/json", firstPair.second as String)
+    }
+
+    @Test
+    fun processTopLevelHeaders_withFormParams_hasNoContentTypeHeader() {
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        operation.vendorExtensions = mutableMapOf()
+        operation.formParams = listOf(CodegenParameter())
+        operation.consumes = listOf(
+                mapOf("mediaType" to "application/json")
+        )
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(false, operation.vendorExtensions["hasOperationHeaders"])
+    }
+
+    @Test
+    fun processTopLevelHeaders_withConsumesAndOperationId_hasTwoHeaders() {
+        val testOperationId = "aTestOperationId"
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        operation.vendorExtensions = mutableMapOf(X_OPERATION_ID to (testOperationId as Any))
+        operation.consumes = listOf(
+                mapOf("mediaType" to "application/json")
+        )
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(true, operation.vendorExtensions["hasOperationHeaders"])
+        val headerMap = operation.vendorExtensions["operationHeaders"] as List<*>
+        assertEquals(2, headerMap.size)
+        val firstPair = headerMap[0] as Pair<*, *>
+        assertEquals(HEADER_X_OPERATION_ID, firstPair.first as String)
+        assertEquals(testOperationId, firstPair.second as String)
+        val secondPair = headerMap[1] as Pair<*, *>
+        assertEquals(HEADER_CONTENT_TYPE, secondPair.first as String)
+        assertEquals("application/json", secondPair.second as String)
     }
 }
