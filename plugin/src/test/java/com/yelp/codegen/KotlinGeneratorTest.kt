@@ -3,6 +3,7 @@ package com.yelp.codegen
 import io.swagger.codegen.CodegenModel
 import io.swagger.codegen.CodegenProperty
 import io.swagger.models.Info
+import io.swagger.models.Operation
 import io.swagger.models.Swagger
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -315,6 +316,30 @@ class KotlinGeneratorTest {
     }
 
     @Test
+    fun fromOperation_withBasePath_removeLeadingSlash() {
+        val generator = KotlinGenerator()
+        generator.basePath = "/v2"
+        val operation = Operation()
+        val swagger = Swagger()
+
+        val codegenOperation = generator.fromOperation("/helloworld", "GET", operation, mutableMapOf(), swagger)
+
+        assertEquals("helloworld", codegenOperation.path)
+    }
+
+    @Test
+    fun fromOperation_withNoBasePath_leadingSlashIsNotRemoved() {
+        val generator = KotlinGenerator()
+        generator.basePath = null
+        val operation = Operation()
+        val swagger = Swagger()
+
+        val codegenOperation = generator.fromOperation("/helloworld", "GET", operation, mutableMapOf(), swagger)
+
+        assertEquals("/helloworld", codegenOperation.path)
+    }
+
+    @Test
     fun preprocessSwagger() {
         val generator = KotlinGenerator()
         generator.additionalProperties()[SPEC_VERSION] = "42.0.0"
@@ -322,8 +347,10 @@ class KotlinGeneratorTest {
         val swagger = Swagger()
         swagger.info = Info()
         swagger.info.version = "1.0.0"
+        swagger.basePath = "/v2"
         generator.preprocessSwagger(swagger)
 
         assertEquals("42.0.0", swagger.info.version)
+        assertEquals("/v2", generator.basePath)
     }
 }
