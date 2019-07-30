@@ -2,6 +2,17 @@
 
 Here you can find the release notes for this project. Please note that list of releases is available also in the [releases](https://github.com/Yelp/swagger-gradle-codegen/releases) page on Github.
 
+## v1.2.0 (2019-07-31)
+
+* 🎁 Remove leading slash if Swagger Spec are specifying a basePath [#50]
+* 🐛 Fix handling of Top Level Operation Headers [#52]
+* 🧪 Add JUnit Tests for the plugin classes [#48]
+* 🧪 Add Integration tests for response classes [#42]
+* ⚙️ Configure Detekt [#44]
+* ⚙️ Updating all the dependencies [#43]
+
+Thanks to @cortinico for the support with this release.
+
 ## v1.1.1 (2019-07-09)
 
 * 🐛 Specify Java source and target compatibility version to Java8 [#39]
@@ -36,3 +47,9 @@ Thanks to @cortinico, @MatthewTPage, @GuilhE, @macisamuele and @redwarp for the 
 [#30]: https://github.com/Yelp/swagger-gradle-codegen/pull/30/
 [#32]: https://github.com/Yelp/swagger-gradle-codegen/pull/32/
 [#39]: https://github.com/Yelp/swagger-gradle-codegen/pull/39/
+[#42]: https://github.com/Yelp/swagger-gradle-codegen/pull/42/
+[#43]: https://github.com/Yelp/swagger-gradle-codegen/pull/43/
+[#44]: https://github.com/Yelp/swagger-gradle-codegen/pull/44/
+[#48]: https://github.com/Yelp/swagger-gradle-codegen/pull/48/
+[#50]: https://github.com/Yelp/swagger-gradle-codegen/pull/50/
+[#52]: https://github.com/Yelp/swagger-gradle-codegen/pull/52/
