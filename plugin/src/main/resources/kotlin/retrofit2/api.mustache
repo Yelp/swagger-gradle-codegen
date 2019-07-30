@@ -25,19 +25,12 @@ interface {{classname}} {
   {{#isMultipart}}@retrofit2.http.Multipart{{/isMultipart}}{{^isMultipart}}@retrofit2.http.FormUrlEncoded{{/isMultipart}}
   {{/-first}}
   {{/formParams}}
-  {{^formParams}}
-  {{#prioritizedContentTypes}}
-  {{#-first}}
-  @Headers({
-    "Content-Type:{{{mediaType}}}"
-  })
-  {{/-first}}
-  {{/prioritizedContentTypes}}
-  {{/formParams}}
-  @Headers({{#vendorExtensions.x-operation-id}}{{{newline}}}    "X-Operation-ID: {{vendorExtensions.x-operation-id}}"{{/vendorExtensions.x-operation-id}}{{^formParams}}{{#prioritizedContentTypes}}{{#-first}},
-    "Content-Type:{{{mediaType}}}"{{/-first}}{{/prioritizedContentTypes}}{{/formParams}}
-  )
-
+  {{#vendorExtensions.hasOperationHeaders}}
+  @Headers(
+    {{#vendorExtensions.operationHeaders}}"{{first}}: {{second}}"{{^-last}},
+    {{/-last}}{{#-last}}
+  ){{/-last}}{{/vendorExtensions.operationHeaders}}
+  {{/vendorExtensions.hasOperationHeaders}}
   @{{httpMethod}}("{{{path}}}"){{#vendorExtensions.x-unsafe-operation}}{{#isDeprecated}}
       @Deprecated(message = "Deprecated and unsafe to use"){{/isDeprecated}}{{^isDeprecated}}
       @Deprecated(message = "Unsafe to use"){{/isDeprecated}}

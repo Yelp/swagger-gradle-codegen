@@ -32,10 +32,15 @@ const val ARTIFACT_ID = "artifact_id"
 const val GROUP_ID = "group_id"
 const val HEADERS_TO_IGNORE = "headers_to_ignore"
 
+// Vendor Extensions Names
 internal const val X_NULLABLE = "x-nullable"
 internal const val X_MODEL = "x-model"
 internal const val X_OPERATION_ID = "x-operation-id"
 internal const val X_UNSAFE_OPERATION = "x-unsafe-operation"
+
+// Headers Names
+internal const val HEADER_X_OPERATION_ID = "X-Operation-Id"
+internal const val HEADER_CONTENT_TYPE = "Content-Type"
 
 abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
 

@@ -28,7 +28,11 @@ class KotlinGenerator : SharedCodegen() {
          * This number represents the version of the kotlin template
          * Please note that is independent from the Plugin version
          */
-        @JvmStatic val VERSION = 11
+        @JvmStatic val VERSION = 12
+
+        // Vendor Extension use to generate the list of top level headers
+        const val HAS_OPERATION_HEADERS = "hasOperationHeaders"
+        const val OPERATION_HEADERS = "operationHeaders"
     }
 
     private val apiDocPath = "docs/"
@@ -404,7 +408,6 @@ class KotlinGenerator : SharedCodegen() {
 
         codegenOperation.imports.add("retrofit2.http.Headers")
         codegenOperation.vendorExtensions[X_OPERATION_ID] = operation?.operationId
-
         getHeadersToIgnore().forEach { headerName ->
             ignoreHeaderParameter(headerName, codegenOperation)
         }
@@ -413,6 +416,7 @@ class KotlinGenerator : SharedCodegen() {
         if (!basePath.isNullOrBlank()) {
             codegenOperation.path = codegenOperation.path.removePrefix("/")
         }
+        processTopLevelHeaders(codegenOperation)
         return codegenOperation
     }
 
@@ -450,5 +454,31 @@ class KotlinGenerator : SharedCodegen() {
      */
     override fun removeNonNameElementToCamelCase(name: String?): String {
         return super.removeNonNameElementToCamelCase(name, "[-_:;#\\[\\]]")
+    }
+
+    /**
+     *  Function to check if there are Headers that should be applied at the Top level on Retrofit
+     *  with the @Headers annotation. This method will populate the `hasOperationHeaders` and `operationHeaders`
+     *  vendor extensions to support the mustache template.
+     */
+    internal fun processTopLevelHeaders(operation: CodegenOperation) {
+        val topLevelHeaders = mutableListOf<Pair<String, String>>()
+
+        // Send the X-Operation-Id header only if a custom operation ID was set.
+        val operationId = operation.vendorExtensions[X_OPERATION_ID] as String?
+        if (!operationId.isNullOrBlank()) {
+            topLevelHeaders.add(HEADER_X_OPERATION_ID to operationId)
+        }
+
+        // Send the Content-Type header for the first `consume` mediaType specified.
+        val firstContentType = operation.consumes?.firstOrNull()
+        if (operation.formParams.isNullOrEmpty() && firstContentType != null) {
+            firstContentType["mediaType"]?.let {
+                topLevelHeaders.add(HEADER_CONTENT_TYPE to it)
+            }
+        }
+
+        operation.vendorExtensions[HAS_OPERATION_HEADERS] = topLevelHeaders.isNotEmpty()
+        operation.vendorExtensions[OPERATION_HEADERS] = topLevelHeaders
     }
 }
