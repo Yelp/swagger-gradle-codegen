@@ -154,6 +154,8 @@ make install-hooks
 
 This will take care of installing the pre-commit hooks to keep a consistent style in the codebase.
 
+When opening the project in the IDE, first perform a gradle sync.  This will make new tasks available in the gradle panel.  Then run the publishing/publishToMavenLocal task from the gradle panel or `./gradlew publishToMavelLocal` in the terminal.  After that, one more gradle sync is required to get all the subprojects to show up.  
+
 While developing, you can run tests on the plugin using:
 
 ```
