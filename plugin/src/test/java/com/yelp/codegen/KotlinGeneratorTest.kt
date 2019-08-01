@@ -12,6 +12,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.io.File
 
 class KotlinGeneratorTest {
 
@@ -153,7 +154,8 @@ class KotlinGeneratorTest {
         val generator = KotlinGenerator()
         generator.additionalProperties()[GROUP_ID] = "com.yelp"
         generator.additionalProperties()[ARTIFACT_ID] = "test"
-        assertTrue(generator.modelFileFolder().endsWith("com/yelp/test/models"))
+        val sep:String = File.separator
+        assertTrue(generator.modelFileFolder().endsWith("com${sep}yelp${sep}test${sep}models"))
     }
 
     @Test
