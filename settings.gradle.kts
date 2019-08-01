@@ -40,7 +40,16 @@ fun pluginIsInstalled(): Boolean {
             .filterIsInstance<MavenArtifactRepository>()
             .any {
                 try {
-                    URL("${it.url}$path").openStream().use { stream ->
+                    // Gradle portal is exposing a wrong URL:
+                    // https://plugins.gradle.org/m2
+                    // The trailing slash is missing and this is breaking
+                    // URL composition and plugin discovery.
+                    var baseUrlString = it.url.toString()
+                    if (!baseUrlString.endsWith("/")) {
+                        baseUrlString = baseUrlString.plus("/")
+                    }
+                    val baseUrl = URL(baseUrlString)
+                    URL(baseUrl, path).openStream().use { stream ->
                         return@any stream.read() >= 0
                     }
                 } catch (ignored: java.io.IOException) {
