@@ -7,6 +7,7 @@ plugins {
     java
     `kotlin-dsl`
     `maven-publish`
+    jacoco
     kotlin("jvm") version "1.3.41"
     id("com.gradle.plugin-publish") version "0.10.0"
     id("io.gitlab.arturbosch.detekt") version "1.0.0-RC16"
@@ -15,6 +16,10 @@ plugins {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jacoco {
+    toolVersion = "0.8.4"
 }
 
 dependencies {
@@ -54,4 +59,15 @@ detekt {
     config = files("./detekt-config.yml")
     buildUponDefaultConfig = true
     filters = ".*/resources/.*,.*/build/.*"
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        csv.isEnabled = false
+    }
+}
+
+tasks.check {
+    dependsOn(tasks.jacocoTestReport)
 }
