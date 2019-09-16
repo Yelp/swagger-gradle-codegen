@@ -29,3 +29,4 @@ script:
 - ./gradlew generateSwagger
 - ./gradlew assembleDebug
 - ./gradlew check
+- bash <(curl -s https://codecov.io/bash)
