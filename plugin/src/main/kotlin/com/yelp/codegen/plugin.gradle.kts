@@ -7,14 +7,14 @@ val config = extensions.create("generateSwagger", GenerateTaskConfiguration::cla
 
 tasks {
     register<GenerateTask>("generateSwagger") {
-        platform = config.platform
-        packageName = config.packageName
-        specName = config.specName
-        specVersion = config.specVersion
-        inputFile = config.inputFile
-        outputDir = config.outputDir
+        platformProvider = config.platform
+        packageNameProvider = config.packageName
+        specNameProvider = config.specName
+        specVersionProvider = config.specVersion
+        inputFileProvider = config.inputFile
+        outputDirectoryProvider = config.outputDir
 
-        extraFiles = config.extraFiles
+        extraFilesDirectoryProvider = config.extraFiles
         features = config.features
     }
 }
