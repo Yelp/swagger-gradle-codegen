@@ -4,7 +4,10 @@ import com.yelp.codegen.main
 import io.swagger.parser.SwaggerParser
 import java.io.File
 import org.gradle.api.DefaultTask
+import org.gradle.api.file.Directory
+import org.gradle.api.file.RegularFile
 import org.gradle.api.plugins.BasePlugin
+import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.InputFiles
@@ -30,37 +33,37 @@ open class GenerateTask : DefaultTask() {
     @Input
     @Optional
     @Option(option = "platform", description = "Configures the platform that is used for generating the code.")
-    var platform: String? = null
+    var platformProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
 
     @Input
     @Optional
     @Option(option = "packageName", description = "Configures the package name of the resulting code.")
-    var packageName: String? = null
+    var packageNameProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
 
     @Input
     @Optional
     @Option(option = "specName", description = "Configures the name of the service for the Swagger Spec.")
-    var specName: String? = null
+    var specNameProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
 
     @Input
     @Optional
     @Option(option = "specVersion", description = "Configures the version of the Swagger Spec.")
-    var specVersion: String? = null
+    var specVersionProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
 
     @InputFile
     @Option(option = "inputFile", description = "Configures path of the Swagger Spec.")
-    lateinit var inputFile: File
+    var inputFileProvider: Provider<RegularFile> = project.objects.fileProperty()
 
     @OutputDirectory
     @Optional
     @Option(option = "outputDir", description = "Configures path of the Generated code directory.")
-    var outputDir: File? = null
+    var outputDirectoryProvider: Provider<Directory> = project.objects.directoryProperty()
 
     @InputFiles
     @Optional
     @Option(option = "extraFiles",
             description = "Configures path of the extra files directory to be added to the Generated code.")
-    var extraFiles: File? = null
+    var extraFilesDirectoryProvider: Provider<Directory> = project.objects.directoryProperty()
 
     @Nested
     @Option(option = "featureHeaderToRemove", description = "")
@@ -68,6 +71,13 @@ open class GenerateTask : DefaultTask() {
 
     @TaskAction
     fun swaggerGenerate() {
+        val platform = platformProvider.orNull
+        val specName = specNameProvider.orNull
+        val specVersion = specVersionProvider.orNull
+        var packageName = packageNameProvider.orNull
+
+        val inputFile = inputFileProvider.get().asFile
+        val outputDirectory = outputDirectoryProvider.orNull?.asFile
 
         if (specVersion == null) {
             readVersionFromSpecfile(inputFile)
@@ -83,13 +93,13 @@ open class GenerateTask : DefaultTask() {
             specName ${'\t'} ${specName ?: "[ DEFAULT ] $DEFAULT_NAME"}
             specVers ${'\t'} ${specVersion ?: "[ DEFAULT ] $DEFAULT_VERSION"}
             input ${"\t\t"} $inputFile
-            output ${"\t\t"} ${outputDir ?: "[ DEFAULT ] $defaultOutputDir"}
+            output ${"\t\t"} ${outputDirectory ?: "[ DEFAULT ] $defaultOutputDir"}
             groupId ${'\t'} ${packageName ?: "[ DEFAULT ] default"}
             artifactId ${'\t'} ${packageName ?: "[ DEFAULT ] com.codegen"}
             features ${'\t'} ${features?.headersToRemove?.joinToString(", ")?.ifEmpty { "[  EMPTY  ]" }}
         """.trimIndent())
 
-        val packageName = packageName ?: DEFAULT_PACKAGE
+        packageName = packageNameProvider.orNull ?: DEFAULT_PACKAGE
 
         val params = mutableListOf<String>()
         params.add("-p")
@@ -105,7 +115,7 @@ open class GenerateTask : DefaultTask() {
         params.add("-i")
         params.add(inputFile.toString())
         params.add("-o")
-        params.add((outputDir ?: defaultOutputDir).toString())
+        params.add((outputDirectory ?: defaultOutputDir).toString())
 
         if (true == features?.headersToRemove?.isNotEmpty()) {
             params.add("-ignoreheaders")
@@ -116,8 +126,8 @@ open class GenerateTask : DefaultTask() {
         main(params.toTypedArray())
 
         // Copy over the extra files.
-        val source = extraFiles
-        val destin = outputDir
+        val source = extraFilesDirectoryProvider.orNull?.asFile
+        val destin = outputDirectory
         if (source != null && destin != null) {
             source.copyRecursively(destin, overwrite = true)
         }
@@ -125,14 +135,15 @@ open class GenerateTask : DefaultTask() {
 
     private fun readVersionFromSpecfile(specFile: File) {
         val swaggerSpec = SwaggerParser().readWithInfo(specFile.absolutePath, listOf(), false).swagger
-        specVersion = when (val version = swaggerSpec.info.version) {
+
+        this.specVersionProvider = when (val version = swaggerSpec.info.version) {
             is String -> {
                 println("Successfully read version from Swagger Spec file: $version")
-                version
+                specVersionProvider.map { version }
             }
             else -> {
                 println("Issue in reading version from Swagger Spec file. Falling back to $DEFAULT_VERSION")
-                DEFAULT_VERSION
+                specVersionProvider.map { DEFAULT_VERSION }
             }
         }
     }

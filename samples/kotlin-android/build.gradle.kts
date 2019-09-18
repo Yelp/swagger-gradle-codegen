@@ -37,14 +37,14 @@ dependencies {
 }
 
 generateSwagger {
-    platform = "kotlin"
-    packageName = "com.yelp.codegen.samples"
-    specName = "sample_specs"
-    specVersion = "1.0.0"
-    inputFile = file("../sample_specs.json")
-    outputDir = file("./src/main/java/")
+    platform.set("kotlin")
+    packageName.set("com.yelp.codegen.samples")
+    specName.set("sample_specs")
+    specVersion.set("1.0.0")
+    inputFile.set(file("../sample_specs.json"))
+    outputDir.set(project.layout.buildDirectory.dir("./src/main/java/"))
     features {
-        headersToRemove = arrayOf("Accept-Language")
+        headersToRemove = ["Accept-Language"]
     }
 }
 

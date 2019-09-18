@@ -41,10 +41,10 @@ plugins {
 }
 
 generateSwagger {
-    platform = "kotlin"
-    packageName = "com.yelp.codegen.samples"
-    inputFile = file("./sample_specs.json")
-    outputDir = file("./src/main/java/")
+    platform.set("kotlin")
+    packageName.set("com.yelp.codegen.samples")
+    inputFile.set(file("./sample_specs.json"))
+    outputDir.set(project.layout.buildDirectory.dir("./src/main/java/"))
 }
 ```
 
@@ -100,14 +100,14 @@ To configure the generator, please use the `generateSwagger { }` block. Here an 
 
 ```kotlin
 generateSwagger {
-    platform = "kotlin"
-    packageName = "com.yelp.codegen.integrations"
-    specName = "integration"
-    specVersion = "1.0.0"
-    inputFile = file("../sample_specs.json")
-    outputDir = file("./src/main/java/")
+    platform.set("kotlin")
+    packageName.set("com.yelp.codegen.integrations")
+    specName.set("integration")
+    specVersion.set("1.0.0")
+    inputFile.set(file("../sample_specs.json"))
+    outputDir.set(project.layout.buildDirectory.dir("./src/main/java/"))
     features {
-        headersToRemove = ["Accept-Language"]
+        headersToRemove.add("Accept-Language")
     }
 }
 ```

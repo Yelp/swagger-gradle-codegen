@@ -7,5 +7,5 @@ open class FeatureConfiguration {
 
     @Input
     @Optional
-    var headersToRemove: Array<String> = arrayOf()
+    var headersToRemove: Array<String> = emptyArray()
 }
