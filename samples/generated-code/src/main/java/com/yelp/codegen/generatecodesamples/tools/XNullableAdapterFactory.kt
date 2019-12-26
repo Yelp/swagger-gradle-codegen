@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
 import java.lang.reflect.Type
 
-internal class XNullableAdapterFactory : JsonAdapter.Factory {
+class XNullableAdapterFactory : JsonAdapter.Factory {
     override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? {
         if (annotations.any { it is XNullable }) {
             return object : JsonAdapter<Any>() {

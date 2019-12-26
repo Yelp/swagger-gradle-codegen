@@ -10,8 +10,8 @@ import com.squareup.moshi.Json
 
 /**
  * Represents a specific Pet in the store
- * @property id Unique ID of this Pet
  * @property category Optional category of the pet
+ * @property id Unique ID of this Pet
  * @property name Name of this specific pet
  * @property photoUrls Photo URls for this Pet on the bucket
  * @property tags Pet status in the store
@@ -19,7 +19,7 @@ import com.squareup.moshi.Json
 data class Pet(
     @Json(name = "name") @field:Json(name = "name") var name: String,
     @Json(name = "photoUrls") @field:Json(name = "photoUrls") var photoUrls: List<String>,
-    @Json(name = "id") @field:Json(name = "id") var id: Long? = null,
     @Json(name = "category") @field:Json(name = "category") var category: Category? = null,
+    @Json(name = "id") @field:Json(name = "id") var id: Long? = null,
     @Json(name = "tags") @field:Json(name = "tags") var tags: List<Tag>? = null
 )
