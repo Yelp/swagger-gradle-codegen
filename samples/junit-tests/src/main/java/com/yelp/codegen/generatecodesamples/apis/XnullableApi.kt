@@ -27,7 +27,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_format_endpoint"
     )
-
     @GET("/xnullable/format_endpoint/{property_format}")
     fun getXnullableFormatEndpoint(
         @retrofit2.http.Path("property_format") propertyFormat: String
@@ -39,7 +38,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_nested_additional_properties"
     )
-
     @GET("/xnullable/nested_additional_properties")
     fun getXnullableNestedAdditionalProperties(): Single<XnullableNestedAdditionalProperties>
 
@@ -51,7 +49,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_property_array"
     )
-
     @GET("/xnullable/property_array/{value_type}/{size}")
     fun getXnullablePropertyArray(
         @retrofit2.http.Path("value_type") valueType: String,
@@ -66,7 +63,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_property_map"
     )
-
     @GET("/xnullable/property_map/{value_type}/{size}")
     fun getXnullablePropertyMap(
         @retrofit2.http.Path("value_type") valueType: String,
@@ -80,7 +76,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_required_property_array"
     )
-
     @GET("/xnullable/required/property_array/{size}")
     fun getXnullableRequiredPropertyArray(
         @retrofit2.http.Path("size") size: String
@@ -93,7 +88,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_required_property_map"
     )
-
     @GET("/xnullable/required/property_map/{size}")
     fun getXnullableRequiredPropertyMap(
         @retrofit2.http.Path("size") size: String
@@ -106,7 +100,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_required_type_endpoint"
     )
-
     @GET("/xnullable/required/type_endpoint/{property_type}")
     fun getXnullableRequiredTypeEndpoint(
         @retrofit2.http.Path("property_type") propertyType: String
@@ -119,7 +112,6 @@ interface XnullableApi {
     @Headers(
             "X-Operation-ID: get_xnullable_type_endpoint"
     )
-
     @GET("/xnullable/type_endpoint/{property_type}")
     fun getXnullableTypeEndpoint(
         @retrofit2.http.Path("property_type") propertyType: String

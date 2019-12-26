@@ -399,59 +399,6 @@
         "version": "1.1.0"
     },
     "paths": {
-        "/brackets/in/parameter/name": {
-            "get": {
-                "description": "Make sure that brackets in parameter name are treated properly",
-                "operationId": "getBracketsInParameterName",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "page",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "page[]",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "datePosted[before]",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "datePosted[strictly_before]",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "datePosted[after]",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "datePosted[strictly_after]",
-                        "required": false,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                },
-                "summary": "Test brackets in parameter name",
-                "tags": [
-                    "resource"
-                ]
-            }
-        },
         "/empty_endpoint": {
             "get": {
                 "operationId": "get_empty_endpoint",
@@ -616,6 +563,53 @@
                         }
                     }
                 },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
+        "/symbols/in/parameter/name": {
+            "get": {
+                "description": "Make sure that symbols in parameter name are treated properly",
+                "operationId": "getSymbolsInParameterName",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "parameter",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "brackets[]",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "brackets[withText]",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "dot.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "dot.withText",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                },
+                "summary": "Test symbols in parameter name",
                 "tags": [
                     "resource"
                 ]
