@@ -453,7 +453,7 @@ class KotlinGenerator : SharedCodegen() {
      * parameter name generation.
      */
     override fun removeNonNameElementToCamelCase(name: String?): String {
-        return super.removeNonNameElementToCamelCase(name, "[-_:;#\\[\\]]")
+        return super.removeNonNameElementToCamelCase(name, "[-_:;.#\\[\\]]")
     }
 
     /**

@@ -39,7 +39,7 @@ internal const val X_OPERATION_ID = "x-operation-id"
 internal const val X_UNSAFE_OPERATION = "x-unsafe-operation"
 
 // Headers Names
-internal const val HEADER_X_OPERATION_ID = "X-Operation-Id"
+internal const val HEADER_X_OPERATION_ID = "X-Operation-ID"
 internal const val HEADER_CONTENT_TYPE = "Content-Type"
 
 abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
