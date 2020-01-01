@@ -427,6 +427,24 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     }
 
     /**
+     * Resolve the inner type from a complex type. E.g:
+     * List<List<Int>> ---> Int
+     * Map<String, Map<String, List<Object>>> ---> Object
+     */
+    internal tailrec fun resolveInnerType(
+        baseType: String
+    ): String {
+        if (isListTypeWrapped(baseType)) {
+            return resolveInnerType(listTypeUnwrapper(baseType))
+        }
+        if (isMapTypeWrapped(baseType)) {
+            return resolveInnerType(mapTypeUnwrapper(baseType))
+        }
+
+        return baseType
+    }
+
+    /**
      * Determine if the swagger operation consumes mutipart content.
      */
     private fun isMultipartOperation(operation: Operation?): Boolean {
@@ -469,6 +487,21 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     protected abstract fun listTypeWrapper(listType: String, innerType: String): String
 
     /**
+     * Abstract function to unwrap a JSON Array type.
+     * @param baseType A JSON list type (e.g. `List<String>`)
+     * @return The unwrapped inner type (e.g. `String`).
+     * @see isListTypeWrapped
+     */
+    protected abstract fun listTypeUnwrapper(baseType: String): String
+
+    /**
+     * Abstract function to check if a type is a JSON Array type.
+     * @param baseType A JSON type
+     * @return True if the type is a JSON Array type and can be safely unwrapped with [listTypeUnwrapper]
+     */
+    protected abstract fun isListTypeWrapped(baseType: String): Boolean
+
+    /**
      * Abstract function to create a type for a JSON Object (A Map from String to values).
      * Please note that in JSON Maps have only Strings as keys.
      *
@@ -477,6 +510,21 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * @return The composed map type (e.g. `Map<String, Any?>`, `[String: Integer]`, etc.
      */
     protected abstract fun mapTypeWrapper(mapType: String, innerType: String): String
+
+    /**
+     * Abstract function to unwrap a JSON Map type.
+     * @param baseType A JSON map type (e.g. `Map<String, Item>`)
+     * @return The unwrapped inner type (e.g. `Item`).
+     * @see isMapTypeWrapped
+     */
+    protected abstract fun mapTypeUnwrapper(baseType: String): String
+
+    /**
+     * Abstract function to check if a type is a JSON Map type.
+     * @param baseType A JSON type
+     * @return True if the type is a JSON Map type and can be safely unwrapped with [mapTypeUnwrapper]
+     */
+    protected abstract fun isMapTypeWrapped(baseType: String): Boolean
 
     /**
      * Abstract function to create a type from a Nullable type.

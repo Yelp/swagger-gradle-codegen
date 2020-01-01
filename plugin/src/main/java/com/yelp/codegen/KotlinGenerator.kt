@@ -142,9 +142,25 @@ class KotlinGenerator : SharedCodegen() {
     public override fun listTypeWrapper(listType: String, innerType: String) =
             "$listType<$innerType>"
 
+    public override fun listTypeUnwrapper(baseType: String) = baseType
+            .replace(" ", "")
+            .removeSuffix(">")
+            .removePrefix("${typeMapping["list"]}<")
+
+    public override fun isListTypeWrapped(baseType: String) =
+            baseType.endsWith('>') && baseType.startsWith("${typeMapping["list"]}<")
+
     @VisibleForTesting
     public override fun mapTypeWrapper(mapType: String, innerType: String) =
             "$mapType<${typeMapping["string"]}, $innerType>"
+
+    public override fun mapTypeUnwrapper(baseType: String) = baseType
+            .replace(" ", "")
+            .removeSuffix(">")
+            .removePrefix("${typeMapping["map"]}<${typeMapping["string"]},")
+
+    public override fun isMapTypeWrapped(baseType: String) =
+            baseType.endsWith('>') && baseType.startsWith("${typeMapping["map"]}<${typeMapping["string"]},")
 
     @VisibleForTesting
     public override fun nullableTypeWrapper(baseType: String) =
@@ -407,6 +423,7 @@ class KotlinGenerator : SharedCodegen() {
         }
 
         codegenOperation.imports.add("retrofit2.http.Headers")
+
         codegenOperation.vendorExtensions[X_OPERATION_ID] = operation?.operationId
         getHeadersToIgnore().forEach { headerName ->
             ignoreHeaderParameter(headerName, codegenOperation)
@@ -417,6 +434,17 @@ class KotlinGenerator : SharedCodegen() {
             codegenOperation.path = codegenOperation.path.removePrefix("/")
         }
         processTopLevelHeaders(codegenOperation)
+
+        // Let's make sure we import all the types, also the inner ones (see #76).
+        codegenOperation.responses.forEach {
+            if (it.dataType != null) {
+                val innerType = resolveInnerType(it.dataType)
+                if (innerType !in codegenOperation.imports) {
+                    codegenOperation.imports.add(innerType)
+                }
+            }
+        }
+
         return codegenOperation
     }
 

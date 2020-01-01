@@ -624,6 +624,28 @@
                 ]
             }
         },
+        "/top_level_enum/nested": {
+            "get": {
+                "operationId": "get_top_level_enum_nested",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "additionalProperties": {
+                                "additionalProperties": {
+                                    "$ref": "#/definitions/top_level_enum"
+                                },
+                                "type": "object"
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "tags": [
+                    "resource"
+                ]
+            }
+        },
         "/top_level_map/{size}": {
             "get": {
                 "operationId": "get_top_level_map",

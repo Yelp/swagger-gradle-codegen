@@ -142,6 +142,15 @@ interface ResourceApi {
 
     /**
      * The endpoint is owned by junittests service owner
+     */
+    @Headers(
+            "X-Operation-ID: get_top_level_enum_nested"
+    )
+    @GET("/top_level_enum/nested")
+    fun getTopLevelEnumNested(): Single<Map<String, Map<String, TopLevelEnum>>>
+
+    /**
+     * The endpoint is owned by junittests service owner
      * @param size (required)
      */
     @Headers(
