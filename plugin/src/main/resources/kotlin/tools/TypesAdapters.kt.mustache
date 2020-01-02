@@ -59,8 +59,8 @@ internal class LocalDateAdapter : XNullableJsonAdapter<LocalDate>() {
 
     override fun fromNonNullString(nextString: String) : LocalDate = LocalDate.parse(nextString, formatter)
 
-    override fun toJson(writer: JsonWriter?, value: LocalDate?) {
-        value?.let { writer?.value(it.format(formatter)) }
+    override fun toJson(writer: JsonWriter, value: LocalDate?) {
+        value?.let { writer.value(it.format(formatter)) }
     }
 }
 
@@ -76,15 +76,15 @@ internal class ZonedDateTimeAdapter : XNullableJsonAdapter<ZonedDateTime>() {
         }
     }
 
-    override fun toJson(writer: JsonWriter?, value: ZonedDateTime?) {
-        value?.let { writer?.value(it.format(formatter)) }
+    override fun toJson(writer: JsonWriter, value: ZonedDateTime?) {
+        value?.let { writer.value(it.format(formatter)) }
     }
 }
 
 internal class BigDecimalJsonAdapter : XNullableJsonAdapter<BigDecimal>() {
     override fun fromNonNullString(nextString: String) = BigDecimal(nextString)
 
-    override fun toJson(writer: JsonWriter?, value: BigDecimal?) {
-        value?.let { writer?.value(it) }
+    override fun toJson(writer: JsonWriter, value: BigDecimal?) {
+        value?.let { writer.value(it) }
     }
 }
