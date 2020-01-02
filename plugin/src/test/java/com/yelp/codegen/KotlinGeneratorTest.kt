@@ -30,31 +30,6 @@ class KotlinGeneratorTest {
     }
 
     @Test
-    fun listTypeWrapper_withSimpleType() {
-        assertEquals("List<String>", KotlinGenerator().listTypeWrapper("List", "String"))
-    }
-
-    @Test
-    fun listTypeWrapper_withMultipleNesting() {
-        assertEquals("List<List<String>>", KotlinGenerator().listTypeWrapper("List", "List<String>"))
-    }
-
-    @Test
-    fun mapTypeWrapper_withSimpleType() {
-        assertEquals("Map<String, Any>", KotlinGenerator().mapTypeWrapper("Map", "Any"))
-    }
-
-    @Test
-    fun mapTypeWrapper_withMultipleNesting() {
-        assertEquals("HashMap<String, List<Any?>?>", KotlinGenerator().mapTypeWrapper("HashMap", "List<Any?>?"))
-    }
-
-    @Test
-    fun nullableTypeWrapper_withSimpleType() {
-        assertEquals("String?", KotlinGenerator().nullableTypeWrapper("String"))
-    }
-
-    @Test
     fun escapeUnsafeCharacters_withNothingToEscape() {
         assertEquals("Nothing", KotlinGenerator().escapeUnsafeCharacters("Nothing"))
     }
@@ -154,7 +129,7 @@ class KotlinGeneratorTest {
         val generator = KotlinGenerator()
         generator.additionalProperties()[GROUP_ID] = "com.yelp"
         generator.additionalProperties()[ARTIFACT_ID] = "test"
-        val sep:String = File.separator
+        val sep: String = File.separator
         assertTrue(generator.modelFileFolder().endsWith("com${sep}yelp${sep}test${sep}models"))
     }
 
