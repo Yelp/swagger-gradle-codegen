@@ -22,14 +22,14 @@ open class KotlinCoroutineGenerator : KotlinGenerator() {
      * than just plain `fun`.
      */
     override fun fromOperation(
-            path: String?,
-            httpMethod: String?,
-            operation: Operation?,
-            definitions: MutableMap<String, Model>?,
-            swagger: Swagger?
+        path: String?,
+        httpMethod: String?,
+        operation: Operation?,
+        definitions: MutableMap<String, Model>?,
+        swagger: Swagger?
     ): CodegenOperation {
         val codegenOperation = super.fromOperation(path, httpMethod, operation, definitions, swagger)
-        codegenOperation.vendorExtensions[X_FUNCTION_QUALIFIER] = "suspend"
+        codegenOperation.vendorExtensions[X_FUNCTION_QUALIFIERS] = "suspend"
         return codegenOperation
     }
 }
