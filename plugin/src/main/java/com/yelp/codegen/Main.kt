@@ -69,6 +69,7 @@ fun main(args: Array<String>) {
     configurator.outputDir = parsed['o']
 
     configurator.addAdditionalProperty(LANGUAGE, parsed['p'])
+
     configurator.addAdditionalProperty(SPEC_VERSION, specVersion)
     configurator.addAdditionalProperty(SERVICE_NAME, parsed['s'])
     configurator.addAdditionalProperty(GROUP_ID, parsed['g'])

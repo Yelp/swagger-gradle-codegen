@@ -23,6 +23,7 @@ include(":plugin")
 if (pluginIsInstalled()) {
     include(":samples:junit-tests",
             ":samples:kotlin-android",
+            ":samples:kotlin-coroutines",
             ":samples:groovy-android",
             ":samples:generated-code")
 }

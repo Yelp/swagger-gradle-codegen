@@ -68,6 +68,7 @@ Here the list of the supported platforms:
 | Platform | Description                                |
 | -------- | ------------------------------------------ |
 | `kotlin` | Generates Kotlin code and Retrofit interfaces, with RxJava2 for async calls, Moshi for serialization and ThreeTenABP for Data management |
+| `kotlin-coroutines` | Generates Kotlin code and Retrofit interfaces, with [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) for async calls, Moshi for serialization and ThreeTenABP for Data management |
 
 We're looking forward to more platforms to support in the future. Contributions are more than welcome.
 
@@ -80,6 +81,8 @@ You can find some **examples** in this repository to help you set up your genera
 * [samples/groovy-android](/samples/groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
 
 * [samples/kotlin-android](/samples/kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
+
+* [samples/kotlin-coroutines](/samples/kotlin-coroutines) Contains an example of an Android Library configured to output Kotlin Coroutines capable code.
 
 * [samples/junit-tests](/samples/junit-tests) This sample contains specs used to test edge cases and scenarios that have been reported in the issue tracker or that are worth testing.
 

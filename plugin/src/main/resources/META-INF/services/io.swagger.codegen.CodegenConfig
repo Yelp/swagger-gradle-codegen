@@ -1,1 +1,2 @@
 com.yelp.codegen.KotlinGenerator
+com.yelp.codegen.KotlinCoroutineGenerator
