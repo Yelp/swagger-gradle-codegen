@@ -10,7 +10,7 @@ plugins {
     jacoco
     kotlin("jvm") version "1.3.61"
     id("com.gradle.plugin-publish") version "0.10.0"
-    id("io.gitlab.arturbosch.detekt") version "1.0.1"
+    id("io.gitlab.arturbosch.detekt") version "1.4.0"
 }
 
 java {
@@ -54,11 +54,9 @@ pluginBundle {
 }
 
 detekt {
-    toolVersion = "1.0.1"
+    toolVersion = "1.4.0"
     input = files("src/")
-    config = files("./detekt-config.yml")
-    buildUponDefaultConfig = true
-    filters = ".*/resources/.*,.*/build/.*"
+    config = rootProject.files("./config/detekt/detekt.yml")
 }
 
 tasks.jacocoTestReport {

@@ -13,7 +13,7 @@ class EmptyEndpointTest {
     val mockServerRule = MockServerApiRule()
 
     @Test
-    fun emptyEndpointTest() {
+    fun emptyEndpointTest_withEmptyBody() {
         mockServerRule.server.enqueue(MockResponse().setBody("{}"))
 
         val returned = mockServerRule.getApi<ResourceApi>().getEmptyEndpoint().blockingGet()
