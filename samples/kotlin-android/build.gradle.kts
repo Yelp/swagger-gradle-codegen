@@ -24,9 +24,9 @@ dependencies {
     implementation("com.squareup.moshi:moshi-adapters:1.9.2")
     implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
     implementation("com.squareup.okhttp3:okhttp:3.12.3")
-    implementation("com.squareup.retrofit2:retrofit:2.6.1")
-    implementation("com.squareup.retrofit2:converter-moshi:2.6.1")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.6.1")
+    implementation("com.squareup.retrofit2:retrofit:2.7.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.7.1")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
 
     // Date Support
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
