@@ -1,6 +1,6 @@
 plugins {
     id("com.android.library") version "3.5.0"
-    kotlin("android") version "1.3.50"
+    kotlin("android") version "1.3.61"
     id("com.yelp.codegen.plugin") version "1.2.0"
 }
 
@@ -16,8 +16,8 @@ android {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
 
     // Moshi + OkHttp + Retrofit
     implementation("com.squareup.moshi:moshi:1.8.0")
