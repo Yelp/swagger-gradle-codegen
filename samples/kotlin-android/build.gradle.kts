@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library") version "3.5.0"
-    kotlin("android") version "1.3.50"
+    id("com.android.library") version "3.5.3"
+    kotlin("android") version "1.3.61"
     id("com.yelp.codegen.plugin") version "1.2.0"
 }
 
@@ -16,23 +16,23 @@ android {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.50")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.50")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.61")
 
     // Moshi + OkHttp + Retrofit
-    implementation("com.squareup.moshi:moshi:1.8.0")
-    implementation("com.squareup.moshi:moshi-adapters:1.8.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.8.0")
+    implementation("com.squareup.moshi:moshi:1.9.2")
+    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
+    implementation("com.squareup.moshi:moshi-kotlin:1.9.2")
     implementation("com.squareup.okhttp3:okhttp:3.12.3")
-    implementation("com.squareup.retrofit2:retrofit:2.6.1")
-    implementation("com.squareup.retrofit2:converter-moshi:2.6.1")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.6.1")
+    implementation("com.squareup.retrofit2:retrofit:2.7.1")
+    implementation("com.squareup.retrofit2:converter-moshi:2.7.1")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
 
     // Date Support
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.2.2")
 
     // RxJava
-    implementation("io.reactivex.rxjava2:rxjava:2.2.11")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.17")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 }
 
