@@ -2,7 +2,7 @@
 
 Here you can find the release notes for this project. Please note that list of releases is available also in the [releases](https://github.com/Yelp/swagger-gradle-codegen/releases) page on Github.
 
-## v1.3.0 (2020-01-20)
+## v1.3.0 (2020-01-21)
 
 * 🎁 Kotlin Coroutines Support [#29]
 * 🐛 Allow dot in parameter names for operations [#77]
@@ -11,6 +11,7 @@ Here you can find the release notes for this project. Please note that list of r
 * 🐛 Fix Gradle Portal URL in settings.gradle.kts breaking Gradle syncs [#59]
 * 🐛 Issue 55 failing windows tests [#56]
 * ⚙️ Update multiple dependencies [#64]
+* ⚙️ Update several dependencies [#80]
 * ⚙️ Gradle to 5.6.2 [#67]
 * ⚙️ Add JaCoCo for CodeCov [#66]
 
@@ -76,3 +77,4 @@ Thanks to @cortinico, @MatthewTPage, @GuilhE, @macisamuele and @redwarp for the 
 [#77]: https://github.com/Yelp/swagger-gradle-codegen/pull/77/
 [#78]: https://github.com/Yelp/swagger-gradle-codegen/pull/78/
 [#79]: https://github.com/Yelp/swagger-gradle-codegen/pull/79/
+[#80]: https://github.com/Yelp/swagger-gradle-codegen/pull/80/
