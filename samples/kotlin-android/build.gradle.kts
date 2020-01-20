@@ -29,7 +29,7 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
 
     // Date Support
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.1")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.2.2")
 
     // RxJava
     implementation("io.reactivex.rxjava2:rxjava:2.2.11")
