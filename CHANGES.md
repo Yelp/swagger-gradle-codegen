@@ -2,6 +2,21 @@
 
 Here you can find the release notes for this project. Please note that list of releases is available also in the [releases](https://github.com/Yelp/swagger-gradle-codegen/releases) page on Github.
 
+## v1.3.0 (2020-01-21)
+
+* 🎁 Kotlin Coroutines Support [#29]
+* 🐛 Allow dot in parameter names for operations [#77]
+* 🐛 Fix Nullability warning in JsonAdapters [#78]
+* 🐛 Fix missing inner enum import on operations [#79]
+* 🐛 Fix Gradle Portal URL in settings.gradle.kts breaking Gradle syncs [#59]
+* 🐛 Issue 55 failing windows tests [#56]
+* ⚙️ Update multiple dependencies [#64]
+* ⚙️ Update several dependencies [#80]
+* ⚙️ Gradle to 5.6.2 [#67]
+* ⚙️ Add JaCoCo for CodeCov [#66]
+
+Thanks to @cortinico @doug-precocity @redwarp @macisamuele @filipemp for the support with this release
+
 ## v1.2.0 (2019-07-31)
 
 * 🎁 Remove leading slash if Swagger Spec are specifying a basePath [#50]
@@ -44,6 +59,7 @@ Thanks to @cortinico, @MatthewTPage, @GuilhE, @macisamuele and @redwarp for the 
 [#22]: https://github.com/Yelp/swagger-gradle-codegen/pull/22/
 [#23]: https://github.com/Yelp/swagger-gradle-codegen/pull/23/
 [#26]: https://github.com/Yelp/swagger-gradle-codegen/pull/26/
+[#29]: https://github.com/Yelp/swagger-gradle-codegen/pull/29/
 [#30]: https://github.com/Yelp/swagger-gradle-codegen/pull/30/
 [#32]: https://github.com/Yelp/swagger-gradle-codegen/pull/32/
 [#39]: https://github.com/Yelp/swagger-gradle-codegen/pull/39/
@@ -53,3 +69,12 @@ Thanks to @cortinico, @MatthewTPage, @GuilhE, @macisamuele and @redwarp for the 
 [#48]: https://github.com/Yelp/swagger-gradle-codegen/pull/48/
 [#50]: https://github.com/Yelp/swagger-gradle-codegen/pull/50/
 [#52]: https://github.com/Yelp/swagger-gradle-codegen/pull/52/
+[#56]: https://github.com/Yelp/swagger-gradle-codegen/pull/56/
+[#59]: https://github.com/Yelp/swagger-gradle-codegen/pull/59/
+[#64]: https://github.com/Yelp/swagger-gradle-codegen/pull/64/
+[#66]: https://github.com/Yelp/swagger-gradle-codegen/pull/66/
+[#67]: https://github.com/Yelp/swagger-gradle-codegen/pull/67/
+[#77]: https://github.com/Yelp/swagger-gradle-codegen/pull/77/
+[#78]: https://github.com/Yelp/swagger-gradle-codegen/pull/78/
+[#79]: https://github.com/Yelp/swagger-gradle-codegen/pull/79/
+[#80]: https://github.com/Yelp/swagger-gradle-codegen/pull/80/
