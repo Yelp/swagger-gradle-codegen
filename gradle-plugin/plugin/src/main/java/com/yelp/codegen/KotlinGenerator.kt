@@ -125,6 +125,8 @@ open class KotlinGenerator : SharedCodegen() {
                 "CollectionFormats.kt",
                 "EnumToValueConverterFactory.kt",
                 "GeneratedCodeConverters.kt",
+                "OptimisticHashCode.kt",
+                "PolymorphicAdapterFactory.kt",
                 "TypesAdapters.kt",
                 "WrapperConverterFactory.kt",
                 "XNullable.kt",
