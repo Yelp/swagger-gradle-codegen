@@ -217,6 +217,11 @@ open class KotlinGenerator : SharedCodegen() {
                 break
             }
         }
+
+        if (!codegenModel.isAlias) {
+            // Import JsonClass annotation to enable Adapters generations via Kotlin Annotation Processor
+            codegenModel.imports.add("com.squareup.moshi.JsonClass")
+        }
     }
 
     override fun postProcessModelProperty(model: CodegenModel, property: CodegenProperty) {

@@ -4,6 +4,7 @@
  * @property {{{name}}} {{description}}
 {{/vars}}
  */
+@JsonClass(generateAdapter = true)
 {{#hasVars}}data {{/hasVars}}class {{classname}} {{#hasVars}}(
 {{#requiredVars}}
 {{>data_class_req_var}}{{^-last}},
@@ -17,6 +18,7 @@
      * {{{description}}}
      * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}
      */
+    @JsonClass(generateAdapter = false)
     enum class {{enumName}}(val value: {{complexType}}){ {{#allowableValues}}{{#enumVars}}
         @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}}{{/-last}}{{/enumVars}}{{/allowableValues}}
     }
