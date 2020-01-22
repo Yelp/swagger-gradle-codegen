@@ -18,6 +18,7 @@ pluginManagement {
 include(":plugin",
         ":samples:junit-tests",
         ":samples:kotlin-android",
+        ":samples:kotlin-android-with-moshi-kotlin-codegen",
         ":samples:kotlin-coroutines",
         ":samples:groovy-android",
         ":samples:generated-code")
