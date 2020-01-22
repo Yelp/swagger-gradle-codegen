@@ -19,6 +19,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 apply plugin: "com.yelp.codegen.plugin"
 apply plugin: "io.gitlab.arturbosch.detekt"
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion = 28
@@ -43,6 +44,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.7.1"
     implementation "com.squareup.retrofit2:converter-moshi:2.7.1"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.7.1"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.9.2"
 
     // Date Support
     implementation "com.jakewharton.threetenabp:threetenabp:1.2.2"
