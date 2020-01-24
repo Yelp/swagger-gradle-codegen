@@ -61,6 +61,8 @@ open class KotlinGenerator : SharedCodegen() {
         outputFolder = "generated-code${File.separator}android-kotlin-client"
         modelTemplateFiles["model.mustache"] = ".kt"
         apiTemplateFiles["retrofit2/api.mustache"] = ".kt"
+
+        supportsInheritance = true
     }
 
     /*
