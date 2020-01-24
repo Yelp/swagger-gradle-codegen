@@ -359,10 +359,10 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
                 // Ensure that after all the processing done on the CodegenModel.*Vars, hasMore does still make sense
                 CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties -> properties.fixHasMoreProperty() }
 
-                if (supportsInheritance && true == codegenModel.children?.isNotEmpty()) {
-                    // Codegen does update the children attribute but does not keep hasChildren consistent
-                    codegenModel.hasChildren = true
-                }
+//                if (supportsInheritance && true == codegenModel.children?.isNotEmpty()) {
+//                    // Codegen does update the children attribute but does not keep hasChildren consistent
+//                    codegenModel.hasChildren = true
+//                }
 
                 if (supportsInheritance && codegenModel.parentModel != null) {
                     val parentPropertyNames = codegenModel.parentModel.allVars.map { it.name }.toSet()
