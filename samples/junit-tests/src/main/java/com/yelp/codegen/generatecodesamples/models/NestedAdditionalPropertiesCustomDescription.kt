@@ -6,4 +6,9 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-typealias NestedAdditionalPropertiesCustomDescription = NestedAdditionalProperties
+import com.squareup.moshi.JsonClass
+
+/**
+ */
+@JsonClass(generateAdapter = true)
+class NestedAdditionalPropertiesCustomDescription
