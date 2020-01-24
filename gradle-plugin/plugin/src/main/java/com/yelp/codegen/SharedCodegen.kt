@@ -269,6 +269,20 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
                 .onEach { it.datatypeWithEnum = postProcessDataTypeWithEnum(codegenModel, it) }
         }
 
+        // Fix presence of duplicated variables into CodegenModel instances.
+        // Apparently swagger-codegen does not really play well with such properties if
+        // inheritance is enable and models have `allOf` attribute.
+        CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties ->
+            val seenProperties = mutableSetOf<CodegenProperty>()
+            val propertiesIterator = properties.iterator()
+            while (propertiesIterator.hasNext()) {
+                val property = propertiesIterator.next()
+                if (!seenProperties.add(property)) {
+                    propertiesIterator.remove()
+                }
+            }
+        }
+
         return codegenModel
     }
 
@@ -290,6 +304,31 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         // If we moved all required vars to optional because they are all x-nullable, hasRequired must be false.
         if (codegenModel.requiredVars.isEmpty()) {
             codegenModel.hasRequired = false
+        }
+    }
+
+    /**
+     * Codegen does use the same [CodegenProperty] in the child models, is the property is inherited
+     *
+     * This method allows the creation of clones of the [CodegenProperty] instances in case they are
+     * present due to inheritance.
+     *
+     * This additional computation is needed to allow further customisation of the child model
+     * property definitions without parent model property modifications.
+     * One example of use-case is the update of isInherited attribute of [CodegenProperty]
+     */
+    private fun decoupleParentProperties(codegenModel: CodegenModel) {
+        val nameToParentClone = codegenModel.parentVars.map {
+            it.name to it.clone()
+        }.toMap()
+        CodegenModelVar.forEachVarAttribute(codegenModel) { type, properties ->
+            if (type != CodegenModelVar.PARENT_VARS) {
+                properties.forEachIndexed { index, property ->
+                    nameToParentClone[property.name]?.let {
+                        properties[index] = it
+                    }
+                }
+            }
         }
     }
 
@@ -319,6 +358,44 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
             .forEach { codegenModel ->
                 // Ensure that after all the processing done on the CodegenModel.*Vars, hasMore does still make sense
                 CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties -> properties.fixHasMoreProperty() }
+
+                if (supportsInheritance && true == codegenModel.children?.isNotEmpty()) {
+                    // Codegen does update the children attribute but does not keep hasChildren consistent
+                    codegenModel.hasChildren = true
+                }
+
+                if (supportsInheritance && codegenModel.parentModel != null) {
+                    val parentPropertyNames = codegenModel.parentModel.allVars.map { it.name }.toSet()
+
+                    // Update parentVars (as codegen does not do it while updating the parents)
+                    codegenModel.parentVars?.addAll(codegenModel.parentModel.allVars)
+
+                    decoupleParentProperties(codegenModel)
+
+                    // Update all the *Vars attributes to keep track of parent-inherited parameters
+                    CodegenModelVar.forEachVarAttribute(codegenModel) { type, properties ->
+                        if (type != CodegenModelVar.PARENT_VARS) {
+                            properties.forEach {
+                                it.isInherited = it.name in parentPropertyNames
+                            }
+                        }
+                    }
+                    // Objects with a single item in allOf are recognized as aliases, as this is usually done
+                    // to override the content of metadata (ie. description).
+                    // The tool does already help avoid a new type creation by creating a type alias
+                    // In the case of Polymorphism this is actually a problem as the user would expect an
+                    // instance of a different class, even if the content is the same of the parent class
+                    if (codegenModel.isAlias) {
+                        codegenModel.isAlias = false
+                        codegenModel.hasVars = codegenModel.allVars.isNotEmpty()
+                        addRequiredImports(codegenModel)
+                    }
+
+                    // codegenModel.hasEnums will be set to true even if the current model does not specify
+                    // an enum value but the parent does.
+                    // In order to avoid to consider this model as a model with enums we're re-evaluating it.
+                    codegenModel.hasEnums = codegenModel.vars.any { it.isEnum }
+                }
             }
 
         return postProcessedModels

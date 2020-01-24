@@ -210,7 +210,7 @@ open class KotlinGenerator : SharedCodegen() {
             codegenModel.imports.add("com.squareup.moshi.Json")
         }
 
-        if (!codegenModel.isAlias) {
+        if (!codegenModel.isAlias || codegenModel.parent != null) {
             // If we are rendering a model (or enum) we are annotating it with @JsonClass,
             // so we need to make sure that we're importing it
             codegenModel.imports.add("com.squareup.moshi.JsonClass")
@@ -222,6 +222,12 @@ open class KotlinGenerator : SharedCodegen() {
                 codegenModel.imports.add("$toolsPackage.XNullable")
                 break
             }
+        }
+
+        if (supportsInheritance && codegenModel.discriminator != null) {
+            // Import JsonClass annotation to enable Adapters generations via Kotlin Annotation Processor
+            codegenModel.imports.add("$toolsPackage.optimisticHashCode")
+            codegenModel.imports.add("$toolsPackage.Polymorphic")
         }
     }
 
