@@ -1,5 +1,3 @@
-@file:Suppress("TooManyFunctions")
-
 package com.yelp.codegen
 
 import com.yelp.codegen.utils.InlineModelResolver
@@ -43,6 +41,7 @@ internal const val X_UNSAFE_OPERATION = "x-unsafe-operation"
 internal const val HEADER_X_OPERATION_ID = "X-Operation-ID"
 internal const val HEADER_CONTENT_TYPE = "Content-Type"
 
+@Suppress("TooManyFunctions")
 abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
 
     // Reference to the Swagger Specs
