@@ -7,6 +7,7 @@
 package com.yelp.codegen.generatecodesamples.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import com.yelp.codegen.generatecodesamples.tools.XNullable
 import java.math.BigDecimal
 
@@ -16,6 +17,7 @@ import java.math.BigDecimal
  * @property objectMap
  * @property stringMap
  */
+@JsonClass(generateAdapter = true)
 data class XnullablePropertyMap(
     @Json(name = "number_map") @field:Json(name = "number_map") @XNullable var numberMap: Map<String, BigDecimal?>? = null,
     @Json(name = "object_map") @field:Json(name = "object_map") @XNullable var objectMap: Map<String, Any?>? = null,

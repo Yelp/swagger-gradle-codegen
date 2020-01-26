@@ -7,6 +7,7 @@
 package com.yelp.codegen.generatecodesamples.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
 
 /**
@@ -17,6 +18,7 @@ import java.math.BigDecimal
  * @property numberProperty
  * @property stringProperty
  */
+@JsonClass(generateAdapter = true)
 data class RequiredTypeResponses(
     @Json(name = "boolean_property") @field:Json(name = "boolean_property") var booleanProperty: Boolean,
     @Json(name = "enum_property") @field:Json(name = "enum_property") var enumProperty: RequiredTypeResponses.EnumPropertyEnum,
@@ -28,6 +30,7 @@ data class RequiredTypeResponses(
      *
      * Values: VALUE1, VALUE2
      */
+    @JsonClass(generateAdapter = false)
     enum class EnumPropertyEnum(val value: String) {
         @Json(name = "VALUE1") VALUE1("VALUE1"),
         @Json(name = "VALUE2") VALUE2("VALUE2")
