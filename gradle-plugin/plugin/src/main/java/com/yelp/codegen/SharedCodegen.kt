@@ -259,6 +259,16 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         }
 
         handleXNullable(codegenModel)
+
+        // Update all enum properties datatypeWithEnum to use "BaseClass.InnerEnumClass" to reduce ambiguity
+        CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties ->
+            properties.forEach {
+                if (it.isEnum) {
+                    it.datatypeWithEnum = this.postProcessDataTypeWithEnum(codegenModel, it)
+                }
+            }
+        }
+
         return codegenModel
     }
 
@@ -590,4 +600,33 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * Nullable type are either not required or x-nullable annotated properties.
      */
     internal fun CodegenProperty.isNullable() = !this.required || this.vendorExtensions[X_NULLABLE] == true
+
+    override fun postProcessModelProperty(model: CodegenModel, property: CodegenProperty) {
+        super.postProcessModelProperty(model, property)
+
+        if (property.isEnum) {
+            property.datatypeWithEnum = this.postProcessDataTypeWithEnum(model, property)
+        }
+    }
+
+    /**
+     * When handling inner enums, we want to prefix their class name, when using them, with their containing class,
+     * to avoid name conflicts.
+     */
+    private fun postProcessDataTypeWithEnum(codegenModel: CodegenModel, codegenProperty: CodegenProperty): String {
+        val name = "${codegenModel.classname}.${codegenProperty.enumName}"
+
+        val baseType = if (codegenProperty.isContainer) {
+            val type = checkNotNull(typeMapping[codegenProperty.containerType])
+            "$type<$name>"
+        } else {
+            name
+        }
+
+        return if (codegenProperty.isNullable()) {
+            nullableTypeWrapper(baseType)
+        } else {
+            baseType
+        }
+    }
 }

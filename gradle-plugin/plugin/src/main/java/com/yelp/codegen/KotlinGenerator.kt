@@ -224,35 +224,6 @@ open class KotlinGenerator : SharedCodegen() {
         }
     }
 
-    override fun postProcessModelProperty(model: CodegenModel, property: CodegenProperty) {
-        super.postProcessModelProperty(model, property)
-
-        if (property.isEnum) {
-            property.datatypeWithEnum = postProcessDataTypeWithEnum(model.classname, property)
-        }
-    }
-
-    /**
-     * When handling inner enums, we want to prefix their class name, when using them, with their containing class,
-     * to avoid name conflicts.
-     */
-    private fun postProcessDataTypeWithEnum(modelClassName: String, codegenProperty: CodegenProperty): String {
-        val name = "$modelClassName.${codegenProperty.enumName}"
-
-        val baseType = if (codegenProperty.isContainer) {
-            val type = checkNotNull(typeMapping[codegenProperty.containerType])
-            "$type<$name>"
-        } else {
-            name
-        }
-
-        return if (codegenProperty.isNullable()) {
-            nullableTypeWrapper(baseType)
-        } else {
-            baseType
-        }
-    }
-
     /**
      * Returns the swagger type for the property
      *
