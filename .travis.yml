@@ -24,9 +24,5 @@ cache:
   - ${HOME}/.m2
 
 script:
-- ./gradlew plugin:build
-- ./gradlew plugin:publishToMavenLocal
-- ./gradlew generateSwagger
-- ./gradlew assembleDebug
-- ./gradlew check
+- make test
 - bash <(curl -s https://codecov.io/bash)
