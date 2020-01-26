@@ -271,7 +271,13 @@ class XnullablePropertyMapEndpointTest {
         assertEquals("array_value1", (returned.objectMap?.get("key3") as List<*>)[0])
 
         assertFalse((returned.objectMap?.get("key4") as Map<*, *>).isEmpty())
-        assertEquals("map_value1", (returned.objectMap?.get("key4") as Map<String, Any>)["map_key1"])
+        assertEquals(
+            "map_value1",
+            (
+                @Suppress("UNCHECKED_CAST")
+                (returned.objectMap?.get("key4") as Map<String, Any>)
+            )["map_key1"]
+        )
         assertNull(returned.objectMap?.get("key5"))
     }
 }
