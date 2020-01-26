@@ -356,19 +356,32 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
             .mapNotNull { it[0]["model"] }
             .filterIsInstance<CodegenModel>()
             .forEach { codegenModel ->
-                // Ensure that after all the processing done on the CodegenModel.*Vars, hasMore does still make sense
-                CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties -> properties.fixHasMoreProperty() }
+                if (
+                    supportsInheritance &&
+                    // Having a single child usually means override of description or attributes that do not change the model
+                    // So we should NOT mark the model with hasChildren
+                    (codegenModel.children?.size ?: 0) > 1
+                ) {
 
-//                if (supportsInheritance && true == codegenModel.children?.isNotEmpty()) {
-//                    // Codegen does update the children attribute but does not keep hasChildren consistent
-//                    codegenModel.hasChildren = true
-//                }
+                    // Codegen does update the children attribute but does not keep hasChildren consistent
+                    codegenModel.hasChildren = true
+                }
+
+                if (codegenModel.parentModel == null) {
+                    codegenModel.allVars?.forEach { it.isInherited = false }
+                }
 
                 if (supportsInheritance && codegenModel.parentModel != null) {
                     val parentPropertyNames = codegenModel.parentModel.allVars.map { it.name }.toSet()
 
                     // Update parentVars (as codegen does not do it while updating the parents)
-                    codegenModel.parentVars?.addAll(codegenModel.parentModel.allVars)
+                    codegenModel.parentVars?.addAll(
+                        codegenModel.parentModel.allVars.map {
+                            val clonedProperty = it.clone()
+                            clonedProperty.isInherited = true
+                            clonedProperty
+                        }
+                    )
 
                     decoupleParentProperties(codegenModel)
 
@@ -396,6 +409,9 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
                     // In order to avoid to consider this model as a model with enums we're re-evaluating it.
                     codegenModel.hasEnums = codegenModel.vars.any { it.isEnum }
                 }
+
+                // Ensure that after all the processing done on the CodegenModel.*Vars, hasMore does still make sense
+                CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties -> properties.fixHasMoreProperty() }
             }
 
         return postProcessedModels

@@ -1,8 +1,102 @@
 {
     "definitions": {
-        "empty_model": {
+        "animal": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/living_thing"
+                },
+                {
+                    "discriminator": "type",
+                    "properties": {
+                        "classification": {
+                            "enum": [
+                                "amphibian",
+                                "bird",
+                                "fish",
+                                "insect",
+                                "mammal",
+                                "reptile"
+                            ],
+                            "type": "string"
+                        },
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "description": "This is a generic `animal`. According to the value of `type` you might have more information",
             "type": "object",
-            "x-model": "empty_model"
+            "x-model": "animal"
+        },
+        "bird": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/animal"
+                },
+                {
+                    "properties": {
+                        "flight_hours": {
+                            "type": "number"
+                        }
+                    }
+                }
+            ],
+            "description": "This is a specific type of `animal`: a `bird`",
+            "title": "Bird",
+            "type": "object",
+            "x-model": "bird"
+        },
+        "cat": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/animal"
+                },
+                {
+                    "properties": {
+                        "age": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                }
+            ],
+            "description": "This is a specific type of `animal`: a `cat`",
+            "type": "object",
+            "x-model": "Cat"
+        },
+        "dog": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/animal"
+                },
+                {
+                    "properties": {
+                        "size": {
+                            "enum": [
+                                "small",
+                                "medium",
+                                "large"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "size"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "description": "This is a specific type of `animal`: a `dog`",
+            "type": "object",
+            "x-model": "dog"
+        },
+        "empty_model": {
+            "type": "object"
         },
         "format_responses": {
             "properties": {
@@ -25,10 +119,24 @@
             "type": "object",
             "x-model": "format_responses"
         },
+        "living_thing": {
+            "description": "This is a base class of `animal`. Created to verify that multiple parents are properly dealt with",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "title": "living_thing",
+            "type": "object"
+        },
         "nested_additional_properties": {
             "additionalProperties": {
                 "$ref": "#/definitions/top_level_map"
             },
+            "title": "xmodel_has_precedence_so_this_will_not_be_used",
             "type": "object",
             "x-model": "nested_additional_properties"
         },
@@ -144,6 +252,15 @@
             },
             "type": "object",
             "x-model": "reserved_keywords"
+        },
+        "snake": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/animal"
+                }
+            ],
+            "description": "This is a specific type of `animal`: a `snake`",
+            "type": "object"
         },
         "top_level_enum": {
             "enum": [
@@ -400,6 +517,22 @@
         "version": "1.1.0"
     },
     "paths": {
+        "/check_polymorphism": {
+            "get": {
+                "operationId": "get_check_polymorphism",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/animal"
+                        }
+                    }
+                },
+                "tags": [
+                    "polymorphism"
+                ]
+            }
+        },
         "/empty_endpoint": {
             "get": {
                 "operationId": "get_empty_endpoint",

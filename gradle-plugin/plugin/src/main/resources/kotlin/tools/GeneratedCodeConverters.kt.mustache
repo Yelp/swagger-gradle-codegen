@@ -7,6 +7,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object GeneratedCodeConverters {
     private val moshi = Moshi.Builder()
         .add(XNullableAdapterFactory())
+        .add(PolymorphicAdapterFactory())
         .add(TypesAdapterFactory())
         .build()
 
