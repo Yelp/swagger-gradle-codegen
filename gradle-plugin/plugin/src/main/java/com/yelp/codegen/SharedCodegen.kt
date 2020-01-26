@@ -562,6 +562,12 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      */
     protected abstract fun nullableTypeWrapper(baseType: String): String
 
+    /**
+     * Hook that allows to add the needed imports for a given [CodegenModel]
+     * This is needed as we might be modifying models in [postProcessAllModels]
+     */
+    internal abstract fun addRequiredImports(codegenModel: CodegenModel)
+
     private fun defaultListType() = typeMapping["list"] ?: ""
 
     private fun defaultMapType() = typeMapping["map"] ?: ""
