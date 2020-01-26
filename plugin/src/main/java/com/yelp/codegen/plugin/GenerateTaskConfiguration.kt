@@ -1,8 +1,8 @@
 package com.yelp.codegen.plugin
 
+import java.io.File
 import org.gradle.api.Action
 import org.gradle.api.Project
-import java.io.File
 
 open class GenerateTaskConfiguration(@Suppress("UNUSED_PARAMETER") project: Project) {
     var platform: String? = null

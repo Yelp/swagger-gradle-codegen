@@ -7,12 +7,12 @@ import io.swagger.codegen.CodegenProperty
 import io.swagger.models.Info
 import io.swagger.models.Operation
 import io.swagger.models.Swagger
+import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import java.io.File
 
 class KotlinGeneratorTest {
 
