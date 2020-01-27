@@ -427,11 +427,6 @@ open class KotlinGenerator : SharedCodegen() {
 
         codegenOperation.imports.add("retrofit2.http.Headers")
 
-        codegenOperation.vendorExtensions[X_OPERATION_ID] = operation?.operationId
-        getHeadersToIgnore().forEach { headerName ->
-            ignoreHeaderParameter(headerName, codegenOperation)
-        }
-
         // Let's remove the leading
         if (!basePath.isNullOrBlank()) {
             codegenOperation.path = codegenOperation.path.removePrefix("/")
@@ -471,8 +466,6 @@ open class KotlinGenerator : SharedCodegen() {
     override fun preprocessSwagger(swagger: Swagger) {
         super.preprocessSwagger(swagger)
 
-        // Override the swagger version with the one provided from command line.
-        swagger.info.version = additionalProperties[SPEC_VERSION] as String
         this.basePath = swagger.basePath
     }
 
