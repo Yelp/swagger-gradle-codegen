@@ -4,7 +4,7 @@ import org.gradle.api.Action
 import org.gradle.api.Project
 import java.io.File
 
-open class GenerateTaskConfiguration(project: Project) {
+open class GenerateTaskConfiguration(@Suppress("UNUSED_PARAMETER") project: Project) {
     var platform: String? = null
     var packageName: String? = null
     var specName: String? = null

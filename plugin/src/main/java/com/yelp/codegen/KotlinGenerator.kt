@@ -1,5 +1,3 @@
-@file:Suppress("TooManyFunctions", "NOTHING_TO_INLINE")
-
 package com.yelp.codegen
 
 import com.google.common.annotations.VisibleForTesting
@@ -21,6 +19,7 @@ import io.swagger.models.Swagger
 import io.swagger.models.properties.Property
 import java.io.File
 
+@Suppress("TooManyFunctions")
 open class KotlinGenerator : SharedCodegen() {
 
     companion object {
@@ -374,6 +373,7 @@ open class KotlinGenerator : SharedCodegen() {
     /**
      * Check if a name is of the type `com.x.name`, which means it has a fully qualified package.
      */
+    @Suppress("NOTHING_TO_INLINE")
     private inline fun String.isFullyQualifiedImportName() = "." in this
 
     override fun postProcessModels(objs: Map<String, Any>): Map<String, Any> {
