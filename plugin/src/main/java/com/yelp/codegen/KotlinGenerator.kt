@@ -410,6 +410,10 @@ open class KotlinGenerator : SharedCodegen() {
                     codegenOperation.imports.add(importName)
                 }
             }
+
+            if (codegenParameter.isFile) {
+                codegenOperation.imports.add("okhttp3.RequestBody")
+            }
         }
 
         codegenOperation.returnType = when {
