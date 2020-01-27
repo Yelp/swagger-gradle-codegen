@@ -207,6 +207,7 @@ open class KotlinGenerator : SharedCodegen() {
         // If there are any vars, we will mark them with the @Json annotation so we have to make sure to import it
         if (codegenModel.vars.isNotEmpty() || codegenModel.isEnum) {
             codegenModel.imports.add("com.squareup.moshi.Json")
+            codegenModel.imports.add("com.squareup.moshi.JsonClass")
         }
 
         // Add import for @XNullable annotation if there are any XNullable properties

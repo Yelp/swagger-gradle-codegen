@@ -76,15 +76,20 @@ We're looking forward to more platforms to support in the future. Contributions 
 
 You can find some **examples** in this repository to help you set up your generator environment.
 
-* [samples/generated-code](/samples/generated-code) Contains an example of an Android Library where the code is generated inside the `/scr/main/java` folder. You can use this example to see how the generated code will _look like_ (like [here](/samples/generated-code/src/main/java/com/yelp/codegen/generatecodesamples/apis/DefaultApi.kt))
+* [samples/generated-code](/samples/generated-code)<sup>*</sup> Contains an example of an Android Library where the code is generated inside the `/scr/main/java` folder. You can use this example to see how the generated code will _look like_ (like [here](/samples/generated-code/src/main/java/com/yelp/codegen/generatecodesamples/apis/DefaultApi.kt)).
 
-* [samples/groovy-android](/samples/groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
+* [samples/groovy-android](/samples/groovy-android)<sup>*</sup> Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
 
-* [samples/kotlin-android](/samples/kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
+* [samples/kotlin-android](/samples/kotlin-android)<sup>*</sup> Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
-* [samples/kotlin-coroutines](/samples/kotlin-coroutines) Contains an example of an Android Library configured to output Kotlin Coroutines capable code.
+* [samples/kotlin-android-moshi-codegen](/samples/kotlin-android-moshi-codegen) Based on samples/kotlin-android but the configuration is using [`moshi-codegen`](https://github.com/square/moshi#codegen) for improved parsing performances and it defines proguard rules.
 
-* [samples/junit-tests](/samples/junit-tests) This sample contains specs used to test edge cases and scenarios that have been reported in the issue tracker or that are worth testing.
+* [samples/kotlin-coroutines](/samples/kotlin-coroutines)<sup>*</sup> Contains an example of an Android Library configured to output Kotlin Coroutines capable code.
+
+* [samples/junit-tests](/samples/junit-tests) This sample contains specs used to test edge cases and scenarios that have been reported in the issue tracker or that are worth testing. Tests are executed using [`moshi-codegen`](https://github.com/square/moshi#codegen).
+
+<sup>*</sup>: The project is using [`moshi-reflect`](https://github.com/square/moshi#reflection) to convert your Kotlin classes to and from JSON.
+
 
 ## How the generated code will look like
 

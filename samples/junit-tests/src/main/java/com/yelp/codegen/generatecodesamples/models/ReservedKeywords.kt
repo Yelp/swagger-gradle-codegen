@@ -7,6 +7,7 @@
 package com.yelp.codegen.generatecodesamples.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  *
@@ -17,6 +18,7 @@ import com.squareup.moshi.Json
  * @property `var`
  * @property `when`
  */
+@JsonClass(generateAdapter = true)
 data class ReservedKeywords(
     @Json(name = "class") @field:Json(name = "class") var `class`: String? = null,
     @Json(name = "for") @field:Json(name = "for") var `for`: String? = null,
