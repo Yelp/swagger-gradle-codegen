@@ -107,3 +107,7 @@ tasks.jacocoTestReport {
 tasks.check {
     dependsOn(tasks.jacocoTestReport)
 }
+
+tasks.withType<Test> {
+    dependsOn("publishDefaultPublicationToPluginTestRepository")
+}
