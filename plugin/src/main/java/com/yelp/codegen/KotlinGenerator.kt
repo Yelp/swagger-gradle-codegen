@@ -402,7 +402,7 @@ open class KotlinGenerator : SharedCodegen() {
     ): CodegenOperation {
         val codegenOperation = super.fromOperation(path, httpMethod, operation, definitions, swagger)
 
-        retrofitImport.get(codegenOperation.httpMethod)?.let { codegenOperation.imports.add(it) }
+        retrofitImport[codegenOperation.httpMethod]?.let { codegenOperation.imports.add(it) }
         codegenOperation.allParams.forEach { codegenParameter: CodegenParameter ->
             codegenParameter.collectionFormat?.let {
                 val importName = "$toolsPackage.${it.toUpperCase()}"
@@ -413,6 +413,8 @@ open class KotlinGenerator : SharedCodegen() {
 
             if (codegenParameter.isFile) {
                 codegenOperation.imports.add("okhttp3.RequestBody")
+                // The generated Retrofit APIs use RequestBody and not File objects
+                codegenOperation.imports.remove("File")
             }
         }
 
