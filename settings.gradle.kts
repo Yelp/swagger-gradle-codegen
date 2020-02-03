@@ -20,5 +20,4 @@ include(":plugin",
         ":samples:kotlin-android",
         ":samples:kotlin-android-moshi-codegen",
         ":samples:kotlin-coroutines",
-        ":samples:groovy-android",
-        ":samples:generated-code")
+        ":samples:groovy-android")
