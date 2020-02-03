@@ -11,6 +11,7 @@ plugins {
     kotlin("jvm") version "1.3.61"
     id("com.gradle.plugin-publish") version "0.10.1"
     id("io.gitlab.arturbosch.detekt") version "1.4.0"
+    id("maven-publish")
 }
 
 java {
@@ -49,6 +50,43 @@ pluginBundle {
     plugins {
         getByName("com.yelp.codegen.plugin") {
             displayName = "Swagger Gradle Codegen"
+        }
+    }
+}
+
+configure<PublishingExtension> {
+    publications {
+        create<MavenPublication>("default") {
+            from(components.findByName("java"))
+
+            pom {
+                groupId = PublishingVersions.PLUGIN_GROUP
+                artifactId = PublishingVersions.PLUGIN_ARTIFACT
+                version = PublishingVersions.PLUGIN_VERSION
+
+                name.set("Swagger Gradle Codegen")
+                packaging = "jar"
+                description.set("Swagger Gradle Codegen")
+                url.set("https://github.com/Yelp/swagger-gradle-codegen")
+
+                scm {
+                    url.set("https://github.com/Yelp/swagger-gradle-codegen")
+                }
+
+                licenses {
+                    license {
+                        name.set("Apache")
+                        url.set("https://github.com/Yelp/swagger-gradle-codegen/blob/master/LICENSE")
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "pluginTest"
+            url = uri("file://${rootProject.buildDir}/localMaven")
         }
     }
 }
