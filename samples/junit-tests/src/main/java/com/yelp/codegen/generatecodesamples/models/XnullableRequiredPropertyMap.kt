@@ -12,7 +12,6 @@ import com.yelp.codegen.generatecodesamples.tools.XNullable
 import java.math.BigDecimal
 
 /**
- *
  * @property numberMap
  * @property objectMap
  * @property stringMap

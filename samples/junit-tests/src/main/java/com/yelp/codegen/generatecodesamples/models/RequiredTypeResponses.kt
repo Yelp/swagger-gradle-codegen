@@ -11,7 +11,6 @@ import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
 
 /**
- *
  * @property booleanProperty
  * @property enumProperty
  * @property integerProperty
@@ -27,7 +26,6 @@ data class RequiredTypeResponses(
     @Json(name = "string_property") @field:Json(name = "string_property") var stringProperty: String
 ) {
     /**
-     *
      * Values: VALUE1, VALUE2
      */
     @JsonClass(generateAdapter = false)
