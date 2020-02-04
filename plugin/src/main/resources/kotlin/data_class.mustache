@@ -4,8 +4,8 @@
  * @property {{{name}}} {{description}}
 {{/vars}}
  */
-{{#hasVars}}@JsonClass(generateAdapter = true)
-data {{/hasVars}}class {{classname}} {{#hasVars}}(
+@JsonClass(generateAdapter = true)
+{{#hasVars}}data {{/hasVars}}class {{classname}} {{#hasVars}}(
 {{#requiredVars}}
 {{>data_class_req_var}}{{^-last}},
 {{/-last}}{{/requiredVars}}{{#hasRequired}}{{#hasOptional}},

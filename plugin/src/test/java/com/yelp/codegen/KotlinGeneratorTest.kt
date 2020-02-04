@@ -44,11 +44,13 @@ class KotlinGeneratorTest {
         val model = CodegenModel()
         val property = CodegenProperty()
         property.vendorExtensions = mutableMapOf()
-        model.vars.add(property)
+        model.allVars.add(property)
 
         KotlinGenerator().addRequiredImports(model)
 
         assertTrue(model.imports.contains("com.squareup.moshi.Json"))
+        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
     @Test
@@ -59,6 +61,20 @@ class KotlinGeneratorTest {
         KotlinGenerator().addRequiredImports(model)
 
         assertTrue(model.imports.contains("com.squareup.moshi.Json"))
+        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
+    }
+
+    @Test
+    fun addRequiredImports_withAlias() {
+        val model = CodegenModel()
+        model.isAlias = true
+
+        KotlinGenerator().addRequiredImports(model)
+
+        assertFalse(model.imports.contains("com.squareup.moshi.Json"))
+        assertFalse(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
     @Test
@@ -74,6 +90,8 @@ class KotlinGeneratorTest {
 
         generator.addRequiredImports(model)
 
+        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
+        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
         assertTrue(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
