@@ -11,12 +11,16 @@ regenerate-samples:
 	${CURDIR}/gradlew plugin:publishToMavenLocal
 	${CURDIR}/gradlew generateSwagger
 
-test:
+run-hooks: install-hooks
+	${CURDIR}/venv/bin/pre-commit run --all-files
+
+test: run-hooks
 	${CURDIR}/gradlew plugin:build
 	${CURDIR}/gradlew plugin:publishToMavenLocal
 	${CURDIR}/gradlew generateSwagger
 	${CURDIR}/gradlew assembleDebug
 	${CURDIR}/gradlew check
+	deactivate
 
 venv:
 	virtualenv venv
