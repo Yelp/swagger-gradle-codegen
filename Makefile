@@ -1,4 +1,4 @@
-.PHONY: install-hooks regenerate-samples test
+.PHONY: install-hooks regenerate-samples test run-hooks
 
 .git/hooks/pre-commit: venv
 	${CURDIR}/venv/bin/pre-commit install --install-hooks
@@ -11,7 +11,10 @@ regenerate-samples:
 	${CURDIR}/gradlew plugin:publishToMavenLocal
 	${CURDIR}/gradlew generateSwagger
 
-test:
+run-hooks: venv
+	${CURDIR}/venv/bin/pre-commit run --all-files
+
+test: run-hooks
 	${CURDIR}/gradlew plugin:build
 	${CURDIR}/gradlew plugin:publishToMavenLocal
 	${CURDIR}/gradlew generateSwagger
