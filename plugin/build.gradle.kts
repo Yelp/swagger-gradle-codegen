@@ -54,34 +54,6 @@ pluginBundle {
 }
 
 configure<PublishingExtension> {
-    publications {
-        create<MavenPublication>("default") {
-            from(components.findByName("java"))
-
-            pom {
-                groupId = PublishingVersions.PLUGIN_GROUP
-                artifactId = PublishingVersions.PLUGIN_ARTIFACT
-                version = PublishingVersions.PLUGIN_VERSION
-
-                name.set("Swagger Gradle Codegen")
-                packaging = "jar"
-                description.set("Swagger Gradle Codegen")
-                url.set("https://github.com/Yelp/swagger-gradle-codegen")
-
-                scm {
-                    url.set("https://github.com/Yelp/swagger-gradle-codegen")
-                }
-
-                licenses {
-                    license {
-                        name.set("Apache")
-                        url.set("https://github.com/Yelp/swagger-gradle-codegen/blob/master/LICENSE")
-                    }
-                }
-            }
-        }
-    }
-
     repositories {
         maven {
             name = "pluginTest"
@@ -108,6 +80,6 @@ tasks.check {
 }
 
 tasks.withType<Test> {
-    dependsOn("publishDefaultPublicationToPluginTestRepository")
+    dependsOn("publishPluginMavenPublicationToPluginTestRepository")
     inputs.dir("src/test/testProject")
 }
