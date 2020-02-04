@@ -54,6 +54,10 @@ pluginBundle {
 }
 
 configure<PublishingExtension> {
+    // Add a local repository for tests.
+    // The plugin tests will use this repository to retrieve the plugin artifact.
+    // This allows to test the current code without deploying it to the gradle
+    // portal or any other repo.
     repositories {
         maven {
             name = "pluginTest"
