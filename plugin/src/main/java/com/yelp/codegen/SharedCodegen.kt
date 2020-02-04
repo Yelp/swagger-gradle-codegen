@@ -1,6 +1,5 @@
 package com.yelp.codegen
 
-import com.yelp.codegen.utils.InlineModelResolver
 import com.yelp.codegen.utils.safeSuffix
 import io.swagger.codegen.CodegenConfig
 import io.swagger.codegen.CodegenModel
@@ -119,8 +118,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * computing models names.
      */
     private fun mapXModel(swagger: Swagger) {
-        InlineModelResolver().flatten(swagger)
-        swagger.definitions.forEach { name, model ->
+        swagger.definitions?.forEach { (name, model) ->
             (model.vendorExtensions?.get(X_MODEL) as? String?)?.let { x_model ->
                 xModelMatches[name] = x_model
             }
