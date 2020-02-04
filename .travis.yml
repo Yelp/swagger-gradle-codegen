@@ -15,14 +15,17 @@ android:
 
 before_cache:
 - rm -f  ${HOME}/.gradle/caches/modules-2/modules-2.lock
-- rm -fr ${HOME}/.gradle/caches/*/plugin-resolution/
 
 cache:
+  pip: true
   directories:
   - ${HOME}/.gradle/caches/
+  - ${HOME}/.cache/pre-commit/
   - ${HOME}/.gradle/wrapper/
   - ${HOME}/.m2
 
 script:
 - make test
+
+after_success:
 - bash <(curl -s https://codecov.io/bash)
