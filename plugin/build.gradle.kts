@@ -29,7 +29,7 @@ dependencies {
 
     implementation("commons-cli:commons-cli:1.4")
     implementation("com.google.guava:guava:27.0-jre")
-    implementation("io.swagger:swagger-codegen:2.3.1")
+    implementation("io.swagger:swagger-codegen:2.4.12")
 
     testImplementation("junit:junit:4.12")
 }
