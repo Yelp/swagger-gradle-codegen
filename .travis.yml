@@ -18,12 +18,12 @@ before_cache:
 - rm -fr ${HOME}/.gradle/caches/*/plugin-resolution/
 
 cache:
+  pip: true
   directories:
   - ${HOME}/.gradle/caches/
+  - ${HOME}/.cache/pre-commit/
   - ${HOME}/.gradle/wrapper/
   - ${HOME}/.m2
-  - ${HOME}/.cache/pip/
-  - ${HOME}/.cache/pre-commit/
 
 script:
 - make test
