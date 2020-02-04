@@ -11,7 +11,6 @@ plugins {
     kotlin("jvm") version "1.3.61"
     id("com.gradle.plugin-publish") version "0.10.1"
     id("io.gitlab.arturbosch.detekt") version "1.4.0"
-    id("maven-publish")
 }
 
 java {
