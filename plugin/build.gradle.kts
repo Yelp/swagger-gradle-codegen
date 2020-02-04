@@ -53,6 +53,19 @@ pluginBundle {
     }
 }
 
+configure<PublishingExtension> {
+    // Add a local repository for tests.
+    // The plugin tests will use this repository to retrieve the plugin artifact.
+    // This allows to test the current code without deploying it to the gradle
+    // portal or any other repo.
+    repositories {
+        maven {
+            name = "pluginTest"
+            url = uri("file://${rootProject.buildDir}/localMaven")
+        }
+    }
+}
+
 detekt {
     toolVersion = "1.4.0"
     input = files("src/")
@@ -68,4 +81,9 @@ tasks.jacocoTestReport {
 
 tasks.check {
     dependsOn(tasks.jacocoTestReport)
+}
+
+tasks.withType<Test> {
+    dependsOn("publishPluginMavenPublicationToPluginTestRepository")
+    inputs.dir("src/test/testProject")
 }
