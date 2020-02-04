@@ -26,5 +26,5 @@ configure<GenerateTaskConfiguration> {
   packageName = "com.yelp.codegen.samples"
   // this file is in rootDir/plugin/build/testProject/
   inputFile = file("../../../samples/junit-tests/junit_tests_specs.json")
-  outputDir = file("./build/generetadSources")
+  outputDir = file("./build/generatedSources")
 }
