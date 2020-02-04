@@ -10,7 +10,7 @@ import java.io.File
 
 class PluginTests {
   @Test
-  fun `basic plugin test`() {
+  fun basicPluginTest() {
     val tmpDir = File(".", "build/testProject")
     tmpDir.deleteRecursively()
 
