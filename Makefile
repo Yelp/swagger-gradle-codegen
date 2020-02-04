@@ -1,4 +1,4 @@
-.PHONY: install-hooks regenerate-samples test
+.PHONY: install-hooks regenerate-samples test run-hooks
 
 .git/hooks/pre-commit: venv
 	${CURDIR}/venv/bin/pre-commit install --install-hooks
@@ -11,7 +11,7 @@ regenerate-samples:
 	${CURDIR}/gradlew plugin:publishToMavenLocal
 	${CURDIR}/gradlew generateSwagger
 
-run-hooks: install-hooks
+run-hooks: venv
 	${CURDIR}/venv/bin/pre-commit run --all-files
 
 test: run-hooks
@@ -20,7 +20,6 @@ test: run-hooks
 	${CURDIR}/gradlew generateSwagger
 	${CURDIR}/gradlew assembleDebug
 	${CURDIR}/gradlew check
-	deactivate
 
 venv:
 	virtualenv venv
