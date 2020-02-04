@@ -4,9 +4,9 @@ import com.yelp.codegen.generatecodesamples.apis.XnullableApi
 import com.yelp.codegen.generatecodesamples.tools.MockServerApiRule
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 

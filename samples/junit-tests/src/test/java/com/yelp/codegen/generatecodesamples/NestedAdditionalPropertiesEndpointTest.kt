@@ -5,8 +5,8 @@ import com.yelp.codegen.generatecodesamples.models.TopLevelMap
 import com.yelp.codegen.generatecodesamples.tools.MockServerApiRule
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
