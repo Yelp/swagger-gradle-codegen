@@ -9,8 +9,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 
 class PluginTests {
-    @Rule
-    @JvmField
+    @get:Rule
     val temporaryFolder = TemporaryFolder(File("."))
 
     @Test

@@ -5,8 +5,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 
 class MainTest {
-    @Rule
-    @JvmField
+    @get:Rule
     val temporaryFolder = TemporaryFolder()
 
     private fun runGenerator(platform: String) {
