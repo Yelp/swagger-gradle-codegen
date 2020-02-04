@@ -91,6 +91,10 @@ tasks.check {
     dependsOn(tasks.jacocoTestReport)
 }
 
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
 tasks.withType<Test> {
     dependsOn("publishPluginMavenPublicationToPluginTestRepository")
     inputs.dir("src/test/testProject")
