@@ -4,6 +4,7 @@ import com.yelp.codegen.utils.safeSuffix
 import io.swagger.codegen.CodegenConfig
 import io.swagger.codegen.CodegenModel
 import io.swagger.codegen.CodegenOperation
+import io.swagger.codegen.CodegenParameter
 import io.swagger.codegen.CodegenProperty
 import io.swagger.codegen.CodegenType
 import io.swagger.codegen.DefaultCodegen
@@ -293,6 +294,37 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         }
     }
 
+    override fun postProcessAllModels(objs: Map<String, Any>): Map<String, Any> {
+        val postProcessedModels = super.postProcessAllModels(objs)
+
+        // postProcessedModel does contain a map like Map<ModelName, ContentOfTheModelAsPassedToMustache>
+        // ContentOfTheModelAsPassedToMustache would look like the following
+        //      {
+        //        <model_name>: {
+        //          <codegen constants>
+        //          "models": [
+        //            {
+        //              "importPath": <String instance>,
+        //              "model": <CodegenModel instance>
+        //            }
+        //          ]
+        //        }
+        //      }
+        postProcessedModels.values
+            .asSequence()
+            .filterIsInstance<Map<String, Any>>()
+            .mapNotNull { it["models"] }
+            .filterIsInstance<List<Map<String, Any>>>()
+            .mapNotNull { it[0]["model"] }
+            .filterIsInstance<CodegenModel>()
+            .forEach { codegenModel ->
+                // Ensure that after all the processing done on the CodegenModel.*Vars, hasMore does still make sense
+                CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties -> properties.fixHasMoreProperty() }
+            }
+
+        return postProcessedModels
+    }
+
     /**
      * Private method to investigate all the properties of a models, filter only the [RefProperty] and eventually
      * propagate the `x-nullable` vendor extension.
@@ -378,7 +410,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         }
 
         // If we removed the last parameter of the Operation, we should update the `hasMore` flag.
-        codegenOperation.allParams.lastOrNull()?.hasMore = false
+        codegenOperation.allParams.fixHasMoreParameter()
     }
 
     /**
@@ -628,5 +660,25 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         } else {
             baseType
         }
+    }
+}
+
+/**
+ * Small helper to ensurer that the hasMore attribute is properly
+ * defined within a list of [CodegenProperty]s
+ */
+internal fun List<CodegenProperty>.fixHasMoreProperty() {
+    this.forEachIndexed { index, item ->
+        item.hasMore = index != (this.size - 1)
+    }
+}
+
+/**
+ * Small helper to ensurer that the hasMore attribute is properly
+ * defined within a list of [CodegenParameter]s
+ */
+internal fun List<CodegenParameter>.fixHasMoreParameter() {
+    this.forEachIndexed { index, item ->
+        item.hasMore = index != (this.size - 1)
     }
 }
