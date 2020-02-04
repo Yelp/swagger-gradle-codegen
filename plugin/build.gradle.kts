@@ -109,4 +109,5 @@ tasks.check {
 
 tasks.withType<Test> {
     dependsOn("publishDefaultPublicationToPluginTestRepository")
+    inputs.dir("src/test/testProject")
 }
