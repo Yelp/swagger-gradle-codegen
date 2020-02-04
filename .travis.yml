@@ -22,6 +22,8 @@ cache:
   - ${HOME}/.gradle/caches/
   - ${HOME}/.gradle/wrapper/
   - ${HOME}/.m2
+  - ${HOME}/.cache/pip/
+  - ${HOME}/.cache/pre-commit/
 
 script:
 - make test
