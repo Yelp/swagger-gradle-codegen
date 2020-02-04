@@ -7,6 +7,7 @@ import io.swagger.codegen.CodegenOperation
 import io.swagger.codegen.CodegenProperty
 import io.swagger.codegen.CodegenType
 import io.swagger.codegen.DefaultCodegen
+import io.swagger.codegen.InlineModelResolver
 import io.swagger.codegen.SupportingFile
 import io.swagger.models.ArrayModel
 import io.swagger.models.ComposedModel
@@ -92,12 +93,26 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     override fun preprocessSwagger(swagger: Swagger) {
         super.preprocessSwagger(swagger)
 
+        // Swagger-Codegen does invoke InlineModelResolver.flatten before starting the API and Models generation
+        // It is a bit too late to ensure that inline models (with x-model) have the model name honored
+        // according to the following ordering preference: x-model, title, <whatever codegen generates>
+        // So we're triggering the process early on as the process is not super slow and more importantly is idempotent
+        InlineModelResolver().flatten(swagger)
+
         unsafeOperations.addAll(when (val it = swagger.info.vendorExtensions["x-operation-ids-unsafe-to-use"]) {
             is List<*> -> it.filterIsInstance<String>()
             else -> listOf()
         })
 
         mapXModel(swagger)
+
+        swagger.definitions?.forEach { (name, model) ->
+            // Ensure that all the models have a title
+            // The title should give priority to x-model, then title and finally
+            // to the name that codegen thought to use
+            model.title = xModelMatches[name] ?: name
+        }
+
         this.swagger = swagger
     }
 
