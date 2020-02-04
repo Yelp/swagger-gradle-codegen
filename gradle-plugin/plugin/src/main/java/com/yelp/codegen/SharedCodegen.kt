@@ -82,7 +82,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * Returns the /main/resources directory to access the .mustache files
      */
     protected val resourcesDirectory: File
-        get() = File(this.javaClass.classLoader.getResource(templateDir).path.safeSuffix(File.separator))
+        get() = File(this.javaClass.classLoader.getResource(templateDir)!!.path.safeSuffix(File.separator))
 
     override fun processOpts() {
         super.processOpts()
@@ -454,7 +454,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      *  or `items` at the top level (Arrays).
      *  Their returned type would be a `Map<String, Any?>` or `List<Any?>`, where `Any?` will be the aliased type.
      *
-     *  The method will call [KotlinAndroidGenerator.resolvePropertyType] that will perform a check if the model
+     *  The method will call [KotlinGenerator.resolvePropertyType] that will perform a check if the model
      *  is aliasing to a 'x-nullable' annotated model and compute the proper type (adding a `?` if needed).
      *
      *  ```
