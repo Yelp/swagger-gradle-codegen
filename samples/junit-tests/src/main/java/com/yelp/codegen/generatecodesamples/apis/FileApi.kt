@@ -34,6 +34,7 @@ interface FileApi {
         "X-Operation-ID: post_file_without_multipart_form_data"
     )
     @POST("/post/file_without_consumes")
+    @Deprecated(message = "Unsafe to use")
     fun postFileWithoutMultipartFormData(
         @retrofit2.http.Field("client_file\"; filename=\"client_file") clientFile: RequestBody
     ): Completable
