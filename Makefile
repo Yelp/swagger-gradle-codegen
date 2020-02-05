@@ -13,7 +13,8 @@ test: run-hooks
 	${CURDIR}/gradlew plugin:build check
 	${CURDIR}/gradlew -p samples/ generateSwagger
 	${CURDIR}/gradlew -p samples/ assembleDebug
-	${CURDIR}/gradlew -p samples/ check
+	# Give more metaspace to the JVM
+	${CURDIR}/gradlew -p samples/ check  -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=2g"
 
 venv:
 	virtualenv venv
