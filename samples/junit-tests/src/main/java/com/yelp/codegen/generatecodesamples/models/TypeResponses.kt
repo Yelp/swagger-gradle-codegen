@@ -11,7 +11,6 @@ import com.squareup.moshi.JsonClass
 import java.math.BigDecimal
 
 /**
- *
  * @property booleanProperty
  * @property integerProperty
  * @property numberProperty

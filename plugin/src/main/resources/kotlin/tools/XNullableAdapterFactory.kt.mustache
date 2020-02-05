@@ -38,13 +38,12 @@ class XNullableAdapterFactory : JsonAdapter.Factory {
                         nextAdapter?.toJson(writer, value)
                     }
                 }
-
             }
         }
         return null
     }
 
-    private fun Set<Annotation>.removeXNullableAnnotation():MutableSet<out Annotation>{
+    private fun Set<Annotation>.removeXNullableAnnotation(): MutableSet<out Annotation> {
         return this.filter { it !is XNullable }.toMutableSet()
     }
 }

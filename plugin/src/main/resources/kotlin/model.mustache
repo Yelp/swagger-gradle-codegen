@@ -1,11 +1,7 @@
 {{>file_header}}
 package {{modelPackage}}
-
-{{#imports}}import {{import}}
+{{#imports}}{{#-first}}
+{{/-first}}import {{import}}
 {{/imports}}
-
-{{#models}}
-{{#model}}
-{{#isAlias}}{{>type_alias}}{{/isAlias}}{{^isAlias}}{{#isEnum}}{{>enum_class}}{{/isEnum}}{{^isEnum}}{{>data_class}}{{/isEnum}}{{/isAlias}}
-{{/model}}
-{{/models}}
+{{#models}}{{#model}}
+{{#isAlias}}{{>type_alias}}{{/isAlias}}{{^isAlias}}{{#isEnum}}{{>enum_class}}{{/isEnum}}{{^isEnum}}{{>data_class}}{{/isEnum}}{{/isAlias}}{{/model}}{{/models}}

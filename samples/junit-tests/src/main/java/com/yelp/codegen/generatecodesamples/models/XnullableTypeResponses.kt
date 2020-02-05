@@ -12,7 +12,6 @@ import com.yelp.codegen.generatecodesamples.tools.XNullable
 import java.math.BigDecimal
 
 /**
- *
  * @property booleanProperty
  * @property enumProperty
  * @property integerProperty
@@ -28,7 +27,6 @@ data class XnullableTypeResponses(
     @Json(name = "string_property") @field:Json(name = "string_property") @XNullable var stringProperty: String? = null
 ) {
     /**
-     *
      * Values: VALUE1, VALUE2
      */
     @JsonClass(generateAdapter = false)

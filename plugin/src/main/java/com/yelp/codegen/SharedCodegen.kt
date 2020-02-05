@@ -106,6 +106,9 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
 
         mapXModel(swagger)
 
+        // Override the swagger version with the one provided from command line.
+        swagger.info.version = additionalProperties[SPEC_VERSION] as String
+
         swagger.definitions?.forEach { (name, model) ->
             // Ensure that all the models have a title
             // The title should give priority to x-model, then title and finally
@@ -484,6 +487,9 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     ): CodegenOperation {
         val codegenOperation = super.fromOperation(path, httpMethod, operation, definitions, swagger)
         codegenOperation.vendorExtensions[X_OPERATION_ID] = operation?.operationId
+        getHeadersToIgnore().forEach { headerName ->
+            ignoreHeaderParameter(headerName, codegenOperation)
+        }
         if (unsafeOperations.contains(operation?.operationId)) {
             codegenOperation.vendorExtensions[X_UNSAFE_OPERATION] = true
         }

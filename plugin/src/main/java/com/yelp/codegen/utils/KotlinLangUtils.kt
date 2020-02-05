@@ -120,7 +120,7 @@ object KotlinLangUtils {
         "array" to "List",
         "list" to "List",
         "map" to "Map",
-        "object" to "Map<String,Any?>",
+        "object" to "Map<String, Any?>",
         "binary" to "List<Byte>"
     )
 
@@ -144,7 +144,7 @@ object KotlinLangUtils {
         "List" to "kotlin.collections.List",
         "List<Byte>" to "kotlin.collections.List",
         "Map" to "kotlin.collections.Map",
-        "Map<String,Any?>" to "kotlin.collections.Map",
+        "Map<String, Any?>" to "kotlin.collections.Map",
         "Timestamp" to "java.sql.Timestamp",
         "UUID" to "java.util.UUID"
     )

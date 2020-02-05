@@ -402,13 +402,19 @@ open class KotlinGenerator : SharedCodegen() {
     ): CodegenOperation {
         val codegenOperation = super.fromOperation(path, httpMethod, operation, definitions, swagger)
 
-        retrofitImport.get(codegenOperation.httpMethod)?.let { codegenOperation.imports.add(it) }
+        retrofitImport[codegenOperation.httpMethod]?.let { codegenOperation.imports.add(it) }
         codegenOperation.allParams.forEach { codegenParameter: CodegenParameter ->
             codegenParameter.collectionFormat?.let {
                 val importName = "$toolsPackage.${it.toUpperCase()}"
                 if (importName !in codegenOperation.imports) {
                     codegenOperation.imports.add(importName)
                 }
+            }
+
+            if (codegenParameter.isFile) {
+                codegenOperation.imports.add("okhttp3.RequestBody")
+                // The generated Retrofit APIs use RequestBody and not File objects
+                codegenOperation.imports.remove("File")
             }
         }
 
@@ -426,11 +432,6 @@ open class KotlinGenerator : SharedCodegen() {
         }
 
         codegenOperation.imports.add("retrofit2.http.Headers")
-
-        codegenOperation.vendorExtensions[X_OPERATION_ID] = operation?.operationId
-        getHeadersToIgnore().forEach { headerName ->
-            ignoreHeaderParameter(headerName, codegenOperation)
-        }
 
         // Let's remove the leading
         if (!basePath.isNullOrBlank()) {
@@ -471,8 +472,6 @@ open class KotlinGenerator : SharedCodegen() {
     override fun preprocessSwagger(swagger: Swagger) {
         super.preprocessSwagger(swagger)
 
-        // Override the swagger version with the one provided from command line.
-        swagger.info.version = additionalProperties[SPEC_VERSION] as String
         this.basePath = swagger.basePath
     }
 

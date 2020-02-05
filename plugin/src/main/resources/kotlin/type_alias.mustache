@@ -1,8 +1,6 @@
 {{#description}}/**
  * {{{description}}}
- */{{/description}}
-typealias {{classname}} = {{{dataType}}}
-{{#hasEnums}}{{#vars}}
+ */{{{newline}}}{{/description}}typealias {{classname}} = {{{dataType}}}{{#hasEnums}}{{{newline}}}{{#vars}}
 /**
   * {{{description}}}
   * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}

@@ -13,7 +13,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.ZonedDateTime
 
 /**
- *
  * @property dateProperty
  * @property datetimeProperty
  * @property doubleProperty

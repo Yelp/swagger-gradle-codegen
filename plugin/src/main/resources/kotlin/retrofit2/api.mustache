@@ -1,8 +1,6 @@
 {{>file_header}}
 package {{package}}
 
-import okhttp3.RequestBody
-
 {{#imports}}import {{import}}
 {{/imports}}
 
@@ -10,38 +8,36 @@ import okhttp3.RequestBody
 @JvmSuppressWildcards
 interface {{classname}} {
   {{#operation}}
-  /**{{#summary}} {{{newline}}}   * {{{summary}}}{{/summary}}{{#notes}}{{{newline}}}   * {{{<br/>}}}{{{notes}}}{{/notes}}
-   * The endpoint is owned by {{{vendorExtensions.x-team-owners}}}{{^vendorExtensions.x-team-owners}}{{service_name}} service owner{{/vendorExtensions.x-team-owners}}
+    /**{{#summary}}{{{newline}}}     * {{{summary}}}{{/summary}}{{#notes}}{{{newline}}}     * {{{<br/>}}}{{{notes}}}{{/notes}}
+     * The endpoint is owned by {{{vendorExtensions.x-team-owners}}}{{^vendorExtensions.x-team-owners}}{{service_name}} service owner{{/vendorExtensions.x-team-owners}}
 {{#allParams}}
-   * @param {{paramName}} {{description}}{{#required}} (required){{/required}}{{^required}} (optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}
+     * @param {{paramName}}{{#description}} {{description}}{{/description}} ({{#required}}required{{/required}}{{^required}}optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/required}})
 {{/allParams}}
 {{#externalDocs}}
-   * {{description}}
-   * @see [{{url}}"][{{summary}} Documentation]
+     * {{description}}
+     * @see [{{url}}"][{{summary}} Documentation]
 {{/externalDocs}}
-   */
+     */
   {{#formParams}}
   {{#-first}}
-  {{#isMultipart}}@retrofit2.http.Multipart{{/isMultipart}}{{^isMultipart}}@retrofit2.http.FormUrlEncoded{{/isMultipart}}
+    {{#isMultipart}}@retrofit2.http.Multipart{{/isMultipart}}{{^isMultipart}}@retrofit2.http.FormUrlEncoded{{/isMultipart}}
   {{/-first}}
   {{/formParams}}
   {{#vendorExtensions.hasOperationHeaders}}
-  @Headers(
-    {{#vendorExtensions.operationHeaders}}"{{first}}: {{second}}"{{^-last}},
-    {{/-last}}{{#-last}}
-  ){{/-last}}{{/vendorExtensions.operationHeaders}}
-  {{/vendorExtensions.hasOperationHeaders}}
-  @{{httpMethod}}("{{{path}}}"){{#vendorExtensions.x-unsafe-operation}}{{#isDeprecated}}
-      @Deprecated(message = "Deprecated and unsafe to use"){{/isDeprecated}}{{^isDeprecated}}
-      @Deprecated(message = "Unsafe to use"){{/isDeprecated}}
+    @Headers(
+        {{#vendorExtensions.operationHeaders}}"{{first}}: {{second}}"{{^-last}},
+      {{/-last}}{{#-last}}
+    ){{/-last}}{{/vendorExtensions.operationHeaders}}
+    {{/vendorExtensions.hasOperationHeaders}}
+    @{{httpMethod}}("{{{path}}}"){{#vendorExtensions.x-unsafe-operation}}{{#isDeprecated}}
+    @Deprecated(message = "Deprecated and unsafe to use"){{/isDeprecated}}{{^isDeprecated}}
+    @Deprecated(message = "Unsafe to use"){{/isDeprecated}}
   {{/vendorExtensions.x-unsafe-operation}}{{^vendorExtensions.x-unsafe-operation}}{{#isDeprecated}}
       @Deprecated(message = "Deprecated"){{/isDeprecated}}
   {{/vendorExtensions.x-unsafe-operation}}
-  {{vendorExtensions.x-function-qualifiers}} fun {{operationId}}({{^allParams}}){{/allParams}}
-    {{#allParams}}{{>retrofit2/queryParams}}{{>retrofit2/pathParams}}{{>retrofit2/headerParams}}{{>retrofit2/bodyParams}}{{>retrofit2/formParams}}{{#hasMore}},
-    {{/hasMore}}{{^hasMore}}
-  ){{/hasMore}}{{/allParams}}: {{{returnType}}}
-
+    {{#vendorExtensions.x-function-qualifiers}}{{vendorExtensions.x-function-qualifiers}} {{/vendorExtensions.x-function-qualifiers}}fun {{operationId}}({{#hasParams}}
+{{#allParams}}        {{>retrofit2/queryParams}}{{>retrofit2/pathParams}}{{>retrofit2/headerParams}}{{>retrofit2/bodyParams}}{{>retrofit2/formParams}}{{#hasMore}},{{{newline}}}{{/hasMore}}{{/allParams}}
+    {{/hasParams}}): {{{returnType}}}
   {{/operation}}
 }
 {{/operations}}

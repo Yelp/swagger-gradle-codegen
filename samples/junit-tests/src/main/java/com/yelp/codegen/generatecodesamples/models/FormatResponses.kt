@@ -12,7 +12,6 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.ZonedDateTime
 
 /**
- *
  * @property dateProperty
  * @property datetimeProperty
  * @property enumProperty
@@ -24,7 +23,6 @@ data class FormatResponses(
     @Json(name = "enum_property") @field:Json(name = "enum_property") var enumProperty: FormatResponses.EnumPropertyEnum? = null
 ) {
     /**
-     *
      * Values: VALUE1, VALUE2
      */
     @JsonClass(generateAdapter = false)

@@ -6,9 +6,10 @@ repos:
   - id: trailing-whitespace
     exclude: .*\.mustache$
   - id: end-of-file-fixer
-    exclude: .*\.mustache$
+    exclude: (.*\.mustache|samples/[^/]+/src/main/java/swagger.json)$
   - id: pretty-format-json
     args: [--autofix, --indent, '4']
+    exclude: ^samples/[^/]+/src/main/java/swagger.json$
   - id: check-yaml
   - id: check-executables-have-shebangs
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks

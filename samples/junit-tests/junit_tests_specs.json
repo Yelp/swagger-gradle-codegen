@@ -573,6 +573,27 @@
                 ]
             }
         },
+        "/post/file": {
+            "post": {
+                "operationId": "post_file",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Something"
+                    }
+                },
+                "tags": [
+                    "file"
+                ]
+            }
+        },
         "/property_array/{value_type}/{size}": {
             "get": {
                 "operationId": "get_property_array",
