@@ -575,11 +575,65 @@
         },
         "/post/file": {
             "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
                 "operationId": "post_file",
                 "parameters": [
                     {
                         "in": "formData",
-                        "name": "file",
+                        "name": "client_file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Something"
+                    }
+                },
+                "tags": [
+                    "file"
+                ]
+            }
+        },
+        "/post/file_without_consumes": {
+            "post": {
+                "operationId": "post_file_without_multipart_form_data",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "client_file",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "Something"
+                    }
+                },
+                "tags": [
+                    "file"
+                ]
+            }
+        },
+        "/post/multiple_files": {
+            "post": {
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "operationId": "post_multiple_files",
+                "parameters": [
+                    {
+                        "in": "formData",
+                        "name": "client_file",
+                        "required": true,
+                        "type": "file"
+                    },
+                    {
+                        "in": "formData",
+                        "name": "certificate_file",
                         "required": true,
                         "type": "file"
                     }
