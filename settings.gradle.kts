@@ -15,9 +15,4 @@ pluginManagement {
     }
 }
 
-include(":plugin",
-        ":samples:junit-tests",
-        ":samples:kotlin-android",
-        ":samples:kotlin-android-moshi-codegen",
-        ":samples:kotlin-coroutines",
-        ":samples:groovy-android")
+include(":plugin")
