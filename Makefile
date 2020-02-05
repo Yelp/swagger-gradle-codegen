@@ -6,7 +6,6 @@
 install-hooks: .git/hooks/pre-commit
 	@true
 
-
 run-hooks: venv
 	${CURDIR}/venv/bin/pre-commit run --all-files
 
