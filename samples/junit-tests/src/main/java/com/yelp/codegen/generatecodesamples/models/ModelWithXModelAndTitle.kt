@@ -10,7 +10,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- *
  * @property xmodelAndTitle
  */
 @JsonClass(generateAdapter = true)
@@ -18,7 +17,6 @@ data class ModelWithXModelAndTitle(
     @Json(name = "xmodel_and_title") @field:Json(name = "xmodel_and_title") var xmodelAndTitle: ModelWithXModelAndTitle.XmodelAndTitleEnum? = null
 ) {
     /**
-     *
      * Values: VAL1, VAL2
      */
     @JsonClass(generateAdapter = false)

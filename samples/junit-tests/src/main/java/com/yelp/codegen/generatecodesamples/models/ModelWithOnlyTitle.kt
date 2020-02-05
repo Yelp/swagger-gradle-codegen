@@ -10,7 +10,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- *
  * @property titleOnly
  */
 @JsonClass(generateAdapter = true)
@@ -18,7 +17,6 @@ data class ModelWithOnlyTitle(
     @Json(name = "title_only") @field:Json(name = "title_only") var titleOnly: ModelWithOnlyTitle.TitleOnlyEnum? = null
 ) {
     /**
-     *
      * Values: VAL1, VAL2
      */
     @JsonClass(generateAdapter = false)

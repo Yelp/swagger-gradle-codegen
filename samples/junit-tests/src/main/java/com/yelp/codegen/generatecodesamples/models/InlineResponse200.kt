@@ -10,7 +10,6 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
- *
  * @property noXmodelNoTitle
  */
 @JsonClass(generateAdapter = true)
@@ -18,7 +17,6 @@ data class InlineResponse200(
     @Json(name = "no_xmodel_no_title") @field:Json(name = "no_xmodel_no_title") var noXmodelNoTitle: InlineResponse200.NoXmodelNoTitleEnum? = null
 ) {
     /**
-     *
      * Values: VAL1, VAL2
      */
     @JsonClass(generateAdapter = false)
