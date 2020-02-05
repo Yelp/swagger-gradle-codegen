@@ -6,20 +6,15 @@
 install-hooks: .git/hooks/pre-commit
 	@true
 
-regenerate-samples:
-	${CURDIR}/gradlew plugin:build
-	${CURDIR}/gradlew plugin:publishToMavenLocal
-	${CURDIR}/gradlew generateSwagger
 
 run-hooks: venv
 	${CURDIR}/venv/bin/pre-commit run --all-files
 
 test: run-hooks
-	${CURDIR}/gradlew plugin:build
-	${CURDIR}/gradlew plugin:publishToMavenLocal
-	${CURDIR}/gradlew generateSwagger
-	${CURDIR}/gradlew assembleDebug
-	${CURDIR}/gradlew check
+	${CURDIR}/gradlew plugin:build check
+	${CURDIR}/gradlew -p samples/ generateSwagger
+	${CURDIR}/gradlew -p samples/ assembleDebug
+	${CURDIR}/gradlew -p samples/ check
 
 venv:
 	virtualenv venv
