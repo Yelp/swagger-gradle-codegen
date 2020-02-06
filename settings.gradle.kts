@@ -1,4 +1,4 @@
-rootProject.name = "samples"
+rootProject.name = "swagger-gradle-codegen"
 
 pluginManagement {
   repositories {
@@ -17,10 +17,10 @@ pluginManagement {
 }
 
 include(
-    ":junit-tests",
-    ":kotlin-android",
-    ":kotlin-android-moshi-codegen",
-    ":kotlin-coroutines",
-    ":groovy-android")
+    ":samples:junit-tests",
+    ":samples:kotlin-android",
+    ":samples:kotlin-android-moshi-codegen",
+    ":samples:kotlin-coroutines",
+    ":samples:groovy-android")
 
-includeBuild("../")
+includeBuild("plugin")
