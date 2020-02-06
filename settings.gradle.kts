@@ -23,4 +23,4 @@ include(
     ":samples:kotlin-coroutines",
     ":samples:groovy-android")
 
-includeBuild("plugin")
+includeBuild("plugin-root")
