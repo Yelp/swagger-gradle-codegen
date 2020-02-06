@@ -1,7 +1,7 @@
 subprojects {
-  repositories {
-    google()
-    mavenCentral()
-    jcenter()
-  }
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
 }
