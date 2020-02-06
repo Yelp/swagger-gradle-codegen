@@ -24,7 +24,7 @@ apply(plugin = "com.yelp.codegen.plugin")
 configure<GenerateTaskConfiguration> {
   platform = "kotlin"
   packageName = "com.yelp.codegen.samples"
-  // this file is in rootDir/plugin/build/testProject/
-  inputFile = file("../../../samples/junit-tests/junit_tests_specs.json")
+  // we are in rootDir/plugin-root/plugin/build/testProject/
+  inputFile = file("../../../../samples/junit-tests/junit_tests_specs.json")
   outputDir = file("./build/generatedSources")
 }

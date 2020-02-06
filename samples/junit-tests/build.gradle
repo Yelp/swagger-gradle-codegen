@@ -72,5 +72,5 @@ repositories {
 detekt {
     toolVersion = "1.4.0"
     input = files("src/test")
-    config = rootProject.files("../config/detekt/detekt.yml")
+    config = rootProject.files("./config/detekt/detekt.yml")
 }
