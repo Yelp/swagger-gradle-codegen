@@ -10,7 +10,7 @@ run-hooks: venv
 	${CURDIR}/venv/bin/pre-commit run --all-files
 
 test: run-hooks
-	${CURDIR}/gradlew -p plugin-root build check
+	${CURDIR}/gradlew --project-dir gradle-plugin build check
 	${CURDIR}/gradlew generateSwagger
 	# The check task requires a lot of MetaSpace
 	${CURDIR}/gradlew assembleDebug check -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=2g"
