@@ -494,6 +494,13 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
             codegenOperation.vendorExtensions[X_UNSAFE_OPERATION] = true
         }
         codegenOperation.isMultipart = isMultipartOperation(operation)
+
+        if (!codegenOperation.isMultipart && codegenOperation.allParams.any { it.isFile }) {
+            // According to the swagger specifications in order to send files the operation must
+            // consume multipart/form-data (https://swagger.io/docs/specification/2-0/file-upload/)
+            codegenOperation.vendorExtensions[X_UNSAFE_OPERATION] = true
+        }
+
         return codegenOperation
     }
 
