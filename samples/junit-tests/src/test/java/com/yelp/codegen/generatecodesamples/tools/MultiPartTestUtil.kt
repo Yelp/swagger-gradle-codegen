@@ -1,7 +1,8 @@
 package com.yelp.codegen.generatecodesamples.tools
 
 import okhttp3.mockwebserver.RecordedRequest
-import org.junit.Assert.fail
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 
 data class FileApiStats(
     val boundary: String,
@@ -18,21 +19,18 @@ data class MultiPartInfo(
 private fun processPart(part: String): MultiPartInfo {
     // part would look like "\r\nHeader-Name: Header-Value\r\n...\r\n\r\nbody\r\n"
     // Here we're removing the first and last part as we know that are empty
-    val partLinesIterator = part.split("\r\n").drop(1).dropLast(1).iterator()
+    val partLines = part.split("\r\n").drop(1).dropLast(1)
 
-    val headers = mutableMapOf<String, String>()
-    for (headerLine in partLinesIterator) {
-        if (headerLine.isEmpty()) {
-            break
-        } else {
-            val (name, value) = headerLine.split(": ", limit = 2)
-            // Note: in theory we can have the same header name multiples times
-            // We're not dealing with it as this is a test utility ;)
-            headers[name] = value
-        }
-    }
+    val indexBoundaryHeadersContent = partLines.indexOf("")
 
-    val content = partLinesIterator.asSequence().joinToString("\r\n")
+    val headers = partLines.subList(0, indexBoundaryHeadersContent).map {
+        val (name, value) = it.split(": ", limit = 2)
+        // Note: in theory we can have the same header name multiples times
+        // We're not dealing with it as this is a test utility ;)
+        name to value
+    }.toMap()
+
+    val content = partLines.subList(indexBoundaryHeadersContent, partLines.size).drop(1).joinToString("\r\n")
     return MultiPartInfo(
         fileContent = content,
         contentDisposition = headers["Content-Disposition"],
@@ -66,19 +64,23 @@ fun RecordedRequest.decodeMultiPartBody(): FileApiStats {
 
     val boundaryLine = requestBody.split("\r\n").first()
 
-    val bodyParts = mutableListOf<String>()
-
-    if (!boundaryLine.startsWith("--")) {
-        fail("Boundary should start with '--'")
-    }
+    assertTrue(
+        "Boundary should start with '--'",
+        boundaryLine.startsWith("--")
+    )
 
     val boundary = boundaryLine.substring(startIndex = 2)
-    bodyParts.addAll(requestBody.split(boundaryLine))
-    if (!bodyParts.last().startsWith("--")) {
-        fail("Start and End Boundaries are different")
-    } else if (bodyParts.last().substring(startIndex = 2) != "\r\n") {
-        fail("The last line of the body has to be empty")
-    }
+    val bodyParts = requestBody.split(boundaryLine)
+
+    assertTrue(
+        "Start and End Boundaries are different",
+        bodyParts.last().startsWith("--")
+    )
+    assertEquals(
+        "The last line of the body has to be empty",
+        "\r\n",
+        bodyParts.last().substring(startIndex = 2)
+    )
 
     val parts = bodyParts
         .drop(1)

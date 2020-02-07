@@ -29,7 +29,6 @@ class PostFileEndpointTest {
         val fileApiStats = rule.server.takeRequest().decodeMultiPartBody()
         assertNotNull(fileApiStats.boundary)
         assertEquals(
-            fileApiStats.parts,
             listOf(
                 MultiPartInfo(
                     contentDisposition = "form-data; name=\"client_file\"; filename=\"client_file\"",
@@ -37,7 +36,8 @@ class PostFileEndpointTest {
                     contentLength = "2",
                     fileContent = "{}"
                 )
-            )
+            ),
+            fileApiStats.parts
         )
     }
 
@@ -53,7 +53,6 @@ class PostFileEndpointTest {
         val fileApiStats = rule.server.takeRequest().decodeMultiPartBody()
         assertNotNull(fileApiStats.boundary)
         assertEquals(
-            fileApiStats.parts,
             listOf(
                 MultiPartInfo(
                     contentDisposition = "form-data; name=\"client_file\"; filename=\"client_file\"",
@@ -67,7 +66,8 @@ class PostFileEndpointTest {
                     contentLength = "9",
                     fileContent = "Some Text"
                 )
-            )
+            ),
+            fileApiStats.parts
         )
     }
 
