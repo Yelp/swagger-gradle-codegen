@@ -11,7 +11,7 @@ class MainTest {
     private fun runGenerator(platform: String) {
         val junitTestsSpecsPath = File(
             // Repo root
-            File(".").absoluteFile.parentFile.parentFile.absolutePath,
+            File(".").absoluteFile.parentFile.parentFile.parentFile.absolutePath,
             "samples${File.separator}junit-tests${File.separator}junit_tests_specs.json"
         ).path
 

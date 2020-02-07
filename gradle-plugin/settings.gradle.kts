@@ -1,7 +1,9 @@
-subprojects {
+pluginManagement {
     repositories {
-        google()
+        gradlePluginPortal()
         mavenCentral()
         jcenter()
     }
 }
+
+include(":plugin")

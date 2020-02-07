@@ -6,20 +6,14 @@
 install-hooks: .git/hooks/pre-commit
 	@true
 
-regenerate-samples:
-	${CURDIR}/gradlew plugin:build
-	${CURDIR}/gradlew plugin:publishToMavenLocal
-	${CURDIR}/gradlew generateSwagger
-
 run-hooks: venv
 	${CURDIR}/venv/bin/pre-commit run --all-files
 
 test: run-hooks
-	${CURDIR}/gradlew plugin:build
-	${CURDIR}/gradlew plugin:publishToMavenLocal
+	${CURDIR}/gradlew --project-dir gradle-plugin build check
 	${CURDIR}/gradlew generateSwagger
-	${CURDIR}/gradlew assembleDebug
-	${CURDIR}/gradlew check
+	# The check task requires a lot of MetaSpace
+	${CURDIR}/gradlew assembleDebug check -Dorg.gradle.jvmargs="-Xmx4g -XX:MaxMetaspaceSize=2g"
 
 venv:
 	virtualenv venv

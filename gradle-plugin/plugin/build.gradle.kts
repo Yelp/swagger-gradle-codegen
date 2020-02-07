@@ -69,7 +69,7 @@ configure<PublishingExtension> {
 detekt {
     toolVersion = "1.4.0"
     input = files("src/")
-    config = rootProject.files("./config/detekt/detekt.yml")
+    config = rootProject.files("../config/detekt/detekt.yml")
 }
 
 tasks.jacocoTestReport {
