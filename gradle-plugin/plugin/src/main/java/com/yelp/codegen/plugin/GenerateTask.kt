@@ -5,8 +5,11 @@ import io.swagger.parser.SwaggerParser
 import java.io.File
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.Directory
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFile
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.plugins.BasePlugin
+import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
@@ -23,66 +26,65 @@ const val DEFAULT_NAME = "defaultname"
 const val DEFAULT_PACKAGE = "com.codegen.default"
 const val DEFAULT_OUTPUT_DIR = "/gen"
 
-open class GenerateTask : DefaultTask() {
+abstract class GenerateTask : DefaultTask() {
 
     init {
         description = "Run the Swagger Code Generation tool"
         group = BasePlugin.BUILD_GROUP
     }
 
-    @Input
-    @Optional
-    @Option(option = "platform", description = "Configures the platform that is used for generating the code.")
-    var platformProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
+    @get:Input
+    @get:Optional
+    @get:Option(option = "platform", description = "Configures the platform that is used for generating the code.")
+    abstract val platform: Property<String>
 
-    @Input
-    @Optional
-    @Option(option = "packageName", description = "Configures the package name of the resulting code.")
-    var packageNameProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
+    @get:Input
+    @get:Optional
+    @get:Option(option = "packageName", description = "Configures the package name of the resulting code.")
+    abstract val packageName: Property<String>
 
-    @Input
-    @Optional
-    @Option(option = "specName", description = "Configures the name of the service for the Swagger Spec.")
-    var specNameProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
+    @get:Input
+    @get:Optional
+    @get:Option(option = "specName", description = "Configures the name of the service for the Swagger Spec.")
+    abstract val specName: Property<String>
 
-    @Input
-    @Optional
-    @Option(option = "specVersion", description = "Configures the version of the Swagger Spec.")
-    var specVersionProvider: Provider<String> = project.objects.property(String::class.javaObjectType)
+    @get:Input
+    @get:Optional
+    @get:Option(option = "specVersion", description = "Configures the version of the Swagger Spec.")
+    abstract val specVersion: Property<String>
 
-    @InputFile
-    @Option(option = "inputFile", description = "Configures path of the Swagger Spec.")
-    var inputFileProvider: Provider<RegularFile> = project.objects.fileProperty()
+    @get:InputFile
+    @get:Option(option = "inputFile", description = "Configures path of the Swagger Spec.")
+    abstract val inputFile: RegularFileProperty
 
-    @OutputDirectory
-    @Optional
-    @Option(option = "outputDir", description = "Configures path of the Generated code directory.")
-    var outputDirectoryProvider: Provider<Directory> = project.objects.directoryProperty()
+    @get:OutputDirectory
+    @get:Optional
+    @get:Option(option = "outputDir", description = "Configures path of the Generated code directory.")
+    abstract val outputDirectory: DirectoryProperty
 
-    @InputFiles
-    @Optional
-    @Option(option = "extraFiles",
+    @get:InputFiles
+    @get:Optional
+    @get:Option(option = "extraFiles",
             description = "Configures path of the extra files directory to be added to the Generated code.")
-    var extraFilesDirectoryProvider: Provider<Directory> = project.objects.directoryProperty()
+    abstract val extraFiles: DirectoryProperty
 
-    @Nested
-    @Option(option = "featureHeaderToRemove", description = "")
+    @get:Nested
+    @get:Option(option = "featureHeaderToRemove", description = "")
     var features: FeatureConfiguration? = null
 
     @TaskAction
     fun swaggerGenerate() {
-        val platform = platformProvider.orNull
-        val specName = specNameProvider.orNull
-        val specVersion = specVersionProvider.orNull
-        var packageName = packageNameProvider.orNull
+        val platform = platform.orNull
+        val specName = specName.orNull
+        var packageName = packageName.orNull
 
-        val inputFile = inputFileProvider.get().asFile
-        val outputDirectory = outputDirectoryProvider.orNull?.asFile
+        val inputFile = inputFile.get().asFile
+        val outputDirectory = outputDirectory.orNull?.asFile
 
-        if (specVersion == null) {
-            readVersionFromSpecfile(inputFile)
-        }
+        val specVersion = specVersion.getOrElse(readVersionFromSpecfile(inputFile))
+
         val defaultOutputDir = File(project.buildDir, DEFAULT_OUTPUT_DIR)
+        val headersToRemove = features?.headersToRemove?.orNull ?: emptyList()
 
         println("""
             ####################
@@ -96,10 +98,10 @@ open class GenerateTask : DefaultTask() {
             output ${"\t\t"} ${outputDirectory ?: "[ DEFAULT ] $defaultOutputDir"}
             groupId ${'\t'} ${packageName ?: "[ DEFAULT ] default"}
             artifactId ${'\t'} ${packageName ?: "[ DEFAULT ] com.codegen"}
-            features ${'\t'} ${features?.headersToRemove?.joinToString(", ")?.ifEmpty { "[  EMPTY  ]" }}
+            features ${'\t'} ${headersToRemove.joinToString(separator = ",", prefix = "[", postfix = "]")}
         """.trimIndent())
 
-        packageName = packageNameProvider.orNull ?: DEFAULT_PACKAGE
+        packageName = this.packageName.orNull ?: DEFAULT_PACKAGE
 
         val params = mutableListOf<String>()
         params.add("-p")
@@ -117,33 +119,33 @@ open class GenerateTask : DefaultTask() {
         params.add("-o")
         params.add((outputDirectory ?: defaultOutputDir).toString())
 
-        if (true == features?.headersToRemove?.isNotEmpty()) {
+        if (headersToRemove.isNotEmpty()) {
             params.add("-ignoreheaders")
-            params.add(features?.headersToRemove?.joinToString(",") ?: "")
+            params.add(headersToRemove.joinToString(","))
         }
 
         // Running the Codegen Main here
         main(params.toTypedArray())
 
         // Copy over the extra files.
-        val source = extraFilesDirectoryProvider.orNull?.asFile
+        val source = extraFiles.orNull?.asFile
         val destin = outputDirectory
         if (source != null && destin != null) {
             source.copyRecursively(destin, overwrite = true)
         }
     }
 
-    private fun readVersionFromSpecfile(specFile: File) {
+    private fun readVersionFromSpecfile(specFile: File): String {
         val swaggerSpec = SwaggerParser().readWithInfo(specFile.absolutePath, listOf(), false).swagger
 
-        this.specVersionProvider = when (val version = swaggerSpec.info.version) {
+        return when (val version = swaggerSpec.info.version) {
             is String -> {
                 println("Successfully read version from Swagger Spec file: $version")
-                specVersionProvider.map { version }
+                version
             }
             else -> {
                 println("Issue in reading version from Swagger Spec file. Falling back to $DEFAULT_VERSION")
-                specVersionProvider.map { DEFAULT_VERSION }
+                DEFAULT_VERSION
             }
         }
     }

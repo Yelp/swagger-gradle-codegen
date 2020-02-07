@@ -44,7 +44,7 @@ generateSwagger {
     inputFile.set(file("../sample_specs.json"))
     outputDir.set(project.layout.buildDirectory.dir("./src/main/java/"))
     features {
-        headersToRemove = ["Accept-Language"]
+        headersToRemove.add("Accept-Language")
     }
 }
 
