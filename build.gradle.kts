@@ -47,8 +47,8 @@ val preMerge = tasks.register("preMerge") {
     description = "Runs pre-commit hooks, build the plugin and sample and execute tests."
 
     dependsOn(runHooks)
-    dependsOn(gradle.includedBuild("gradle-plugin").task(":build"))
-    dependsOn(gradle.includedBuild("gradle-plugin").task(":check"))
+    dependsOn(gradle.includedBuild("gradle-plugin").task(":plugin:build"))
+    dependsOn(gradle.includedBuild("gradle-plugin").task(":plugin:check"))
     dependsOn(subprojects.filter { it.name != "samples" }.map { it.tasks.named("assembleDebug") })
     dependsOn(subprojects.filter { it.name != "samples" }.map { it.tasks.named("check") })
 }
