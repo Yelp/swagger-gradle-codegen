@@ -64,7 +64,7 @@ subprojects {
     afterEvaluate { // Remove when we have lazy configuration
         tasks.all {
             if (this is org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
-                // assembleDebug needs the generated files
+                // we need the generated files before we run the kotlin compile task
                 dependsOn(tasks.named("generateSwagger"))
             }
         }
