@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library") version "3.5.3"
-    kotlin("android") version "1.3.61"
-    id("com.yelp.codegen.plugin") version "1.3.0"
-    kotlin("kapt") version "1.3.61"
+    id("com.android.library")
+    id("kotlin-android")
+    id("com.yelp.codegen.plugin")
+    id("kotlin-kapt")
 }
 
 android {

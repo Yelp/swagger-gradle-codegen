@@ -53,10 +53,17 @@ val preMerge = tasks.register("preMerge") {
     dependsOn(subprojects.filter { it.name != "samples" }.map { it.tasks.named("check") })
 }
 
+plugins {
+    id("com.android.library").version("3.5.3").apply(false)
+    id("com.yelp.codegen.plugin").version("1.3.0").apply(false)
+    id("io.gitlab.arturbosch.detekt").version("1.4.0").apply(false)
+    kotlin("android").version("1.3.61").apply(false)
+}
+
 subprojects {
     afterEvaluate { // Remove when we have lazy configuration
         tasks.all {
-            if (name == "assembleDebug") {
+            if (this is org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
                 // assembleDebug needs the generated files
                 dependsOn(tasks.named("generateSwagger"))
             }
