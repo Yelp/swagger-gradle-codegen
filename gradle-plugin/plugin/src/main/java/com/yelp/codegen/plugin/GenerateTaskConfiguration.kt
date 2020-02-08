@@ -1,12 +1,11 @@
 package com.yelp.codegen.plugin
 
+import javax.inject.Inject
 import org.gradle.api.Action
-import org.gradle.api.Project
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
-import javax.inject.Inject
 
 abstract class GenerateTaskConfiguration @Inject constructor(objectFactory: ObjectFactory) {
     abstract val platform: Property<String>
