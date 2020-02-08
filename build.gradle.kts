@@ -36,7 +36,7 @@ val installHooks = tasks.register("installHooks", Exec::class.java) {
 }
 
 val runHooks = tasks.register("runHooks", Exec::class.java) {
-    description = "Run pre-commit hooks without installing them"
+    description = "Run pre-commit hooks"
 
     dependsOn(installPreCommit)
 
