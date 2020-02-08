@@ -25,7 +25,7 @@ cache:
   - ${HOME}/.m2
 
 script:
-- make test
+- ./gradlew preMerge
 
 after_success:
 - bash <(curl -s https://codecov.io/bash)
