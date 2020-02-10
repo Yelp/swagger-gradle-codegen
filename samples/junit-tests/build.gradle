@@ -1,24 +1,10 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-        jcenter()
-    }
-
-    dependencies {
-        classpath "com.android.tools.build:gradle:3.5.3"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
-        classpath "com.yelp.codegen:plugin:1.3.0"
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.4.0"
-    }
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+    id("com.yelp.codegen.plugin")
+    id("io.gitlab.arturbosch.detekt")
+    id("kotlin-kapt")
 }
-
-apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-apply plugin: "com.yelp.codegen.plugin"
-apply plugin: "io.gitlab.arturbosch.detekt"
-apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion = 28

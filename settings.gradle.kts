@@ -7,6 +7,7 @@ pluginManagement {
         jcenter()
         google()
     }
+
     resolutionStrategy {
         eachPlugin {
             if ("com.android" in requested.id.id) {
