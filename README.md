@@ -156,15 +156,15 @@ We also recommend you set up:
 Before starting developing, please run:
 
 ```
-make install-hooks
+./gradlew installHooks
 ```
 
 This will take care of installing the pre-commit hooks to keep a consistent style in the codebase.
 
-While developing, you can run tests on the plugin using:
+While developing, you can build, run pre-commits, checks & tests on the plugin using:
 
 ```
-./gradlew plugin:test
+./gradlew preMerge
 ```
 
 Make sure your tests are all green ✅ locally before submitting PRs.
