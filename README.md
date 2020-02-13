@@ -56,7 +56,7 @@ Once you setup the plugin correctly, you can call the `:generateSwagger` gradle 
 
 In order to run this gradle plugin you need to fulfill the following requirements:
 
-* Gradle 5.x - This plugin uses Gradle 5 features, and you will need to setup your Gradle wrapper to use 5.0 or more.
+* Gradle 5.x - This plugin uses Gradle 5 features, and you will need to setup your Gradle wrapper to use 5.4.1 or more.
 * Java 8+
 
 ## Supported platforms

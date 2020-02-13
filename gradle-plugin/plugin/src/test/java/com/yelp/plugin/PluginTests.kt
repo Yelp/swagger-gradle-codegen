@@ -32,4 +32,20 @@ class PluginTests {
                 .build()
         Assert.assertEquals(TaskOutcome.UP_TO_DATE, result2ndRun.task(":generateSwagger")?.outcome)
     }
+
+    @Test
+    fun testGradle5() {
+        val projectDir = temporaryFolder.newFolder("project")
+        File("src/test/testProject").copyRecursively(projectDir)
+
+        val result = GradleRunner.create()
+                .withProjectDir(projectDir)
+                .withGradleVersion("5.4.1")
+                .forwardStdOutput(System.out.writer())
+                .forwardStdError(System.err.writer())
+                .withArguments("generateSwagger")
+                .build()
+
+        Assert.assertEquals(TaskOutcome.SUCCESS, result.task(":generateSwagger")?.outcome)
+    }
 }

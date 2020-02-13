@@ -5,7 +5,7 @@ version = rootProject.version
 
 plugins {
     java
-    `kotlin-dsl`
+    id("java-gradle-plugin")
     `maven-publish`
     jacoco
     kotlin("jvm") version "1.3.61"
@@ -37,6 +37,14 @@ dependencies {
 tasks.register<Jar>("sourcesJar") {
     from(sourceSets.main.get().allJava)
     classifier = "sources"
+}
+gradlePlugin {
+    plugins {
+        create("com.yelp.codegen.plugin") {
+            id = "com.yelp.codegen.plugin"
+            implementationClass = "com.yelp.codegen.plugin.CodegenPlugin"
+        }
+    }
 }
 
 // Configuration Block for the Plugin Marker artifact on Plugin Central
@@ -87,3 +95,4 @@ tasks.withType<Test> {
     dependsOn("publishPluginMavenPublicationToPluginTestRepository")
     inputs.dir("src/test/testProject")
 }
+
