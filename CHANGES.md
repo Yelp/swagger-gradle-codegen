@@ -15,7 +15,7 @@ Here you can find the release notes for this project. Please note that list of r
 * ⚙️ Gradle to 5.6.2 [#67]
 * ⚙️ Add JaCoCo for CodeCov [#66]
 
-⚠️: `swagger-gradle-codegen:plugin:1.3.0` is **NOT** supported on Gradle 5
+⚠️: `swagger-gradle-codegen:plugin:1.3.0` is supported **ONLY** on Gradle 6+
 
 Thanks to @cortinico @doug-precocity @redwarp @macisamuele @filipemp for the support with this release
 
