@@ -6,7 +6,7 @@ import org.gradle.util.GradleVersion
 
 val config = extensions.create("generateSwagger", GenerateTaskConfiguration::class.java, project)
 
-require(GradleVersion.current().compareTo(GradleVersion.version("5.0")) >= 0) {
+require(GradleVersion.current() >= GradleVersion.version("5.0")) {
     "com.yelp.codegen.plugin requires Gradle version 5.0 or greater"
 }
 
