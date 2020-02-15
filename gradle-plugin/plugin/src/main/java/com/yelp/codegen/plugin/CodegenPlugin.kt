@@ -6,7 +6,7 @@ import org.gradle.util.GradleVersion
 
 class CodegenPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        require(GradleVersion.current().compareTo(GradleVersion.version("5.4.1")) >= 0) {
+        require(GradleVersion.current() >= GradleVersion.version("5.4.1")) {
             "com.yelp.codegen.plugin requires Gradle version 5.4.1 or greater"
         }
 
