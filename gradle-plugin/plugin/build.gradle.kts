@@ -95,4 +95,3 @@ tasks.withType<Test> {
     dependsOn("publishPluginMavenPublicationToPluginTestRepository")
     inputs.dir("src/test/testProject")
 }
-
