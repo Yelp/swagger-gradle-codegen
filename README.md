@@ -1,6 +1,6 @@
 # Swagger Gradle Codegen
 
-[![Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/yelp/codegen/plugin/com.yelp.codegen.plugin.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal&colorB=brightgreen)](https://plugins.gradle.org/plugin/com.yelp.codegen.plugin) [![Build Status](https://travis-ci.com/Yelp/swagger-gradle-codegen.svg?branch=master)](https://travis-ci.com/Yelp/swagger-gradle-codegen) [![License](https://img.shields.io/badge/license-Apache2.0%20License-orange.svg)](https://opensource.org/licenses/Apache2.0) [![Twitter](https://img.shields.io/badge/Twitter-@YelpEngineering-blue.svg)](https://twitter.com/YelpEngineering)
+[![Plugin Portal](https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/com/yelp/codegen/plugin/com.yelp.codegen.plugin.gradle.plugin/maven-metadata.xml.svg?label=Gradle%20Plugin%20Portal&colorB=brightgreen)](https://plugins.gradle.org/plugin/com.yelp.codegen.plugin) [![Join the chat at https://kotlinlang.slack.com](https://img.shields.io/badge/slack-@kotlinlang/swagger--gradle--codegen-yellow.svg?logo=slack)](https://kotlinlang.slack.com/archives/CU233PG2Z) [![Build Status](https://travis-ci.com/Yelp/swagger-gradle-codegen.svg?branch=master)](https://travis-ci.com/Yelp/swagger-gradle-codegen) [![License](https://img.shields.io/badge/license-Apache2.0%20License-orange.svg)](https://opensource.org/licenses/Apache2.0) [![Twitter](https://img.shields.io/badge/Twitter-@YelpEngineering-blue.svg)](https://twitter.com/YelpEngineering)
 
 A Gradle plugin to **generate networking code** from a **Swagger spec file**.
 
@@ -169,7 +169,9 @@ While developing, you can build, run pre-commits, checks & tests on the plugin u
 
 Make sure your tests are all green ✅ locally before submitting PRs.
 
-## Contributing
+## Contributing/Support
+
+Support for this project is offered in the [#swagger-gradle-codegen](https://kotlinlang.slack.com/archives/CU233PG2Z) channel on the Kotlinlang slack ([request an invite here](http://slack.kotlinlang.org/)).
 
 We're looking for contributors! Feel free to open issues/pull requests to help me improve this project.
 
