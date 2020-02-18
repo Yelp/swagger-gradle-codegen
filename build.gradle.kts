@@ -54,7 +54,7 @@ val preMerge = tasks.register("preMerge") {
 
 plugins {
     id("com.android.library").version("3.5.3").apply(false)
-    id("com.yelp.codegen.plugin").version("1.3.0").apply(false)
+    id("com.yelp.codegen.plugin").version("1.4.0").apply(false)
     id("io.gitlab.arturbosch.detekt").version("1.4.0").apply(false)
     kotlin("android").version("1.3.61").apply(false)
 }
