@@ -431,13 +431,16 @@ open class KotlinGenerator : SharedCodegen() {
             }
         }
 
-        codegenOperation.imports.add("retrofit2.http.Headers")
-
         // Let's remove the leading
         if (!basePath.isNullOrBlank()) {
             codegenOperation.path = codegenOperation.path.removePrefix("/")
         }
+
+        // Let's process the top level Headers and eventually add the retrofit annotations.
         processTopLevelHeaders(codegenOperation)
+        if (codegenOperation.vendorExtensions[HAS_OPERATION_HEADERS] == true) {
+            codegenOperation.imports.add("retrofit2.http.Headers")
+        }
 
         // Let's make sure we import all the types, also the inner ones (see #76).
         codegenOperation.responses.forEach {
@@ -507,6 +510,10 @@ open class KotlinGenerator : SharedCodegen() {
                 topLevelHeaders.add(HEADER_CONTENT_TYPE to it)
             }
         }
+
+        // Process the
+        val headersToIgnore = getHeadersToIgnore()
+        topLevelHeaders.removeIf { it.first in headersToIgnore }
 
         operation.vendorExtensions[HAS_OPERATION_HEADERS] = topLevelHeaders.isNotEmpty()
         operation.vendorExtensions[OPERATION_HEADERS] = topLevelHeaders
