@@ -1,8 +1,6 @@
 package com.yelp.codegen.plugin
 
 import com.yelp.codegen.main
-import io.swagger.parser.SwaggerParser
-import java.io.File
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
@@ -31,22 +29,18 @@ abstract class GenerateTask : DefaultTask() {
     }
 
     @get:Input
-    @get:Optional
     @get:Option(option = "platform", description = "Configures the platform that is used for generating the code.")
     abstract val platform: Property<String>
 
     @get:Input
-    @get:Optional
     @get:Option(option = "packageName", description = "Configures the package name of the resulting code.")
     abstract val packageName: Property<String>
 
     @get:Input
-    @get:Optional
     @get:Option(option = "specName", description = "Configures the name of the service for the Swagger Spec.")
     abstract val specName: Property<String>
 
     @get:Input
-    @get:Optional
     @get:Option(option = "specVersion", description = "Configures the version of the Swagger Spec.")
     abstract val specVersion: Property<String>
 
@@ -55,7 +49,6 @@ abstract class GenerateTask : DefaultTask() {
     abstract val inputFile: RegularFileProperty
 
     @get:OutputDirectory
-    @get:Optional
     @get:Option(option = "outputDir", description = "Configures path of the Generated code directory.")
     abstract val outputDir: DirectoryProperty
 
@@ -71,12 +64,12 @@ abstract class GenerateTask : DefaultTask() {
 
     @TaskAction
     fun swaggerGenerate() {
-        val platform = platform.getOrElse(DEFAULT_PLATFORM)
-        val specName = specName.getOrElse(DEFAULT_NAME)
-        val packageName = packageName.getOrElse(DEFAULT_PACKAGE)
-        val outputDir = outputDir.getOrElse(project.layout.buildDirectory.dir(DEFAULT_OUTPUT_DIR).get()).asFile
+        val platform = platform.get()
+        val specName = specName.get()
+        val packageName = packageName.get()
+        val outputDir = outputDir.get().asFile
         val inputFile = inputFile.get().asFile
-        val specVersion = specVersion.getOrElse(readVersionFromSpecfile(inputFile))
+        val specVersion = specVersion.get()
 
         val headersToRemove = features?.headersToRemove?.get() ?: emptyList()
 
@@ -122,20 +115,5 @@ abstract class GenerateTask : DefaultTask() {
         // Copy over the extra files.
         val source = extraFiles.orNull?.asFile
         source?.copyRecursively(outputDir, overwrite = true)
-    }
-
-    private fun readVersionFromSpecfile(specFile: File): String {
-        val swaggerSpec = SwaggerParser().readWithInfo(specFile.absolutePath, listOf(), false).swagger
-
-        return when (val version = swaggerSpec.info.version) {
-            is String -> {
-                println("Successfully read version from Swagger Spec file: $version")
-                version
-            }
-            else -> {
-                println("Issue in reading version from Swagger Spec file. Falling back to $DEFAULT_VERSION")
-                DEFAULT_VERSION
-            }
-        }
     }
 }

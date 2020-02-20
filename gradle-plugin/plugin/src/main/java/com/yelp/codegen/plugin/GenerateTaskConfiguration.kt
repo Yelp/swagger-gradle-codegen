@@ -1,22 +1,43 @@
 package com.yelp.codegen.plugin
 
+import io.swagger.parser.SwaggerParser
+import java.io.File
 import javax.inject.Inject
 import org.gradle.api.Action
-import org.gradle.api.file.DirectoryProperty
-import org.gradle.api.file.RegularFileProperty
-import org.gradle.api.model.ObjectFactory
-import org.gradle.api.provider.Property
+import org.gradle.api.Project
 
-abstract class GenerateTaskConfiguration @Inject constructor(objectFactory: ObjectFactory) {
-    abstract val platform: Property<String>
-    abstract val packageName: Property<String>
-    abstract val specName: Property<String>
-    abstract val specVersion: Property<String>
-    abstract val inputFile: RegularFileProperty
-    abstract val outputDir: DirectoryProperty
-    abstract val extraFiles: DirectoryProperty
+abstract class GenerateTaskConfiguration @Inject constructor(project: Project) {
+    val objects = project.objects
 
-    val features: FeatureConfiguration = FeatureConfiguration(objectFactory)
+    val platform = objects.property(String::class.java).convention("kotlin")
+    val packageName = objects.property(String::class.java).convention("com.codegen.default")
+    val specName = objects.property(String::class.java).convention("defaultname")
+    val specVersion = objects.property(String::class.java).convention(project.provider {
+        readVersionFromSpecfile(inputFile.get().asFile)
+    })
+    val inputFile = objects.fileProperty()
+    val outputDir = objects.directoryProperty().convention(project.layout.buildDirectory.dir(DEFAULT_OUTPUT_DIR).get())
+
+    val extraFiles = objects.directoryProperty()
+    val features: FeatureConfiguration = FeatureConfiguration(objects)
 
     fun features(action: Action<FeatureConfiguration>) = action.execute(features)
+
+    companion object {
+        private fun readVersionFromSpecfile(specFile: File): String {
+            val swaggerSpec = SwaggerParser().readWithInfo(specFile.absolutePath, listOf(), false).swagger
+
+            return when (val version = swaggerSpec.info.version) {
+                is String -> {
+                    println("Successfully read version from Swagger Spec file: $version")
+                    version
+                }
+                else -> {
+                    val defaultVersion = "0.0.0"
+                    println("Issue in reading version from Swagger Spec file. Falling back to $defaultVersion")
+                    defaultVersion
+                }
+            }
+        }
+    }
 }

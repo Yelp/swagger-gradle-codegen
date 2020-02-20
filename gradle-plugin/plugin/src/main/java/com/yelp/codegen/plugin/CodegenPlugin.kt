@@ -10,7 +10,7 @@ class CodegenPlugin : Plugin<Project> {
             "com.yelp.codegen.plugin requires Gradle version 5.4.1 or greater"
         }
 
-        val config = project.extensions.create("generateSwagger", GenerateTaskConfiguration::class.java)
+        val config = project.extensions.create("generateSwagger", GenerateTaskConfiguration::class.java, project)
 
         project.tasks.register("generateSwagger", GenerateTask::class.java) {
             it.platform.set(config.platform)
