@@ -17,7 +17,7 @@ abstract class GenerateTaskConfiguration @Inject constructor(project: Project) {
     val specVersion = objects.property(String::class.java).convention(project.provider {
         readVersionFromSpecfile(inputFile.get().asFile)
     })
-    val outputDir = objects.directoryProperty().convention(project.layout.buildDirectory.dir(DEFAULT_OUTPUT_DIR).get())
+    val outputDir = objects.directoryProperty().convention(project.layout.buildDirectory.dir("gen").get())
 
     val extraFiles = objects.directoryProperty()
     val features: FeatureConfiguration = FeatureConfiguration(objects)

@@ -15,12 +15,6 @@ import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
-const val DEFAULT_PLATFORM = "kotlin"
-const val DEFAULT_VERSION = "0.0.0"
-const val DEFAULT_NAME = "defaultname"
-const val DEFAULT_PACKAGE = "com.codegen.default"
-const val DEFAULT_OUTPUT_DIR = "/gen"
-
 abstract class GenerateTask : DefaultTask() {
 
     init {
