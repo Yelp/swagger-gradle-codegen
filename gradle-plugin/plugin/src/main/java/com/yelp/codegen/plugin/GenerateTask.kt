@@ -71,50 +71,45 @@ abstract class GenerateTask : DefaultTask() {
 
     @TaskAction
     fun swaggerGenerate() {
-        val platform = platform.orNull
-        val specName = specName.orNull
-        var packageName = packageName.orNull
+        platform.convention(DEFAULT_PLATFORM)
+        specName.convention(DEFAULT_NAME)
+        packageName.convention(DEFAULT_PACKAGE)
+        outputDirectory.convention(project.objects.directoryProperty().value(project.layout.buildDirectory.dir(DEFAULT_OUTPUT_DIR)))
+        platform.convention(DEFAULT_PLATFORM)
+        specName.convention(project.provider { readVersionFromSpecfile(inputFile.get().asFile) })
 
-        val inputFile = inputFile.get().asFile
-        val outputDirectory = outputDirectory.orNull?.asFile
-
-        val specVersion = specVersion.getOrElse(readVersionFromSpecfile(inputFile))
-
-        val defaultOutputDir = File(project.buildDir, DEFAULT_OUTPUT_DIR)
-        val headersToRemove = features?.headersToRemove?.orNull ?: emptyList()
+        val headersToRemove = features?.headersToRemove?.get() ?: emptyList()
 
         println("""
             ####################
             Yelp Swagger Codegen
             ####################
-            Platform ${'\t'} ${platform ?: "[ DEFAULT ] $DEFAULT_PLATFORM"}
-            Package ${'\t'} ${packageName ?: "[ DEFAULT ] $DEFAULT_PACKAGE"}
-            specName ${'\t'} ${specName ?: "[ DEFAULT ] $DEFAULT_NAME"}
-            specVers ${'\t'} ${specVersion ?: "[ DEFAULT ] $DEFAULT_VERSION"}
+            Platform ${'\t'} $platform
+            Package ${'\t'} $packageName
+            specName ${'\t'} $specName
+            specVers ${'\t'} $specVersion
             input ${"\t\t"} $inputFile
-            output ${"\t\t"} ${outputDirectory ?: "[ DEFAULT ] $defaultOutputDir"}
-            groupId ${'\t'} ${packageName ?: "[ DEFAULT ] default"}
-            artifactId ${'\t'} ${packageName ?: "[ DEFAULT ] com.codegen"}
+            output ${"\t\t"} $outputDirectory
+            groupId ${'\t'} $packageName
+            artifactId ${'\t'} $packageName
             features ${'\t'} ${headersToRemove.joinToString(separator = ",", prefix = "[", postfix = "]")}
         """.trimIndent())
 
-        packageName = this.packageName.orNull ?: DEFAULT_PACKAGE
-
         val params = mutableListOf<String>()
         params.add("-p")
-        params.add(platform ?: DEFAULT_PLATFORM)
+        params.add(platform.get())
         params.add("-s")
-        params.add(specName ?: DEFAULT_NAME)
+        params.add(specName.get())
         params.add("-v")
-        params.add(specVersion ?: DEFAULT_VERSION)
+        params.add(specVersion.get())
         params.add("-g")
-        params.add(packageName.substringBeforeLast('.'))
+        params.add(packageName.get().substringBeforeLast('.'))
         params.add("-a")
-        params.add(packageName.substringAfterLast('.'))
+        params.add(packageName.get().substringAfterLast('.'))
         params.add("-i")
-        params.add(inputFile.toString())
+        params.add(inputFile.get().asFile.toString())
         params.add("-o")
-        params.add((outputDirectory ?: defaultOutputDir).toString())
+        params.add((outputDirectory.get().asFile).toString())
 
         if (headersToRemove.isNotEmpty()) {
             params.add("-ignoreheaders")
@@ -126,10 +121,8 @@ abstract class GenerateTask : DefaultTask() {
 
         // Copy over the extra files.
         val source = extraFiles.orNull?.asFile
-        val destin = outputDirectory
-        if (source != null && destin != null) {
-            source.copyRecursively(destin, overwrite = true)
-        }
+        val destination = outputDirectory.get().asFile
+        source?.copyRecursively(destination, overwrite = true)
     }
 
     private fun readVersionFromSpecfile(specFile: File): String {
