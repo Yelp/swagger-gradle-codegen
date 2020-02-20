@@ -57,7 +57,7 @@ abstract class GenerateTask : DefaultTask() {
     @get:OutputDirectory
     @get:Optional
     @get:Option(option = "outputDir", description = "Configures path of the Generated code directory.")
-    abstract val outputDirectory: DirectoryProperty
+    abstract val outputDir: DirectoryProperty
 
     @get:InputFiles
     @get:Optional
@@ -71,12 +71,12 @@ abstract class GenerateTask : DefaultTask() {
 
     @TaskAction
     fun swaggerGenerate() {
-        platform.convention(DEFAULT_PLATFORM)
-        specName.convention(DEFAULT_NAME)
-        packageName.convention(DEFAULT_PACKAGE)
-        outputDirectory.convention(project.objects.directoryProperty().value(project.layout.buildDirectory.dir(DEFAULT_OUTPUT_DIR)))
-        platform.convention(DEFAULT_PLATFORM)
-        specName.convention(project.provider { readVersionFromSpecfile(inputFile.get().asFile) })
+        val platform = platform.getOrElse(DEFAULT_PLATFORM)
+        val specName = specName.getOrElse(DEFAULT_NAME)
+        val packageName = packageName.getOrElse(DEFAULT_PACKAGE)
+        val outputDir = outputDir.getOrElse(project.layout.buildDirectory.dir(DEFAULT_OUTPUT_DIR).get()).asFile
+        val inputFile = inputFile.get().asFile
+        val specVersion = specVersion.getOrElse(readVersionFromSpecfile(inputFile))
 
         val headersToRemove = features?.headersToRemove?.get() ?: emptyList()
 
@@ -89,7 +89,7 @@ abstract class GenerateTask : DefaultTask() {
             specName ${'\t'} $specName
             specVers ${'\t'} $specVersion
             input ${"\t\t"} $inputFile
-            output ${"\t\t"} $outputDirectory
+            output ${"\t\t"} $outputDir
             groupId ${'\t'} $packageName
             artifactId ${'\t'} $packageName
             features ${'\t'} ${headersToRemove.joinToString(separator = ",", prefix = "[", postfix = "]")}
@@ -97,19 +97,19 @@ abstract class GenerateTask : DefaultTask() {
 
         val params = mutableListOf<String>()
         params.add("-p")
-        params.add(platform.get())
+        params.add(platform)
         params.add("-s")
-        params.add(specName.get())
+        params.add(specName)
         params.add("-v")
-        params.add(specVersion.get())
+        params.add(specVersion)
         params.add("-g")
-        params.add(packageName.get().substringBeforeLast('.'))
+        params.add(packageName.substringBeforeLast('.'))
         params.add("-a")
-        params.add(packageName.get().substringAfterLast('.'))
+        params.add(packageName.substringAfterLast('.'))
         params.add("-i")
-        params.add(inputFile.get().asFile.toString())
+        params.add(inputFile.toString())
         params.add("-o")
-        params.add((outputDirectory.get().asFile).toString())
+        params.add(outputDir.toString())
 
         if (headersToRemove.isNotEmpty()) {
             params.add("-ignoreheaders")
@@ -121,8 +121,7 @@ abstract class GenerateTask : DefaultTask() {
 
         // Copy over the extra files.
         val source = extraFiles.orNull?.asFile
-        val destination = outputDirectory.get().asFile
-        source?.copyRecursively(destination, overwrite = true)
+        source?.copyRecursively(outputDir, overwrite = true)
     }
 
     private fun readVersionFromSpecfile(specFile: File): String {
