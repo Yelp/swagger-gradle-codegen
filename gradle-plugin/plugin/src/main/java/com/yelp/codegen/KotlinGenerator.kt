@@ -511,7 +511,7 @@ open class KotlinGenerator : SharedCodegen() {
             }
         }
 
-        // Process the
+        // Process the headers from the `headersToIgnore` config feature.
         val headersToIgnore = getHeadersToIgnore()
         topLevelHeaders.removeIf { it.first in headersToIgnore }
 
