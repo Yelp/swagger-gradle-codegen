@@ -2,6 +2,12 @@
 
 Here you can find the release notes for this project. Please note that list of releases is available also in the [releases](https://github.com/Yelp/swagger-gradle-codegen/releases) page on Github.
 
+## v1.4.1 (2020-02-22)
+
+* 🐛 `headersToRemove` should apply also to top level headers (e.g. `X-Operation-ID` or `Content-Type`) [#121]
+
+Thanks to @cortinico for the support with this release
+
 ## v1.4.0 (2020-02-18)
 
 * 🎁 Moshi-Codegen Support [#82] [#88]
@@ -115,3 +121,4 @@ Thanks to @cortinico, @MatthewTPage, @GuilhE, @macisamuele and @redwarp for the 
 [#105]: https://github.com/Yelp/swagger-gradle-codegen/pull/105/
 [#111]: https://github.com/Yelp/swagger-gradle-codegen/pull/111/
 [#112]: https://github.com/Yelp/swagger-gradle-codegen/pull/112/
+[#121]: https://github.com/Yelp/swagger-gradle-codegen/pull/121/
