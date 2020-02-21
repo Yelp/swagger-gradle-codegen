@@ -380,6 +380,21 @@ class KotlinGeneratorTest {
     }
 
     @Test
+    fun processTopLevelHeaders_withOperationIdAndHeadersToIgnore_hasNoHeaders() {
+        val testOperationId = "aTestOperationId"
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        generator.additionalProperties()[HEADERS_TO_IGNORE] = HEADER_X_OPERATION_ID
+        operation.vendorExtensions = mutableMapOf(X_OPERATION_ID to (testOperationId as Any))
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(false, operation.vendorExtensions["hasOperationHeaders"])
+        val headerMap = operation.vendorExtensions["operationHeaders"] as List<*>
+        assertEquals(0, headerMap.size)
+    }
+
+    @Test
     fun processTopLevelHeaders_withConsumes_hasContentTypeHeader() {
         val generator = KotlinGenerator()
         val operation = CodegenOperation()
@@ -396,6 +411,23 @@ class KotlinGeneratorTest {
         val firstPair = headerMap[0] as Pair<*, *>
         assertEquals(HEADER_CONTENT_TYPE, firstPair.first as String)
         assertEquals("application/json", firstPair.second as String)
+    }
+
+    @Test
+    fun processTopLevelHeaders_withConsumesAndHeadersToIgnore_hasNoContentTypeHeader() {
+        val generator = KotlinGenerator()
+        val operation = CodegenOperation()
+        generator.additionalProperties()[HEADERS_TO_IGNORE] = HEADER_CONTENT_TYPE
+        operation.vendorExtensions = mutableMapOf()
+        operation.consumes = listOf(
+                mapOf("mediaType" to "application/json")
+        )
+
+        generator.processTopLevelHeaders(operation)
+
+        assertEquals(false, operation.vendorExtensions["hasOperationHeaders"])
+        val headerMap = operation.vendorExtensions["operationHeaders"] as List<*>
+        assertEquals(0, headerMap.size)
     }
 
     @Test
