@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 subprojects {
     repositories {
         google()
@@ -9,7 +11,7 @@ subprojects {
 val installVenv = tasks.register("installVenv", Exec::class.java) {
     description = "Install a new virtualenv in ./venv"
 
-    outputs.dir("./venv")
+    outputs.dir(Paths.get(".", "venv"))
 
     commandLine("virtualenv", "venv")
 }
@@ -19,9 +21,9 @@ val installPreCommit = tasks.register("installPreCommit", Exec::class.java) {
 
     dependsOn(installVenv)
 
-    outputs.file("./venv/bin/pre-commit")
+    outputs.file(Paths.get(".", "venv", "bin", "pre-commit"))
 
-    commandLine("./venv/bin/pip", "install", "pre-commit")
+    commandLine(Paths.get(".", "venv", binFolder, "pip"), "install", "pre-commit")
 }
 
 val installHooks = tasks.register("installHooks", Exec::class.java) {
@@ -29,10 +31,10 @@ val installHooks = tasks.register("installHooks", Exec::class.java) {
 
     dependsOn(installPreCommit)
 
-    outputs.file(".git/hooks/pre-commit")
+    outputs.file(Paths.get(".", "venv", binFolder, "pre-commit"))
     inputs.file(".pre-commit-config.yaml")
 
-    commandLine("./venv/bin/pre-commit", "install", "--install-hooks")
+    commandLine(Paths.get(".", "venv", binFolder, "pre-commit"), "install", "--install-hooks")
 }
 
 val runHooks = tasks.register("runHooks", Exec::class.java) {
@@ -40,7 +42,7 @@ val runHooks = tasks.register("runHooks", Exec::class.java) {
 
     dependsOn(installPreCommit)
 
-    commandLine("./venv/bin/pre-commit", "run", "--all-files")
+    commandLine(Paths.get(".", "venv", binFolder, "pre-commit"), "run", "--all-files")
 }
 
 val preMerge = tasks.register("preMerge") {
@@ -68,4 +70,14 @@ subprojects {
             }
         }
     }
+}
+
+/**
+ * Python `venv/bin` folder is different based on OS.
+ * On Windows it's inside the `venv/Scripts` folder.
+ */
+val binFolder : String get() = if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+    "Scripts"
+} else {
+    "bin"
 }
