@@ -13,14 +13,14 @@ class CodegenPlugin : Plugin<Project> {
         val config = project.extensions.create("generateSwagger", GenerateTaskConfiguration::class.java, project)
 
         project.tasks.register("generateSwagger", GenerateTask::class.java) {
-            it.platform = config.platform
-            it.packageName = config.packageName
-            it.specName = config.specName
-            it.specVersion = config.specVersion
-            it.inputFile = config.inputFile
-            it.outputDir = config.outputDir
+            it.platform.set(config.platform)
+            it.packageName.set(config.packageName)
+            it.specName.set(config.specName)
+            it.specVersion.set(config.specVersion)
+            it.inputFile.set(config.inputFile)
+            it.outputDir.set(config.outputDir)
 
-            it.extraFiles = config.extraFiles
+            it.extraFiles.set(config.extraFiles)
             it.features = config.features
         }
     }

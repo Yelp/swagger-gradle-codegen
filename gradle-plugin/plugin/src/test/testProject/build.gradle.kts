@@ -22,9 +22,9 @@ buildscript {
 apply(plugin = "com.yelp.codegen.plugin")
 
 configure<GenerateTaskConfiguration> {
-  platform = "kotlin"
-  packageName = "com.yelp.codegen.samples"
+  platform.set("kotlin")
+  packageName.set("com.yelp.codegen.samples")
   // we are in rootDir/plugin-root/plugin/build/testProject/
-  inputFile = file("../../../../samples/junit-tests/junit_tests_specs.json")
-  outputDir = file("./build/generatedSources")
+  inputFile.set(file("../../../../samples/junit-tests/junit_tests_specs.json"))
+  outputDir.set(file("./build/generatedSources"))
 }
