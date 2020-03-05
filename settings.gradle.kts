@@ -20,7 +20,6 @@ pluginManagement {
 include(
         ":samples:junit-tests",
         ":samples:kotlin-android",
-        ":samples:kotlin-android-moshi-codegen",
         ":samples:kotlin-coroutines",
         ":samples:groovy-android")
 

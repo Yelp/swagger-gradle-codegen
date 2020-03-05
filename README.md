@@ -76,11 +76,9 @@ We're looking forward to more platforms to support in the future. Contributions 
 
 You can find some **examples** in this repository to help you set up your generator environment.
 
-* [samples/groovy-android](/samples/groovy-android)<sup>*</sup> Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
+* [samples/groovy-android](/samples/groovy-android) Contains an example of an Android Library configured with a `build.gradle` file, using the classical Gradle/Groovy as scripting language.
 
-* [samples/kotlin-android](/samples/kotlin-android)<sup>*</sup> Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
-
-* [samples/kotlin-android-moshi-codegen](/samples/kotlin-android-moshi-codegen) Based on samples/kotlin-android but the configuration is using [`moshi-codegen`](https://github.com/square/moshi#codegen) for improved parsing performances and it defines proguard rules.
+* [samples/kotlin-android](/samples/kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
 * [samples/kotlin-coroutines](/samples/kotlin-coroutines)<sup>*</sup> Contains an example of an Android Library configured to output Kotlin Coroutines capable code.
 
