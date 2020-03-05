@@ -8,7 +8,7 @@ plugins {
     id("java-gradle-plugin")
     `maven-publish`
     jacoco
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.3.70"
     id("com.gradle.plugin-publish") version "0.10.1"
     id("io.gitlab.arturbosch.detekt") version "1.4.0"
 }

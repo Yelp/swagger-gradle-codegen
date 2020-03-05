@@ -23,7 +23,7 @@ android {
 
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
 
     // Moshi + OkHttp + Retrofit
     implementation("com.squareup.moshi:moshi:1.9.2")
