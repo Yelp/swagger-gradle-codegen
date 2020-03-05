@@ -80,12 +80,10 @@ You can find some **examples** in this repository to help you set up your genera
 
 * [samples/kotlin-android](/samples/kotlin-android) Contains an example of an Android Library configured with a `build.gradle.kts` file, using Kotlin as scripting language.
 
-* [samples/kotlin-coroutines](/samples/kotlin-coroutines)<sup>*</sup> Contains an example of an Android Library configured to output Kotlin Coroutines capable code.
+* [samples/kotlin-coroutines](/samples/kotlin-coroutines) Contains an example of an Android Library configured to output Kotlin Coroutines capable code.
 
 * [samples/junit-tests](/samples/junit-tests) This sample contains specs used to test edge cases and scenarios that have been reported in the issue tracker or that are worth testing. Tests are executed using [`moshi-codegen`](https://github.com/square/moshi#codegen).
  It does also contains all the generated code inside the `/scr/main/java` folder. You can use this example to see how the generated code will _look like_ (like [here](/samples/junit-tests/src/main/java/com/yelp/codegen/generatecodesamples/apis/ResourceApi.kt)).
-
-<sup>*</sup>: The project is using [`moshi-reflect`](https://github.com/square/moshi#reflection) to convert your Kotlin classes to and from JSON.
 
 
 ## How the generated code will look like
@@ -136,7 +134,7 @@ Here a list of all the supported features:
 
 | Feature | Description | Command line |
 | -------- | ----------- | ------------ |
-| `headersToRemove` | List of headers that needs to be ignored for every endpoints. The headers in this list will be dropped and not generated as parameters for the endpoints. | `--featureHeaderToRemove=` |
+| `headersToRemove` | List of headers that needs to be ignored for every endpoints. The headers in this list will be dropped and not generated as parameters for the endpoints. | `-ignoreheaders=` |
 
 
 ## Building
