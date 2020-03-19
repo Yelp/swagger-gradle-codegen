@@ -25,3 +25,5 @@ jobs:
       with:
         gradle-version: wrapper
         arguments: preMerge
+    - name: Publish Coverage
+      uses: codecov/codecov-action@v1
