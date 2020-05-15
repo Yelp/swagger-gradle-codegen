@@ -10,7 +10,7 @@ plugins {
     jacoco
     kotlin("jvm") version "1.3.70"
     id("com.gradle.plugin-publish") version "0.11.0"
-    id("io.gitlab.arturbosch.detekt") version "1.4.0"
+    id("io.gitlab.arturbosch.detekt") version "1.9.0"
 }
 
 java {
@@ -75,7 +75,6 @@ configure<PublishingExtension> {
 }
 
 detekt {
-    toolVersion = "1.4.0"
     input = files("src/")
     config = rootProject.files("../config/detekt/detekt.yml")
 }
