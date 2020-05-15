@@ -1,11 +1,11 @@
 name: Pre Merge Checks
-on: 
+on:
   push:
     branches:
-      - master
+    - master
   pull_request:
     branches:
-      - '*'
+    - '*'
 
 jobs:
   gradle:
