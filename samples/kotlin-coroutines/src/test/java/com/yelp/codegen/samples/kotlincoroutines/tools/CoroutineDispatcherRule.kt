@@ -33,5 +33,5 @@ class CoroutineDispatcherRule : ExternalResource() {
     }
 
     fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) =
-            runBlocking(Dispatchers.Main, block)
+        runBlocking(Dispatchers.Main, block)
 }

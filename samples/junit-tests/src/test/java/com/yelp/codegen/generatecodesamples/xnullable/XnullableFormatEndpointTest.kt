@@ -14,11 +14,15 @@ class XnullableFormatEndpointTest {
 
     @Test
     fun formatEndpoint_withEnumFormat() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "double_property": null
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "double_property": null
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("double").blockingGet()
 
@@ -29,11 +33,15 @@ class XnullableFormatEndpointTest {
 
     @Test
     fun formatEndpoint_withDateFormat() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "date_property": null
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "date_property": null
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("date").blockingGet()
 
@@ -44,11 +52,15 @@ class XnullableFormatEndpointTest {
 
     @Test
     fun formatEndpoint_withDateTimeFormat() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "datetime_property": null
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "datetime_property": null
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("datetime").blockingGet()
 

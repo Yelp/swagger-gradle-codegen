@@ -19,11 +19,11 @@ class ValidParameterTest {
 
         val defaultApi = mockServerRule.getApi<ResourceApi>()
         val pet = defaultApi.getSymbolsInParameterName(
-                parameter = "testParameter",
-                brackets = "testBrackets",
-                bracketsWithText = "testBracketsWithText",
-                dot = "testDot",
-                dotWithText = "testDotWithText"
+            parameter = "testParameter",
+            brackets = "testBrackets",
+            bracketsWithText = "testBracketsWithText",
+            dot = "testDot",
+            dotWithText = "testDotWithText"
         ).blockingGet()
 
         val requestPath = mockServerRule.server.takeRequest().path

@@ -14,16 +14,20 @@ class ReservedKeywordsEndpointTest {
 
     @Test
     fun reservedKeywordsEndpoint() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "class": "class",
-                "for": "for",
-                "operator": "operator",
-                "val": "val",
-                "var": "var",
-                "when": "when"
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "class": "class",
+                    "for": "for",
+                    "operator": "operator",
+                    "val": "val",
+                    "var": "var",
+                    "when": "when"
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getReservedKeywords().blockingGet()
         assertEquals("class", returned.`class`)

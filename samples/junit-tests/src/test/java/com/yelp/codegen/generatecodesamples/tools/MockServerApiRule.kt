@@ -20,10 +20,10 @@ class MockServerApiRule : ExternalResource() {
         server.start()
 
         retrofit = Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.trampoline()))
-                .addConverterFactory(GeneratedCodeConverters.converterFactory())
-                .baseUrl(server.url("/"))
-                .build()
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.trampoline()))
+            .addConverterFactory(GeneratedCodeConverters.converterFactory())
+            .baseUrl(server.url("/"))
+            .build()
     }
 
     override fun after() {

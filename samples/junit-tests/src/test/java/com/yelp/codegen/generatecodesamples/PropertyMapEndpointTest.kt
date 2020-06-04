@@ -18,11 +18,15 @@ class PropertyMapEndpointTest {
 
     @Test
     fun propertyMap_withEmptyString() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "string_map": {}
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "string_map": {}
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getPropertyMap("string", "empty").blockingGet()
 
@@ -35,11 +39,15 @@ class PropertyMapEndpointTest {
 
     @Test
     fun propertyMap_withEmptyNumber() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "number_map": {}
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "number_map": {}
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getPropertyMap("number", "empty").blockingGet()
 
@@ -52,11 +60,15 @@ class PropertyMapEndpointTest {
 
     @Test
     fun propertyMap_withEmptyObject() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "object_map": {}
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "object_map": {}
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getPropertyMap("object", "empty").blockingGet()
 
@@ -69,14 +81,18 @@ class PropertyMapEndpointTest {
 
     @Test
     fun propertyMap_withNonEmptyString() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "string_map": {
-                    "key1": "value1",
-                    "key2": "value2"
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "string_map": {
+                        "key1": "value1",
+                        "key2": "value2"
+                    }
                 }
-            }
-        """.trimIndent()))
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getPropertyMap("string", "2").blockingGet()
 
@@ -91,14 +107,18 @@ class PropertyMapEndpointTest {
 
     @Test
     fun propertyMap_withNonEmptyNumber() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "number_map": {
-                    "key1": 1.1,
-                    "key2": 2.2
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "number_map": {
+                        "key1": 1.1,
+                        "key2": 2.2
+                    }
                 }
-            }
-        """.trimIndent()))
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getPropertyMap("number", "2").blockingGet()
 
@@ -113,14 +133,18 @@ class PropertyMapEndpointTest {
 
     @Test
     fun propertyMap_withNonEmptyObject() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "object_map": {
-                    "key1": "1",
-                    "key2": "2"
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "object_map": {
+                        "key1": "1",
+                        "key2": "2"
+                    }
                 }
-            }
-        """.trimIndent()))
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getPropertyMap("object", "2").blockingGet()
 
@@ -135,20 +159,24 @@ class PropertyMapEndpointTest {
 
     @Test
     fun propertyMap_withHeterogeneousObject() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "object_map": {
-                    "key1": "1",
-                    "key2": 2,
-                    "key3": [
-                        "array_value1"
-                    ],
-                    "key4": {
-                        "map_key1": "map_value1"
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "object_map": {
+                        "key1": "1",
+                        "key2": 2,
+                        "key3": [
+                            "array_value1"
+                        ],
+                        "key4": {
+                            "map_key1": "map_value1"
+                        }
                     }
                 }
-            }
-        """.trimIndent()))
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getPropertyMap("object", "heterogeneous").blockingGet()
 
@@ -166,10 +194,11 @@ class PropertyMapEndpointTest {
 
         assertFalse((returned.objectMap?.get("key4") as Map<*, *>).isEmpty())
         assertEquals(
-            "map_value1", (
+            "map_value1",
+            (
                 @Suppress("UNCHECKED_CAST")
                 (returned.objectMap?.get("key4") as Map<String, Any>)
-            )["map_key1"]
+                )["map_key1"]
         )
     }
 }

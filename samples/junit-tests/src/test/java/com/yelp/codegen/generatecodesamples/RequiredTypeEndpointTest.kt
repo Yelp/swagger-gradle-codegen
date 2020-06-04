@@ -15,15 +15,19 @@ class RequiredTypeEndpointTest {
 
     @Test
     fun requiredTypeEndpoint() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "boolean_property": true,
-                "enum_property": "VALUE1",
-                "integer_property": 1,
-                "number_property": 1.2,
-                "string_property": "string"
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "boolean_property": true,
+                    "enum_property": "VALUE1",
+                    "integer_property": 1,
+                    "number_property": 1.2,
+                    "string_property": "string"
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getRequiredTypeEndpoint().blockingGet()
         assertEquals("string", returned.stringProperty)

@@ -23,13 +23,17 @@ class TopLevelEnumEndpointTest {
 
     @Test
     fun topLevelEnumNestedEndpoint() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "key1": {
-                    "key2": "TOP_LEVEL_VALUE1"
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "key1": {
+                        "key2": "TOP_LEVEL_VALUE1"
+                    }
                 }
-            }
-        """.trimIndent()))
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getTopLevelEnumNested().blockingGet()
         assertEquals(TopLevelEnum.VALUE1, returned["key1"]?.get("key2"))

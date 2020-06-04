@@ -18,19 +18,23 @@ class XnullableNestedAdditionalPropertiesEndpointTest {
 
     @Test
     fun xNullableNestedAdditionalProperties() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "key1": {
-                    "subkey1": "subvalue1",
-                    "subkey2": null
-                },
-                "key2": {
-                    "subkey1": null
-                },
-                "key3": {},
-                "key4": null
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "key1": {
+                        "subkey1": "subvalue1",
+                        "subkey2": null
+                    },
+                    "key2": {
+                        "subkey1": null
+                    },
+                    "key3": {},
+                    "key4": null
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableNestedAdditionalProperties().blockingGet()
 

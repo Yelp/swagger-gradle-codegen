@@ -33,11 +33,15 @@ class CoroutinesEndpointsTest {
 
     @Test
     fun propertyEndpointTest_withStringProperty() {
-        mockServerRule.server.enqueue(MockResponse().setBody("""
-            {
-                "string_property": "string"
-            }
-        """.trimIndent()))
+        mockServerRule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "string_property": "string"
+                }
+                """.trimIndent()
+            )
+        )
 
         coroutinesRule.runBlockingTest {
             val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")
@@ -48,11 +52,15 @@ class CoroutinesEndpointsTest {
 
     @Test
     fun propertyEndpointTest_withEnumProperty() {
-        mockServerRule.server.enqueue(MockResponse().setBody("""
-            {
-                "enum_property": "VALUE1"
-            }
-        """.trimIndent()))
+        mockServerRule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "enum_property": "VALUE1"
+                }
+                """.trimIndent()
+            )
+        )
 
         coroutinesRule.runBlockingTest {
             val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")

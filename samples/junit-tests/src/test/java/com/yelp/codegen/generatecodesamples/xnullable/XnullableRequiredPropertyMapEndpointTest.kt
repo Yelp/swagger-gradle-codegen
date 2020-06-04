@@ -17,13 +17,17 @@ class XnullableRequiredPropertyMapEndpointTest {
 
     @Test
     fun xNullableRequiredPropertyMap_withAllEmpty() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "number_map": {},
-                "object_map": {},
-                "string_map": {}
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "number_map": {},
+                    "object_map": {},
+                    "string_map": {}
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredPropertyMap("empty").blockingGet()
 
@@ -38,13 +42,17 @@ class XnullableRequiredPropertyMapEndpointTest {
 
     @Test
     fun xNullableRequiredPropertyMap_withAllNull() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "number_map": null,
-                "object_map": null,
-                "string_map": null
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "number_map": null,
+                    "object_map": null,
+                    "string_map": null
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredPropertyMap("null").blockingGet()
 
@@ -55,19 +63,23 @@ class XnullableRequiredPropertyMapEndpointTest {
 
     @Test
     fun xNullableRequiredPropertyMap_withAllOneNullElement() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "number_map": {
-                    "key1": null
-                },
-                "object_map": {
-                    "key1": null
-                },
-                "string_map": {
-                    "key1": null
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "number_map": {
+                        "key1": null
+                    },
+                    "object_map": {
+                        "key1": null
+                    },
+                    "string_map": {
+                        "key1": null
+                    }
                 }
-            }
-        """.trimIndent()))
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredPropertyMap("1null").blockingGet()
 
@@ -82,24 +94,28 @@ class XnullableRequiredPropertyMapEndpointTest {
 
     @Test
     fun xNullableRequiredPropertyMap_withAllTwoElements() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "number_map": {
-                    "key1": 1.1,
-                    "key2": null
-                },
-                "object_map": {
-                    "key1": [
-                        "value1"
-                    ],
-                    "key2": null
-                },
-                "string_map": {
-                    "key1": "value1",
-                    "key2": null
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "number_map": {
+                        "key1": 1.1,
+                        "key2": null
+                    },
+                    "object_map": {
+                        "key1": [
+                            "value1"
+                        ],
+                        "key2": null
+                    },
+                    "string_map": {
+                        "key1": "value1",
+                        "key2": null
+                    }
                 }
-            }
-        """.trimIndent()))
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredPropertyMap("2").blockingGet()
 
