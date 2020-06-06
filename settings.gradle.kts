@@ -17,10 +17,27 @@ pluginManagement {
     }
 }
 
-include(
-        ":samples:junit-tests",
+include(":samples:junit-tests")
+
+if (shouldIncludeAndroidProjects()) {
+    include(
         ":samples:kotlin-android",
         ":samples:kotlin-coroutines",
-        ":samples:groovy-android")
+        ":samples:groovy-android"
+    )
+}
 
 includeBuild("gradle-plugin")
+
+fun shouldIncludeAndroidProjects(): Boolean {
+    if (System.getenv("CI") != null) {
+        // Ensure that on CI systems we run all the gradle tasks (including the Android specific ones)
+        return true;
+    }
+
+    if (System.getenv("SKIP_ANDROID") != null) {
+        return false;
+    }
+
+    return true;
+}
