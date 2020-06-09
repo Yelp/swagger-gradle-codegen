@@ -20,7 +20,7 @@ fun String.toPascalCase(): String {
 }
 
 fun String.safeSuffix(suffix: String) =
-        if (!this.endsWith(suffix)) "$this$suffix" else this
+    if (!this.endsWith(suffix)) "$this$suffix" else this
 
 fun String.red(): String {
     return "$ANSI_RED${this}$ANSI_RESET"

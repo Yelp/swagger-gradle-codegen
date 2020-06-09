@@ -1,9 +1,9 @@
 package com.yelp.codegen.plugin
 
-import javax.inject.Inject
 import org.gradle.api.Action
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFileProperty
+import javax.inject.Inject
 
 abstract class GenerateTaskConfiguration @Inject constructor(project: Project) {
     val objects = project.objects
@@ -12,9 +12,11 @@ abstract class GenerateTaskConfiguration @Inject constructor(project: Project) {
     val packageName = objects.property(String::class.java).convention("com.codegen.default")
     val specName = objects.property(String::class.java).convention("defaultname")
     abstract val inputFile: RegularFileProperty
-    val specVersion = objects.property(String::class.java).convention(project.provider {
-        readVersionFromSpecfile(inputFile.get().asFile)
-    })
+    val specVersion = objects.property(String::class.java).convention(
+        project.provider {
+            readVersionFromSpecfile(inputFile.get().asFile)
+        }
+    )
     val outputDir = objects.directoryProperty().convention(project.layout.buildDirectory.dir("gen").get())
 
     val extraFiles = objects.directoryProperty()

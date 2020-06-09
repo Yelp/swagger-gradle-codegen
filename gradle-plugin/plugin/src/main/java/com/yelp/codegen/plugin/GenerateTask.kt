@@ -48,8 +48,10 @@ abstract class GenerateTask : DefaultTask() {
 
     @get:InputFiles
     @get:Optional
-    @get:Option(option = "extraFiles",
-            description = "Configures path of the extra files directory to be added to the Generated code.")
+    @get:Option(
+        option = "extraFiles",
+        description = "Configures path of the extra files directory to be added to the Generated code."
+    )
     abstract val extraFiles: DirectoryProperty
 
     @get:Nested
@@ -67,7 +69,8 @@ abstract class GenerateTask : DefaultTask() {
 
         val headersToRemove = features?.headersToRemove?.get() ?: emptyList()
 
-        println("""
+        println(
+            """
             ####################
             Yelp Swagger Codegen
             ####################
@@ -80,7 +83,8 @@ abstract class GenerateTask : DefaultTask() {
             groupId ${'\t'} $packageName
             artifactId ${'\t'} $packageName
             features ${'\t'} ${headersToRemove.joinToString(separator = ",", prefix = "[", postfix = "]")}
-        """.trimIndent())
+            """.trimIndent()
+        )
 
         val params = mutableListOf<String>()
         params.add("-p")

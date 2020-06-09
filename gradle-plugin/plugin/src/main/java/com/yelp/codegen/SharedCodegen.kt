@@ -99,10 +99,12 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         // So we're triggering the process early on as the process is not super slow and more importantly is idempotent
         InlineModelResolver().flatten(swagger)
 
-        unsafeOperations.addAll(when (val it = swagger.info.vendorExtensions["x-operation-ids-unsafe-to-use"]) {
-            is List<*> -> it.filterIsInstance<String>()
-            else -> listOf()
-        })
+        unsafeOperations.addAll(
+            when (val it = swagger.info.vendorExtensions["x-operation-ids-unsafe-to-use"]) {
+                is List<*> -> it.filterIsInstance<String>()
+                else -> listOf()
+            }
+        )
 
         mapXModel(swagger)
 
@@ -153,8 +155,8 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      */
     fun matchXModel(name: String): String {
         return xModelMatches[name] ?: (
-                this.swagger?.definitions?.get(name)?.title ?: name
-                )
+            this.swagger?.definitions?.get(name)?.title ?: name
+            )
     }
 
     /**
@@ -202,7 +204,8 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
                     model.type
                 } else {
                     if (false == model.properties?.isEmpty() ||
-                            model.additionalProperties != null) {
+                        model.additionalProperties != null
+                    ) {
                         "object"
                     } else {
                         null
@@ -286,9 +289,9 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      */
     private fun propagateXNullableToProperties(model: Model, allDefinitions: MutableMap<String, Model>) {
         model.properties
-                .values
-                .filterIsInstance(RefProperty::class.java)
-                .forEach { propagateXNullableVendorExtension(it, allDefinitions) }
+            .values
+            .filterIsInstance(RefProperty::class.java)
+            .forEach { propagateXNullableVendorExtension(it, allDefinitions) }
     }
 
     /**
@@ -335,7 +338,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         codegenModel.hasEnums = true
         codegenModel.vars.add(innerEnum)
         codegenModel.dataType =
-                codegenModel.dataType.replace(defaultStringType(), innerEnum.datatypeWithEnum)
+            codegenModel.dataType.replace(defaultStringType(), innerEnum.datatypeWithEnum)
     }
 
     /**

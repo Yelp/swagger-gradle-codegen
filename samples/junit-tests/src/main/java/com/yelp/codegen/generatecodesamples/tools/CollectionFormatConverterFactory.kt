@@ -1,8 +1,8 @@
 package com.yelp.codegen.generatecodesamples.tools
 
-import java.lang.reflect.Type
 import retrofit2.Converter
 import retrofit2.Retrofit
+import java.lang.reflect.Type
 
 internal class CollectionFormatConverterFactory : Converter.Factory() {
 

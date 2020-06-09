@@ -15,15 +15,19 @@ class XnullableRequiredTypeEndpointTest {
 
     @Test
     fun xNullableTypeEndpoint_withStringType() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "boolean_property": true,
-                "enum_property": "VALUE1",
-                "integer_property": 1,
-                "number_property": 1.2,
-                "string_property": null
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "boolean_property": true,
+                    "enum_property": "VALUE1",
+                    "integer_property": 1,
+                    "number_property": 1.2,
+                    "string_property": null
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredTypeEndpoint("string").blockingGet()
         assertNotNull(returned.integerProperty)
@@ -35,15 +39,19 @@ class XnullableRequiredTypeEndpointTest {
 
     @Test
     fun xNullableTypeEndpoint_withBooleanType() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "boolean_property": null,
-                "enum_property": "VALUE1",
-                "integer_property": 1,
-                "number_property": 1.2,
-                "string_property": "string"
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "boolean_property": null,
+                    "enum_property": "VALUE1",
+                    "integer_property": 1,
+                    "number_property": 1.2,
+                    "string_property": "string"
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredTypeEndpoint("boolean").blockingGet()
         assertNotNull(returned.integerProperty)
@@ -55,15 +63,19 @@ class XnullableRequiredTypeEndpointTest {
 
     @Test
     fun xNullableTypeEndpoint_withIntegerType() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "boolean_property": true,
-                "enum_property": "VALUE1",
-                "integer_property": null,
-                "number_property": 1.2,
-                "string_property": "string"
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "boolean_property": true,
+                    "enum_property": "VALUE1",
+                    "integer_property": null,
+                    "number_property": 1.2,
+                    "string_property": "string"
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredTypeEndpoint("integer").blockingGet()
         assertNull(returned.integerProperty)
@@ -75,15 +87,19 @@ class XnullableRequiredTypeEndpointTest {
 
     @Test
     fun xNullableTypeEndpoint_withNumberType() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "boolean_property": true,
-                "enum_property": "VALUE1",
-                "integer_property": 1,
-                "number_property": null,
-                "string_property": "string"
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "boolean_property": true,
+                    "enum_property": "VALUE1",
+                    "integer_property": 1,
+                    "number_property": null,
+                    "string_property": "string"
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredTypeEndpoint("number").blockingGet()
         assertNotNull(returned.integerProperty)
@@ -95,15 +111,19 @@ class XnullableRequiredTypeEndpointTest {
 
     @Test
     fun xNullableTypeEndpoint_withEnumType() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "boolean_property": true,
-                "enum_property": null,
-                "integer_property": 1,
-                "number_property": 1.1,
-                "string_property": "string"
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "boolean_property": true,
+                    "enum_property": null,
+                    "integer_property": 1,
+                    "number_property": 1.1,
+                    "string_property": "string"
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<XnullableApi>().getXnullableRequiredTypeEndpoint("enum").blockingGet()
         assertNotNull(returned.integerProperty)

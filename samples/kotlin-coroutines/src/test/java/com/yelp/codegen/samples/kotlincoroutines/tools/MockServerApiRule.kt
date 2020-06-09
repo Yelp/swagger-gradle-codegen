@@ -18,9 +18,9 @@ class MockServerApiRule : ExternalResource() {
         server.start()
 
         retrofit = Retrofit.Builder()
-                .addConverterFactory(GeneratedCodeConverters.converterFactory())
-                .baseUrl(server.url("/"))
-                .build()
+            .addConverterFactory(GeneratedCodeConverters.converterFactory())
+            .baseUrl(server.url("/"))
+            .build()
     }
 
     override fun after() {

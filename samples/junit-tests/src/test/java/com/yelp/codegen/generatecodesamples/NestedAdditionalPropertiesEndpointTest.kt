@@ -17,18 +17,22 @@ class NestedAdditionalPropertiesEndpointTest {
 
     @Test
     fun nestedAdditionalProperties() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "key1": {
-                    "subkey1": "subvalue1",
-                    "subkey2": "subvalue2"
-                },
-                "key2": {
-                    "subkey1": "subvalue1"
-                },
-                "key3": {}
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "key1": {
+                        "subkey1": "subvalue1",
+                        "subkey2": "subvalue2"
+                    },
+                    "key2": {
+                        "subkey1": "subvalue1"
+                    },
+                    "key3": {}
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getNestedAdditionalProperties().blockingGet()
 

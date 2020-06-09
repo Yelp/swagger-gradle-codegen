@@ -24,12 +24,16 @@ class TopLevelMapEndpointTest {
 
     @Test
     fun topLevelMap_withNonEmptyResponse() {
-        rule.server.enqueue(MockResponse().setBody("""
-            {
-                "key1": "value1",
-                "key2": "value2"
-            }
-        """.trimIndent()))
+        rule.server.enqueue(
+            MockResponse().setBody(
+                """
+                {
+                    "key1": "value1",
+                    "key2": "value2"
+                }
+                """.trimIndent()
+            )
+        )
 
         val returned = rule.getApi<ResourceApi>().getTopLevelMap("2").blockingGet()
 
