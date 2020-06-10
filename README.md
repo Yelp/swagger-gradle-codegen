@@ -165,6 +165,8 @@ While developing, you can build, run pre-commits, checks & tests on the plugin u
 
 Make sure your tests are all green ✅ locally before submitting PRs.
 
+NOTE: If you don't have the [Android SDK](https://developer.android.com/studio/releases/sdk-tools) you can skip the Android related tasks by setting `SKIP_ANDROID` enviromental variable (tests will be run on the CI anyway).
+
 ## Contributing/Support
 
 Support for this project is offered in the [#swagger-gradle-codegen](https://kotlinlang.slack.com/archives/CU233PG2Z) channel on the Kotlinlang slack ([request an invite here](http://slack.kotlinlang.org/)).
