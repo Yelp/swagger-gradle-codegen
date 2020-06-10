@@ -1,5 +1,8 @@
 package com.yelp.codegen.samples.kotlincoroutines.tools
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.ExternalResource
 import retrofit2.Retrofit
@@ -17,8 +20,9 @@ class MockServerApiRule : ExternalResource() {
         super.before()
         server.start()
 
+        val contentType = MediaType.get("application/json")
         retrofit = Retrofit.Builder()
-            .addConverterFactory(GeneratedCodeConverters.converterFactory())
+                .addConverterFactory(Json.asConverterFactory(contentType))
             .baseUrl(server.url("/"))
             .build()
     }
