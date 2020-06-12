@@ -18,16 +18,16 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class FormatResponses(
-    @Json(name = "date_property") @field:Json(name = "date_property") var dateProperty: LocalDate? = null,
-    @Json(name = "datetime_property") @field:Json(name = "datetime_property") var datetimeProperty: ZonedDateTime? = null,
-    @Json(name = "enum_property") @field:Json(name = "enum_property") var enumProperty: FormatResponses.EnumPropertyEnum? = null
+  @Json(name = "date_property") @field:Json(name = "date_property") var dateProperty: LocalDate? = null,
+  @Json(name = "datetime_property") @field:Json(name = "datetime_property") var datetimeProperty: ZonedDateTime? = null,
+  @Json(name = "enum_property") @field:Json(name = "enum_property") var enumProperty: FormatResponses.EnumPropertyEnum? = null
 ) {
-    /**
-     * Values: VALUE1, VALUE2
-     */
-    @JsonClass(generateAdapter = false)
-    enum class EnumPropertyEnum(val value: String) {
-        @Json(name = "VALUE1") VALUE1("VALUE1"),
-        @Json(name = "VALUE2") VALUE2("VALUE2")
-    }
+  /**
+   * Values: VALUE1, VALUE2
+   */
+  @JsonClass(generateAdapter = false)
+  enum class EnumPropertyEnum(val value: String) {
+    @Json(name = "VALUE1") VALUE1("VALUE1"),
+    @Json(name = "VALUE2") VALUE2("VALUE2")
+  }
 }

@@ -14,14 +14,14 @@ import com.squareup.moshi.JsonClass
  */
 @JsonClass(generateAdapter = true)
 data class InlineResponse200(
-    @Json(name = "no_xmodel_no_title") @field:Json(name = "no_xmodel_no_title") var noXmodelNoTitle: InlineResponse200.NoXmodelNoTitleEnum? = null
+  @Json(name = "no_xmodel_no_title") @field:Json(name = "no_xmodel_no_title") var noXmodelNoTitle: InlineResponse200.NoXmodelNoTitleEnum? = null
 ) {
-    /**
-     * Values: VAL1, VAL2
-     */
-    @JsonClass(generateAdapter = false)
-    enum class NoXmodelNoTitleEnum(val value: String) {
-        @Json(name = "val1") VAL1("val1"),
-        @Json(name = "val2") VAL2("val2")
-    }
+  /**
+   * Values: VAL1, VAL2
+   */
+  @JsonClass(generateAdapter = false)
+  enum class NoXmodelNoTitleEnum(val value: String) {
+    @Json(name = "val1") VAL1("val1"),
+    @Json(name = "val2") VAL2("val2")
+  }
 }

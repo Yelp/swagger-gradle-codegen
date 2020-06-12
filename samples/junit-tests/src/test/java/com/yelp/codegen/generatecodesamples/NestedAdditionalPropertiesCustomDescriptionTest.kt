@@ -12,14 +12,14 @@ import org.junit.Test
 
 class NestedAdditionalPropertiesCustomDescriptionTest {
 
-    @get:Rule
-    val rule = MockServerApiRule()
+  @get:Rule
+  val rule = MockServerApiRule()
 
-    @Test
-    fun nestedAdditionalProperties() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun nestedAdditionalProperties() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "key1": {
                         "subkey1": "subvalue1",
@@ -30,28 +30,28 @@ class NestedAdditionalPropertiesCustomDescriptionTest {
                     },
                     "key3": {}
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getNestedAdditionalProperties().blockingGet()
+    val returned = rule.getApi<ResourceApi>().getNestedAdditionalProperties().blockingGet()
 
-        assertFalse(returned.isEmpty())
+    assertFalse(returned.isEmpty())
 
-        // Check that size are correct
-        assertEquals(3, returned.keys.size)
-        assertEquals(2, returned["key1"]?.keys?.size)
-        assertEquals(1, returned["key2"]?.keys?.size)
-        assertEquals(0, returned["key3"]?.keys?.size)
+    // Check that size are correct
+    assertEquals(3, returned.keys.size)
+    assertEquals(2, returned["key1"]?.keys?.size)
+    assertEquals(1, returned["key2"]?.keys?.size)
+    assertEquals(0, returned["key3"]?.keys?.size)
 
-        // Check that sizes are mapped correctly
-        assertTrue(returned["key1"] is TopLevelMap)
-        assertTrue(returned["key2"] is TopLevelMap)
-        assertTrue(returned["key3"] is TopLevelMap)
+    // Check that sizes are mapped correctly
+    assertTrue(returned["key1"] is TopLevelMap)
+    assertTrue(returned["key2"] is TopLevelMap)
+    assertTrue(returned["key3"] is TopLevelMap)
 
-        // Check that values are correct
-        assertEquals("subvalue1", returned["key1"]?.get("subkey1"))
-        assertEquals("subvalue2", returned["key1"]?.get("subkey2"))
-        assertEquals("subvalue1", returned["key2"]?.get("subkey1"))
-    }
+    // Check that values are correct
+    assertEquals("subvalue1", returned["key1"]?.get("subkey1"))
+    assertEquals("subvalue2", returned["key1"]?.get("subkey2"))
+    assertEquals("subvalue1", returned["key2"]?.get("subkey1"))
+  }
 }

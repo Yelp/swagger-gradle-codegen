@@ -19,7 +19,7 @@ import org.threeten.bp.ZonedDateTime
  */
 @JsonClass(generateAdapter = true)
 data class XnullableFormatResponses(
-    @Json(name = "date_property") @field:Json(name = "date_property") @XNullable var dateProperty: LocalDate? = null,
-    @Json(name = "datetime_property") @field:Json(name = "datetime_property") @XNullable var datetimeProperty: ZonedDateTime? = null,
-    @Json(name = "double_property") @field:Json(name = "double_property") @XNullable var doubleProperty: Double? = null
+  @Json(name = "date_property") @field:Json(name = "date_property") @XNullable var dateProperty: LocalDate? = null,
+  @Json(name = "datetime_property") @field:Json(name = "datetime_property") @XNullable var datetimeProperty: ZonedDateTime? = null,
+  @Json(name = "double_property") @field:Json(name = "double_property") @XNullable var doubleProperty: Double? = null
 )

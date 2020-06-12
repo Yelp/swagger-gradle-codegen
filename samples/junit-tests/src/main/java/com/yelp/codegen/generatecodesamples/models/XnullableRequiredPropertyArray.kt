@@ -17,6 +17,6 @@ import java.math.BigDecimal
  */
 @JsonClass(generateAdapter = true)
 data class XnullableRequiredPropertyArray(
-    @Json(name = "number_array") @field:Json(name = "number_array") @XNullable var numberArray: List<BigDecimal?>? = null,
-    @Json(name = "string_array") @field:Json(name = "string_array") @XNullable var stringArray: List<String?>? = null
+  @Json(name = "number_array") @field:Json(name = "number_array") @XNullable var numberArray: List<BigDecimal?>? = null,
+  @Json(name = "string_array") @field:Json(name = "string_array") @XNullable var stringArray: List<String?>? = null
 )

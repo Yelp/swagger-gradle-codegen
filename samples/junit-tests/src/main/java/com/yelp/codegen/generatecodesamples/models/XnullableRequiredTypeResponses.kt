@@ -20,18 +20,18 @@ import java.math.BigDecimal
  */
 @JsonClass(generateAdapter = true)
 data class XnullableRequiredTypeResponses(
-    @Json(name = "boolean_property") @field:Json(name = "boolean_property") @XNullable var booleanProperty: Boolean? = null,
-    @Json(name = "enum_property") @field:Json(name = "enum_property") @XNullable var enumProperty: XnullableRequiredTypeResponses.EnumPropertyEnum? = null,
-    @Json(name = "integer_property") @field:Json(name = "integer_property") @XNullable var integerProperty: Int? = null,
-    @Json(name = "number_property") @field:Json(name = "number_property") @XNullable var numberProperty: BigDecimal? = null,
-    @Json(name = "string_property") @field:Json(name = "string_property") @XNullable var stringProperty: String? = null
+  @Json(name = "boolean_property") @field:Json(name = "boolean_property") @XNullable var booleanProperty: Boolean? = null,
+  @Json(name = "enum_property") @field:Json(name = "enum_property") @XNullable var enumProperty: XnullableRequiredTypeResponses.EnumPropertyEnum? = null,
+  @Json(name = "integer_property") @field:Json(name = "integer_property") @XNullable var integerProperty: Int? = null,
+  @Json(name = "number_property") @field:Json(name = "number_property") @XNullable var numberProperty: BigDecimal? = null,
+  @Json(name = "string_property") @field:Json(name = "string_property") @XNullable var stringProperty: String? = null
 ) {
-    /**
-     * Values: VALUE1, VALUE2
-     */
-    @JsonClass(generateAdapter = false)
-    enum class EnumPropertyEnum(val value: String) {
-        @Json(name = "VALUE1") VALUE1("VALUE1"),
-        @Json(name = "VALUE2") VALUE2("VALUE2")
-    }
+  /**
+   * Values: VALUE1, VALUE2
+   */
+  @JsonClass(generateAdapter = false)
+  enum class EnumPropertyEnum(val value: String) {
+    @Json(name = "VALUE1") VALUE1("VALUE1"),
+    @Json(name = "VALUE2") VALUE2("VALUE2")
+  }
 }

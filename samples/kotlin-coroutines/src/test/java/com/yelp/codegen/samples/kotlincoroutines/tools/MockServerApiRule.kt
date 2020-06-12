@@ -13,26 +13,26 @@ import retrofit2.Retrofit
  */
 class MockServerApiRule : ExternalResource() {
 
-    lateinit var retrofit: Retrofit
-    val server = MockWebServer()
+  lateinit var retrofit: Retrofit
+  val server = MockWebServer()
 
-    override fun before() {
-        super.before()
-        server.start()
+  override fun before() {
+    super.before()
+    server.start()
 
-        val contentType = MediaType.get("application/json")
-        retrofit = Retrofit.Builder()
-                .addConverterFactory(Json.asConverterFactory(contentType))
-            .baseUrl(server.url("/"))
-            .build()
-    }
+    val contentType = MediaType.get("application/json")
+    retrofit = Retrofit.Builder()
+      .addConverterFactory(Json.asConverterFactory(contentType))
+      .baseUrl(server.url("/"))
+      .build()
+  }
 
-    override fun after() {
-        server.shutdown()
-        super.after()
-    }
+  override fun after() {
+    server.shutdown()
+    super.after()
+  }
 
-    inline fun <reified T> getApi(): T {
-        return retrofit.create(T::class.java)
-    }
+  inline fun <reified T> getApi(): T {
+    return retrofit.create(T::class.java)
+  }
 }

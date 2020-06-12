@@ -9,63 +9,63 @@ import org.junit.Test
 
 class XnullableFormatEndpointTest {
 
-    @get:Rule
-    val rule = MockServerApiRule()
+  @get:Rule
+  val rule = MockServerApiRule()
 
-    @Test
-    fun formatEndpoint_withEnumFormat() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun formatEndpoint_withEnumFormat() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "double_property": null
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("double").blockingGet()
+    val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("double").blockingGet()
 
-        assertNull(returned.doubleProperty)
-        assertNull(returned.datetimeProperty)
-        assertNull(returned.dateProperty)
-    }
+    assertNull(returned.doubleProperty)
+    assertNull(returned.datetimeProperty)
+    assertNull(returned.dateProperty)
+  }
 
-    @Test
-    fun formatEndpoint_withDateFormat() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun formatEndpoint_withDateFormat() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "date_property": null
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("date").blockingGet()
+    val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("date").blockingGet()
 
-        assertNull(returned.doubleProperty)
-        assertNull(returned.datetimeProperty)
-        assertNull(returned.dateProperty)
-    }
+    assertNull(returned.doubleProperty)
+    assertNull(returned.datetimeProperty)
+    assertNull(returned.dateProperty)
+  }
 
-    @Test
-    fun formatEndpoint_withDateTimeFormat() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun formatEndpoint_withDateTimeFormat() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "datetime_property": null
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("datetime").blockingGet()
+    val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("datetime").blockingGet()
 
-        assertNull(returned.doubleProperty)
-        assertNull(returned.datetimeProperty)
-        assertNull(returned.dateProperty)
-    }
+    assertNull(returned.doubleProperty)
+    assertNull(returned.datetimeProperty)
+    assertNull(returned.dateProperty)
+  }
 }

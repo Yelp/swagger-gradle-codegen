@@ -17,7 +17,7 @@ import java.math.BigDecimal
  */
 @JsonClass(generateAdapter = true)
 data class PropertyMap(
-    @Json(name = "number_map") @field:Json(name = "number_map") var numberMap: Map<String, BigDecimal>? = null,
-    @Json(name = "object_map") @field:Json(name = "object_map") var objectMap: Map<String, Any?>? = null,
-    @Json(name = "string_map") @field:Json(name = "string_map") var stringMap: Map<String, String>? = null
+  @Json(name = "number_map") @field:Json(name = "number_map") var numberMap: Map<String, BigDecimal>? = null,
+  @Json(name = "object_map") @field:Json(name = "object_map") var objectMap: Map<String, Any?>? = null,
+  @Json(name = "string_map") @field:Json(name = "string_map") var stringMap: Map<String, String>? = null
 )

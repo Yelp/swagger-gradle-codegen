@@ -9,14 +9,14 @@ import org.junit.Test
 
 class EmptyEndpointTest {
 
-    @get:Rule
-    val mockServerRule = MockServerApiRule()
+  @get:Rule
+  val mockServerRule = MockServerApiRule()
 
-    @Test
-    fun emptyEndpointTest_withEmptyBody() {
-        mockServerRule.server.enqueue(MockResponse().setBody("{}"))
+  @Test
+  fun emptyEndpointTest_withEmptyBody() {
+    mockServerRule.server.enqueue(MockResponse().setBody("{}"))
 
-        val returned = mockServerRule.getApi<ResourceApi>().getEmptyEndpoint().blockingGet()
-        assertNotNull(returned)
-    }
+    val returned = mockServerRule.getApi<ResourceApi>().getEmptyEndpoint().blockingGet()
+    assertNotNull(returned)
+  }
 }

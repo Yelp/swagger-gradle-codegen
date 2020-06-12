@@ -18,8 +18,8 @@ import java.math.BigDecimal
  */
 @JsonClass(generateAdapter = true)
 data class TypeResponses(
-    @Json(name = "boolean_property") @field:Json(name = "boolean_property") var booleanProperty: Boolean? = null,
-    @Json(name = "integer_property") @field:Json(name = "integer_property") var integerProperty: Int? = null,
-    @Json(name = "number_property") @field:Json(name = "number_property") var numberProperty: BigDecimal? = null,
-    @Json(name = "string_property") @field:Json(name = "string_property") var stringProperty: String? = null
+  @Json(name = "boolean_property") @field:Json(name = "boolean_property") var booleanProperty: Boolean? = null,
+  @Json(name = "integer_property") @field:Json(name = "integer_property") var integerProperty: Int? = null,
+  @Json(name = "number_property") @field:Json(name = "number_property") var numberProperty: BigDecimal? = null,
+  @Json(name = "string_property") @field:Json(name = "string_property") var stringProperty: String? = null
 )

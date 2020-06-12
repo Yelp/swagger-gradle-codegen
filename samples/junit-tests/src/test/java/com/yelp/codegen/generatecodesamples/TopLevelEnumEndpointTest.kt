@@ -10,32 +10,32 @@ import org.junit.Test
 
 class TopLevelEnumEndpointTest {
 
-    @get:Rule
-    val rule = MockServerApiRule()
+  @get:Rule
+  val rule = MockServerApiRule()
 
-    @Test
-    fun topLevelEnumEndpoint() {
-        rule.server.enqueue(MockResponse().setBody("\"TOP_LEVEL_VALUE1\""))
+  @Test
+  fun topLevelEnumEndpoint() {
+    rule.server.enqueue(MockResponse().setBody("\"TOP_LEVEL_VALUE1\""))
 
-        val returned = rule.getApi<ResourceApi>().getTopLevelEnum().blockingGet()
-        assertEquals(TopLevelEnum.VALUE1, returned)
-    }
+    val returned = rule.getApi<ResourceApi>().getTopLevelEnum().blockingGet()
+    assertEquals(TopLevelEnum.VALUE1, returned)
+  }
 
-    @Test
-    fun topLevelEnumNestedEndpoint() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun topLevelEnumNestedEndpoint() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "key1": {
                         "key2": "TOP_LEVEL_VALUE1"
                     }
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getTopLevelEnumNested().blockingGet()
-        assertEquals(TopLevelEnum.VALUE1, returned["key1"]?.get("key2"))
-    }
+    val returned = rule.getApi<ResourceApi>().getTopLevelEnumNested().blockingGet()
+    assertEquals(TopLevelEnum.VALUE1, returned["key1"]?.get("key2"))
+  }
 }

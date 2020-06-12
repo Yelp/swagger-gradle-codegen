@@ -9,14 +9,14 @@ import org.junit.Test
 
 class ReservedKeywordsEndpointTest {
 
-    @get:Rule
-    val rule = MockServerApiRule()
+  @get:Rule
+  val rule = MockServerApiRule()
 
-    @Test
-    fun reservedKeywordsEndpoint() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun reservedKeywordsEndpoint() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "class": "class",
                     "for": "for",
@@ -25,16 +25,16 @@ class ReservedKeywordsEndpointTest {
                     "var": "var",
                     "when": "when"
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getReservedKeywords().blockingGet()
-        assertEquals("class", returned.`class`)
-        assertEquals("when", returned.`when`)
-        assertEquals("for", returned.`for`)
-        assertEquals("val", returned.`val`)
-        assertEquals("var", returned.`var`)
-        assertEquals("operator", returned.`operator`)
-    }
+    val returned = rule.getApi<ResourceApi>().getReservedKeywords().blockingGet()
+    assertEquals("class", returned.`class`)
+    assertEquals("when", returned.`when`)
+    assertEquals("for", returned.`for`)
+    assertEquals("val", returned.`val`)
+    assertEquals("var", returned.`var`)
+    assertEquals("operator", returned.`operator`)
+  }
 }

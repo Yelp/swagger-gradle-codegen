@@ -13,43 +13,43 @@ import retrofit2.http.POST
 
 @JvmSuppressWildcards
 interface FileApi {
-    /**
-     * The endpoint is owned by junittests service owner
-     * @param clientFile (required)
-     */
-    @retrofit2.http.Multipart
-    @Headers(
-        "X-Operation-ID: post_file"
-    )
-    @POST("/post/file")
-    fun postFile(
-        @retrofit2.http.Part("client_file\"; filename=\"client_file") clientFile: RequestBody
-    ): Completable
-    /**
-     * The endpoint is owned by junittests service owner
-     * @param clientFile (required)
-     */
-    @retrofit2.http.FormUrlEncoded
-    @Headers(
-        "X-Operation-ID: post_file_without_multipart_form_data"
-    )
-    @POST("/post/file_without_consumes")
-    @Deprecated(message = "Unsafe to use")
-    fun postFileWithoutMultipartFormData(
-        @retrofit2.http.Field("client_file\"; filename=\"client_file") clientFile: RequestBody
-    ): Completable
-    /**
-     * The endpoint is owned by junittests service owner
-     * @param clientFile (required)
-     * @param certificateFile (required)
-     */
-    @retrofit2.http.Multipart
-    @Headers(
-        "X-Operation-ID: post_multiple_files"
-    )
-    @POST("/post/multiple_files")
-    fun postMultipleFiles(
-        @retrofit2.http.Part("client_file\"; filename=\"client_file") clientFile: RequestBody,
-        @retrofit2.http.Part("certificate_file\"; filename=\"certificate_file") certificateFile: RequestBody
-    ): Completable
+  /**
+   * The endpoint is owned by junittests service owner
+   * @param clientFile (required)
+   */
+  @retrofit2.http.Multipart
+  @Headers(
+    "X-Operation-ID: post_file"
+  )
+  @POST("/post/file")
+  fun postFile(
+    @retrofit2.http.Part("client_file\"; filename=\"client_file") clientFile: RequestBody
+  ): Completable
+  /**
+   * The endpoint is owned by junittests service owner
+   * @param clientFile (required)
+   */
+  @retrofit2.http.FormUrlEncoded
+  @Headers(
+    "X-Operation-ID: post_file_without_multipart_form_data"
+  )
+  @POST("/post/file_without_consumes")
+  @Deprecated(message = "Unsafe to use")
+  fun postFileWithoutMultipartFormData(
+    @retrofit2.http.Field("client_file\"; filename=\"client_file") clientFile: RequestBody
+  ): Completable
+  /**
+   * The endpoint is owned by junittests service owner
+   * @param clientFile (required)
+   * @param certificateFile (required)
+   */
+  @retrofit2.http.Multipart
+  @Headers(
+    "X-Operation-ID: post_multiple_files"
+  )
+  @POST("/post/multiple_files")
+  fun postMultipleFiles(
+    @retrofit2.http.Part("client_file\"; filename=\"client_file") clientFile: RequestBody,
+    @retrofit2.http.Part("certificate_file\"; filename=\"certificate_file") certificateFile: RequestBody
+  ): Completable
 }

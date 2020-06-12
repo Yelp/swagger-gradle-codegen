@@ -16,6 +16,6 @@ import java.math.BigDecimal
  */
 @JsonClass(generateAdapter = true)
 data class PropertyArray(
-    @Json(name = "number_array") @field:Json(name = "number_array") var numberArray: List<BigDecimal>? = null,
-    @Json(name = "string_array") @field:Json(name = "string_array") var stringArray: List<String>? = null
+  @Json(name = "number_array") @field:Json(name = "number_array") var numberArray: List<BigDecimal>? = null,
+  @Json(name = "string_array") @field:Json(name = "string_array") var stringArray: List<String>? = null
 )

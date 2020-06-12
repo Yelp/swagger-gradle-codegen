@@ -10,35 +10,35 @@ import org.junit.Test
 
 class TopLevelMapEndpointTest {
 
-    @get:Rule
-    val rule = MockServerApiRule()
+  @get:Rule
+  val rule = MockServerApiRule()
 
-    @Test
-    fun topLevelMap_withEmptyResponse() {
-        rule.server.enqueue(MockResponse().setBody("{}"))
+  @Test
+  fun topLevelMap_withEmptyResponse() {
+    rule.server.enqueue(MockResponse().setBody("{}"))
 
-        val returned = rule.getApi<ResourceApi>().getTopLevelMap("empty").blockingGet()
+    val returned = rule.getApi<ResourceApi>().getTopLevelMap("empty").blockingGet()
 
-        assertTrue(returned.isEmpty())
-    }
+    assertTrue(returned.isEmpty())
+  }
 
-    @Test
-    fun topLevelMap_withNonEmptyResponse() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun topLevelMap_withNonEmptyResponse() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "key1": "value1",
                     "key2": "value2"
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getTopLevelMap("2").blockingGet()
+    val returned = rule.getApi<ResourceApi>().getTopLevelMap("2").blockingGet()
 
-        assertEquals(2, returned.size)
-        assertEquals("value1", returned["key1"])
-        assertEquals("value2", returned["key2"])
-    }
+    assertEquals(2, returned.size)
+    assertEquals("value1", returned["key1"])
+    assertEquals("value2", returned["key2"])
+  }
 }

@@ -16,36 +16,36 @@ import retrofit2.http.Headers
 
 @JvmSuppressWildcards
 interface ModelNameCheckApi {
-    /**
-     * The endpoint is owned by junittests service owner
-     */
-    @Headers(
-        "X-Operation-ID: getInlinedModelWithNoNames"
-    )
-    @GET("/model_name/no_x-model_or_title")
-    fun getInlinedModelWithNoNames(): Single<InlineResponse200>
-    /**
-     * The endpoint is owned by junittests service owner
-     */
-    @Headers(
-        "X-Operation-ID: getInlinedModelWithTitleOnly"
-    )
-    @GET("/model_name/title_only")
-    fun getInlinedModelWithTitleOnly(): Single<ModelWithOnlyTitle>
-    /**
-     * The endpoint is owned by junittests service owner
-     */
-    @Headers(
-        "X-Operation-ID: getInlinedModelWithXModelAndTitle"
-    )
-    @GET("/model_name/x-model_and_title")
-    fun getInlinedModelWithXModelAndTitle(): Single<ModelWithXModelAndTitle>
-    /**
-     * The endpoint is owned by junittests service owner
-     */
-    @Headers(
-        "X-Operation-ID: getInlinedModelWithXModelOnly"
-    )
-    @GET("/model_name/x-model_only")
-    fun getInlinedModelWithXModelOnly(): Single<ModelWithOnlyXModel>
+  /**
+   * The endpoint is owned by junittests service owner
+   */
+  @Headers(
+    "X-Operation-ID: getInlinedModelWithNoNames"
+  )
+  @GET("/model_name/no_x-model_or_title")
+  fun getInlinedModelWithNoNames(): Single<InlineResponse200>
+  /**
+   * The endpoint is owned by junittests service owner
+   */
+  @Headers(
+    "X-Operation-ID: getInlinedModelWithTitleOnly"
+  )
+  @GET("/model_name/title_only")
+  fun getInlinedModelWithTitleOnly(): Single<ModelWithOnlyTitle>
+  /**
+   * The endpoint is owned by junittests service owner
+   */
+  @Headers(
+    "X-Operation-ID: getInlinedModelWithXModelAndTitle"
+  )
+  @GET("/model_name/x-model_and_title")
+  fun getInlinedModelWithXModelAndTitle(): Single<ModelWithXModelAndTitle>
+  /**
+   * The endpoint is owned by junittests service owner
+   */
+  @Headers(
+    "X-Operation-ID: getInlinedModelWithXModelOnly"
+  )
+  @GET("/model_name/x-model_only")
+  fun getInlinedModelWithXModelOnly(): Single<ModelWithOnlyXModel>
 }
