@@ -36,7 +36,10 @@ class ModelNameCheckEndpointTest {
 
   @Test
   fun getInlinedModelWithTitleOnly() {
-    rule.server.enqueue(MockResponse().setBody("{\"title_only\": \"val1\"}"))
+    rule.server.enqueue(
+      MockResponse()
+        .setBody("{\"title_only\": \"val1\"}")
+    )
 
     val returned = rule.getApi<ModelNameCheckApi>().getInlinedModelWithTitleOnly().blockingGet()
 

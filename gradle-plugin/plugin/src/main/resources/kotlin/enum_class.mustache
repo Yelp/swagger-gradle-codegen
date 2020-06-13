@@ -2,6 +2,6 @@
 * {{{description}}}{{/description}}
 * Values: {{#allowableValues}}{{#enumVars}}{{&name}}{{^-last}},{{/-last}}{{/enumVars}}{{/allowableValues}}
 */
-@JsonClass(generateAdapter = false)
+@Serializable
 enum class {{classname}}(val value: {{dataType}}) {
-{{#allowableValues}}{{#enumVars}}    @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{{newline}}}{{/enumVars}}{{/allowableValues}}}
+{{#allowableValues}}{{#enumVars}}    @SerialName({{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{{newline}}}{{/enumVars}}{{/allowableValues}}}

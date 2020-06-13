@@ -20,7 +20,7 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70"
 
-    // kotlin.serialization + OkHttp + Retrofit
+    // kotlinx.serialization + OkHttp + Retrofit
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
     implementation "com.squareup.okhttp3:okhttp:3.12.3"
     implementation "com.squareup.retrofit2:retrofit:2.7.1"
