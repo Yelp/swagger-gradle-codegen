@@ -56,7 +56,7 @@ Once you setup the plugin correctly, you can call the `:generateSwagger` gradle 
 
 In order to run this gradle plugin you need to fulfill the following requirements:
 
-* Gradle 5.x - This plugin uses Gradle 5 features, and you will need to setup your Gradle wrapper to use 5.4.1 or more.
+* Gradle 6.x - This plugin uses Gradle 6 features, and you will need to setup your Gradle wrapper to use 6.1.1 or newer.
 * Java 8+
 
 ## Supported platforms
@@ -67,8 +67,8 @@ Here the list of the supported platforms:
 
 | Platform | Description                                |
 | -------- | ------------------------------------------ |
-| `kotlin` | Generates Kotlin code and Retrofit interfaces, with RxJava2 for async calls, Moshi for serialization and ThreeTenABP for Data management |
-| `kotlin-coroutines` | Generates Kotlin code and Retrofit interfaces, with [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) for async calls, Moshi for serialization and ThreeTenABP for Data management |
+| `kotlin` | Generates Kotlin code and Retrofit interfaces, with RxJava2 for async calls and Moshi for serialization |
+| `kotlin-coroutines` | Generates Kotlin code and Retrofit interfaces, with [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) for async calls and Moshi for serialization |
 
 We're looking forward to more platforms to support in the future. Contributions are more than welcome.
 

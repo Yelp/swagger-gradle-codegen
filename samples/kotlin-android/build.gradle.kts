@@ -12,6 +12,11 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -26,8 +31,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-moshi:2.7.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
 
-    // Date Support
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.2")
+    // Date Support via Desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.9")
 
     // RxJava
     implementation("io.reactivex.rxjava2:rxjava:2.2.17")

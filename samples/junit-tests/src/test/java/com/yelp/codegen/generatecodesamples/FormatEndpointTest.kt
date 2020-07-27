@@ -7,9 +7,9 @@ import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
-import org.threeten.bp.ZonedDateTime
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class FormatEndpointTest {
 
