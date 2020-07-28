@@ -19,20 +19,20 @@ import java.math.BigDecimal
  * such as [LocalDate], [ZonedDateTime], [BigDecimal].
  */
 class TypesAdapterFactory : JsonAdapter.Factory {
-    private val types = mapOf<Type, JsonAdapter<*>>(
-        LocalDate::class.java to LocalDateAdapter(),
-        ZonedDateTime::class.java to ZonedDateTimeAdapter(),
-        BigDecimal::class.java to BigDecimalJsonAdapter()
-    )
+  private val types = mapOf<Type, JsonAdapter<*>>(
+    LocalDate::class.java to LocalDateAdapter(),
+    ZonedDateTime::class.java to ZonedDateTimeAdapter(),
+    BigDecimal::class.java to BigDecimalJsonAdapter()
+  )
 
-    override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? {
-        if (annotations.isEmpty()) {
-            for (targetType in types.keys) {
-                if (Util.typesMatch(type, targetType)) return types[targetType]
-            }
-        }
-        return null
+  override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? {
+    if (annotations.isEmpty()) {
+      for (targetType in types.keys) {
+        if (Util.typesMatch(type, targetType)) return types[targetType]
+      }
     }
+    return null
+  }
 }
 
 /**
@@ -42,49 +42,49 @@ class TypesAdapterFactory : JsonAdapter.Factory {
  */
 internal abstract class XNullableJsonAdapter<T> : JsonAdapter<T>() {
 
-    abstract fun fromNonNullString(nextString: String): T
+  abstract fun fromNonNullString(nextString: String): T
 
-    override fun fromJson(reader: JsonReader): T? {
-        return if (reader.peek() != JsonReader.Token.NULL) {
-            fromNonNullString(reader.nextString())
-        } else {
-            reader.nextNull<Any>()
-            null
-        }
+  override fun fromJson(reader: JsonReader): T? {
+    return if (reader.peek() != JsonReader.Token.NULL) {
+      fromNonNullString(reader.nextString())
+    } else {
+      reader.nextNull<Any>()
+      null
     }
+  }
 }
 
 internal class LocalDateAdapter : XNullableJsonAdapter<LocalDate>() {
-    private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
+  private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
 
-    override fun fromNonNullString(nextString: String): LocalDate = LocalDate.parse(nextString, formatter)
+  override fun fromNonNullString(nextString: String): LocalDate = LocalDate.parse(nextString, formatter)
 
-    override fun toJson(writer: JsonWriter, value: LocalDate?) {
-        value?.let { writer.value(it.format(formatter)) }
-    }
+  override fun toJson(writer: JsonWriter, value: LocalDate?) {
+    value?.let { writer.value(it.format(formatter)) }
+  }
 }
 
 internal class ZonedDateTimeAdapter : XNullableJsonAdapter<ZonedDateTime>() {
-    private val formatter = DateTimeFormatter.ISO_DATE_TIME
+  private val formatter = DateTimeFormatter.ISO_DATE_TIME
 
-    override fun fromNonNullString(nextString: String): ZonedDateTime {
-        return try {
-            ZonedDateTime.parse(nextString, formatter)
-        } catch (parseException: DateTimeException) {
-            val localDateTime = LocalDateTime.parse(nextString, formatter)
-            localDateTime.atZone(ZoneId.of("Z"))
-        }
+  override fun fromNonNullString(nextString: String): ZonedDateTime {
+    return try {
+      ZonedDateTime.parse(nextString, formatter)
+    } catch (parseException: DateTimeException) {
+      val localDateTime = LocalDateTime.parse(nextString, formatter)
+      localDateTime.atZone(ZoneId.of("Z"))
     }
+  }
 
-    override fun toJson(writer: JsonWriter, value: ZonedDateTime?) {
-        value?.let { writer.value(it.format(formatter)) }
-    }
+  override fun toJson(writer: JsonWriter, value: ZonedDateTime?) {
+    value?.let { writer.value(it.format(formatter)) }
+  }
 }
 
 internal class BigDecimalJsonAdapter : XNullableJsonAdapter<BigDecimal>() {
-    override fun fromNonNullString(nextString: String) = BigDecimal(nextString)
+  override fun fromNonNullString(nextString: String) = BigDecimal(nextString)
 
-    override fun toJson(writer: JsonWriter, value: BigDecimal?) {
-        value?.let { writer.value(it) }
-    }
+  override fun toJson(writer: JsonWriter, value: BigDecimal?) {
+    value?.let { writer.value(it) }
+  }
 }

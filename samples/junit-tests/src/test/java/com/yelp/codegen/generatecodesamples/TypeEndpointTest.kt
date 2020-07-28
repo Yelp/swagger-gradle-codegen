@@ -9,70 +9,70 @@ import org.junit.Test
 
 class TypeEndpointTest {
 
-    @get:Rule
-    val rule = MockServerApiRule()
+  @get:Rule
+  val rule = MockServerApiRule()
 
-    @Test
-    fun typeEndpoint_withStringType() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun typeEndpoint_withStringType() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "string_property": "string"
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getTypeEndpoint("string").blockingGet()
-        assertEquals("string", returned.stringProperty)
-    }
+    val returned = rule.getApi<ResourceApi>().getTypeEndpoint("string").blockingGet()
+    assertEquals("string", returned.stringProperty)
+  }
 
-    @Test
-    fun typeEndpoint_withBooleanType() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun typeEndpoint_withBooleanType() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "boolean_property": true
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getTypeEndpoint("boolean").blockingGet()
-        assertEquals(true, returned.booleanProperty)
-    }
+    val returned = rule.getApi<ResourceApi>().getTypeEndpoint("boolean").blockingGet()
+    assertEquals(true, returned.booleanProperty)
+  }
 
-    @Test
-    fun typeEndpoint_withIntegerType() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun typeEndpoint_withIntegerType() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "integer_property": 1
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getTypeEndpoint("integer").blockingGet()
-        assertEquals(1, returned.integerProperty)
-    }
+    val returned = rule.getApi<ResourceApi>().getTypeEndpoint("integer").blockingGet()
+    assertEquals(1, returned.integerProperty)
+  }
 
-    @Test
-    fun typeEndpoint_withNumberType() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun typeEndpoint_withNumberType() {
+    rule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "number_property": 1.2
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        val returned = rule.getApi<ResourceApi>().getTypeEndpoint("number").blockingGet()
-        assertEquals(1.2.toBigDecimal(), returned.numberProperty)
-    }
+    val returned = rule.getApi<ResourceApi>().getTypeEndpoint("number").blockingGet()
+    assertEquals(1.2.toBigDecimal(), returned.numberProperty)
+  }
 }

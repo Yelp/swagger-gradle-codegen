@@ -18,20 +18,20 @@ import org.junit.rules.ExternalResource
 @ExperimentalCoroutinesApi
 class CoroutineDispatcherRule : ExternalResource() {
 
-    private val testCoroutineDispatcher = TestCoroutineDispatcher()
-    private val testCoroutineScope = TestCoroutineScope(testCoroutineDispatcher)
+  private val testCoroutineDispatcher = TestCoroutineDispatcher()
+  private val testCoroutineScope = TestCoroutineScope(testCoroutineDispatcher)
 
-    override fun before() {
-        super.before()
-        Dispatchers.setMain(testCoroutineDispatcher)
-    }
+  override fun before() {
+    super.before()
+    Dispatchers.setMain(testCoroutineDispatcher)
+  }
 
-    override fun after() {
-        Dispatchers.resetMain()
-        testCoroutineScope.cleanupTestCoroutines()
-        super.after()
-    }
+  override fun after() {
+    Dispatchers.resetMain()
+    testCoroutineScope.cleanupTestCoroutines()
+    super.after()
+  }
 
-    fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) =
-        runBlocking(Dispatchers.Main, block)
+  fun runBlockingTest(block: suspend CoroutineScope.() -> Unit) =
+    runBlocking(Dispatchers.Main, block)
 }

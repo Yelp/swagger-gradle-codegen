@@ -15,68 +15,68 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class CoroutinesEndpointsTest {
 
-    @get:Rule
-    val mockServerRule = MockServerApiRule()
+  @get:Rule
+  val mockServerRule = MockServerApiRule()
 
-    @get:Rule
-    val coroutinesRule = CoroutineDispatcherRule()
+  @get:Rule
+  val coroutinesRule = CoroutineDispatcherRule()
 
-    @Test
-    fun emptyEndpointTest() {
-        mockServerRule.server.enqueue(MockResponse().setBody("{}"))
+  @Test
+  fun emptyEndpointTest() {
+    mockServerRule.server.enqueue(MockResponse().setBody("{}"))
 
-        coroutinesRule.runBlockingTest {
-            val returned = mockServerRule.getApi<ResourceApi>().getEmptyEndpoint()
-            assertNotNull(returned)
-        }
+    coroutinesRule.runBlockingTest {
+      val returned = mockServerRule.getApi<ResourceApi>().getEmptyEndpoint()
+      assertNotNull(returned)
     }
+  }
 
-    @Test
-    fun propertyEndpointTest_withStringProperty() {
-        mockServerRule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun propertyEndpointTest_withStringProperty() {
+    mockServerRule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "string_property": "string"
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        coroutinesRule.runBlockingTest {
-            val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")
-            assertEquals("string", returned.stringProperty)
-            assertNull(returned.enumProperty)
-        }
+    coroutinesRule.runBlockingTest {
+      val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")
+      assertEquals("string", returned.stringProperty)
+      assertNull(returned.enumProperty)
     }
+  }
 
-    @Test
-    fun propertyEndpointTest_withEnumProperty() {
-        mockServerRule.server.enqueue(
-            MockResponse().setBody(
-                """
+  @Test
+  fun propertyEndpointTest_withEnumProperty() {
+    mockServerRule.server.enqueue(
+      MockResponse().setBody(
+        """
                 {
                     "enum_property": "VALUE1"
                 }
-                """.trimIndent()
-            )
-        )
+        """.trimIndent()
+      )
+    )
 
-        coroutinesRule.runBlockingTest {
-            val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")
-            assertEquals(PropertyModel.EnumPropertyEnum.VALUE1, returned.enumProperty)
-            assertNull(returned.stringProperty)
-        }
+    coroutinesRule.runBlockingTest {
+      val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")
+      assertEquals(PropertyModel.EnumPropertyEnum.VALUE1, returned.enumProperty)
+      assertNull(returned.stringProperty)
     }
+  }
 
-    @Test
-    fun propertyEndpointTest_withEmptyObject() {
-        mockServerRule.server.enqueue(MockResponse().setBody("{}"))
+  @Test
+  fun propertyEndpointTest_withEmptyObject() {
+    mockServerRule.server.enqueue(MockResponse().setBody("{}"))
 
-        coroutinesRule.runBlockingTest {
-            val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")
-            assertNull(returned.stringProperty)
-            assertNull(returned.enumProperty)
-        }
+    coroutinesRule.runBlockingTest {
+      val returned = mockServerRule.getApi<ResourceApi>().getPropertyEndpoint("string")
+      assertNull(returned.stringProperty)
+      assertNull(returned.enumProperty)
     }
+  }
 }

@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("com.yelp.codegen.plugin")
+    kotlin("plugin.serialization") version "1.3.70"
 }
 
 android {
@@ -18,12 +19,10 @@ dependencies {
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70")
 
-    // Moshi + OkHttp + Retrofit
-    implementation("com.squareup.moshi:moshi:1.9.2")
-    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
+    // kotlinx.serialization + OkHttp + Retrofit
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
     implementation("com.squareup.okhttp3:okhttp:3.12.3")
     implementation("com.squareup.retrofit2:retrofit:2.7.1")
-    implementation("com.squareup.retrofit2:converter-moshi:2.7.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.7.1")
 
     // Date Support
