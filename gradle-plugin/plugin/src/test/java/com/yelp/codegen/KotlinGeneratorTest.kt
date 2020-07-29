@@ -244,8 +244,8 @@ class KotlinGeneratorTest {
     @Test
     fun toModelName_withImportMapping() {
         val generator = KotlinGenerator()
-        generator.importMapping()["threeten"] = "org.threeten.bp.LocalDate"
-        assertEquals("threeten", generator.toModelName("threeten"))
+        generator.importMapping()["Instant"] = "java.time.Instant"
+        assertEquals("Instant", generator.toModelName("Instant"))
     }
 
     @Test
