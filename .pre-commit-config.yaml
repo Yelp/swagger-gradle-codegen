@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.4.0
+  rev: v3.3.0
   hooks:
   - id: check-merge-conflict
   - id: trailing-whitespace
@@ -22,7 +22,7 @@ repos:
     args: [--autofix, --indent, '2']
     exclude: ^config/detekt/detekt\.yml$
 - repo: https://github.com/Yelp/detect-secrets
-  rev: v0.13.0
+  rev: v0.14.3
   hooks:
   - id: detect-secrets
     args: [--baseline, .secrets.baseline]
