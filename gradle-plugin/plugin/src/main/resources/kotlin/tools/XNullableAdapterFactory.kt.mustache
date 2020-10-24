@@ -13,9 +13,9 @@ class XNullableAdapterFactory : JsonAdapter.Factory {
                 override fun fromJson(reader: JsonReader): Any? {
                     return if (reader.peek() != JsonReader.Token.NULL) {
                         val nextAdapter = moshi.nextAdapter<Any>(
-                                this@XNullableAdapterFactory,
-                                type,
-                                annotations.removeXNullableAnnotation()
+                            this@XNullableAdapterFactory,
+                            type,
+                            annotations.removeXNullableAnnotation()
                         )
                         nextAdapter?.fromJson(reader)
                     } else {
@@ -31,9 +31,9 @@ class XNullableAdapterFactory : JsonAdapter.Factory {
                         writer.serializeNulls = serializeNulls
                     } else {
                         val nextAdapter = moshi.nextAdapter<Any>(
-                                this@XNullableAdapterFactory,
-                                type,
-                                annotations.removeXNullableAnnotation()
+                            this@XNullableAdapterFactory,
+                            type,
+                            annotations.removeXNullableAnnotation()
                         )
                         nextAdapter?.toJson(writer, value)
                     }
