@@ -20,9 +20,9 @@ import java.time.format.DateTimeFormatter
  */
 class TypesAdapterFactory : JsonAdapter.Factory {
     private val types = mapOf<Type, JsonAdapter<*>>(
-            LocalDate::class.java to LocalDateAdapter(),
-            ZonedDateTime::class.java to ZonedDateTimeAdapter(),
-            BigDecimal::class.java to BigDecimalJsonAdapter()
+        LocalDate::class.java to LocalDateAdapter(),
+        ZonedDateTime::class.java to ZonedDateTimeAdapter(),
+        BigDecimal::class.java to BigDecimalJsonAdapter()
     )
 
     override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? {
