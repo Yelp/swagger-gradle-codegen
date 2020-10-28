@@ -1,5 +1,7 @@
 package com.yelp.codegen
 
+import com.google.common.annotations.VisibleForTesting
+import com.yelp.codegen.utils.CodegenModelVar
 import com.yelp.codegen.utils.safeSuffix
 import io.swagger.codegen.CodegenConfig
 import io.swagger.codegen.CodegenModel
@@ -81,8 +83,8 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     /**
      * Returns the /main/resources directory to access the .mustache files
      */
-    protected val resourcesDirectory: File
-        get() = File(this.javaClass.classLoader.getResource(templateDir)!!.path.safeSuffix(File.separator))
+    protected val resourcesDirectory: File?
+        get() = javaClass.classLoader.getResource(templateDir)?.path?.safeSuffix(File.separator)?.let { File(it) }
 
     override fun processOpts() {
         super.processOpts()
@@ -263,11 +265,8 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
 
         // Update all enum properties datatypeWithEnum to use "BaseClass.InnerEnumClass" to reduce ambiguity
         CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties ->
-            properties.forEach {
-                if (it.isEnum) {
-                    it.datatypeWithEnum = this.postProcessDataTypeWithEnum(codegenModel, it)
-                }
-            }
+            properties.filter { it.isEnum }
+                .onEach { it.datatypeWithEnum = postProcessDataTypeWithEnum(codegenModel, it) }
         }
 
         return codegenModel
@@ -608,6 +607,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * Hook that allows to add the needed imports for a given [CodegenModel]
      * This is needed as we might be modifying models in [postProcessAllModels]
      */
+    @VisibleForTesting
     internal abstract fun addRequiredImports(codegenModel: CodegenModel)
 
     private fun defaultListType() = typeMapping["list"] ?: ""

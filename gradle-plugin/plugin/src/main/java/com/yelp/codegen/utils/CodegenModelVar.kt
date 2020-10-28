@@ -1,3 +1,5 @@
+package com.yelp.codegen.utils
+
 import io.swagger.codegen.CodegenModel
 import io.swagger.codegen.CodegenProperty
 
