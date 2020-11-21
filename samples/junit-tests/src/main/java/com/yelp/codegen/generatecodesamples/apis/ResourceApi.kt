@@ -116,11 +116,11 @@ interface ResourceApi {
     )
     @GET("/symbols/in/parameter/name")
     fun getSymbolsInParameterName(
-        @retrofit2.http.Query("parameter") parameter: String?,
-        @retrofit2.http.Query("brackets[]") brackets: String?,
-        @retrofit2.http.Query("brackets[withText]") bracketsWithText: String?,
-        @retrofit2.http.Query("dot.") dot: String?,
-        @retrofit2.http.Query("dot.withText") dotWithText: String?
+        @retrofit2.http.Query("parameter") parameter: String? = null,
+        @retrofit2.http.Query("brackets[]") brackets: String? = null,
+        @retrofit2.http.Query("brackets[withText]") bracketsWithText: String? = null,
+        @retrofit2.http.Query("dot.") dot: String? = null,
+        @retrofit2.http.Query("dot.withText") dotWithText: String? = null
     ): Completable
     /**
      * The endpoint is owned by junittests service owner
