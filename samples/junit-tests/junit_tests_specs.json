@@ -123,6 +123,9 @@
                 "class": {
                     "type": "string"
                 },
+                "data": {
+                    "type": "string"
+                },
                 "for": {
                     "type": "string"
                 },
@@ -727,6 +730,43 @@
         "/reserved_keywords": {
             "get": {
                 "operationId": "get_reserved_keywords",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "class",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "data",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "for",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "operator",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "val",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "var",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "when",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "",

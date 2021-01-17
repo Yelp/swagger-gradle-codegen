@@ -95,12 +95,27 @@ interface ResourceApi {
     fun getRequiredTypeEndpoint(): Single<RequiredTypeResponses>
     /**
      * The endpoint is owned by junittests service owner
+     * @param `class` (optional)
+     * @param `data` (optional)
+     * @param `for` (optional)
+     * @param `operator` (optional)
+     * @param `val` (optional)
+     * @param `var` (optional)
+     * @param `when` (optional)
      */
     @Headers(
         "X-Operation-ID: get_reserved_keywords"
     )
     @GET("/reserved_keywords")
-    fun getReservedKeywords(): Single<ReservedKeywords>
+    fun getReservedKeywords(
+        @retrofit2.http.Query("class") `class`: String? = null,
+        @retrofit2.http.Query("data") `data`: String? = null,
+        @retrofit2.http.Query("for") `for`: String? = null,
+        @retrofit2.http.Query("operator") `operator`: String? = null,
+        @retrofit2.http.Query("val") `val`: String? = null,
+        @retrofit2.http.Query("var") `var`: String? = null,
+        @retrofit2.http.Query("when") `when`: String? = null
+    ): Single<ReservedKeywords>
     /**
      * Test symbols in parameter name
      * Make sure that symbols in parameter name are treated properly

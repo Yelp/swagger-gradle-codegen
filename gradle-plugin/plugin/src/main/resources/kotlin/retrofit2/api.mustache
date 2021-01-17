@@ -11,7 +11,7 @@ interface {{classname}} {
     /**{{#summary}}{{{newline}}}     * {{{summary}}}{{/summary}}{{#notes}}{{{newline}}}     * {{{<br/>}}}{{{notes}}}{{/notes}}
      * The endpoint is owned by {{{vendorExtensions.x-team-owners}}}{{^vendorExtensions.x-team-owners}}{{service_name}} service owner{{/vendorExtensions.x-team-owners}}
 {{#allParams}}
-     * @param {{paramName}}{{#description}} {{description}}{{/description}} ({{#required}}required{{/required}}{{^required}}optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/required}})
+     * @param {{{paramName}}}{{#description}} {{description}}{{/description}} ({{#required}}required{{/required}}{{^required}}optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}{{/required}})
 {{/allParams}}
 {{#externalDocs}}
      * {{description}}
