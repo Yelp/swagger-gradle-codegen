@@ -4,7 +4,7 @@
  * @property {{{name}}}{{#description}} {{description}}{{/description}}
 {{/vars}}
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 {{#hasVars}}data {{/hasVars}}class {{classname}}{{#hasVars}}(
 {{#requiredVars}}
 {{>data_class_req_var}}{{^-last}},
@@ -18,7 +18,7 @@
      * {{{description}}}{{/description}}
      * Values:{{#allowableValues}} {{#enumVars}}{{&name}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}
      */
-    @JsonClass(generateAdapter = false)
-    enum class {{enumName}}(val value: {{complexType}}) {
-{{#allowableValues}}{{#enumVars}}        @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{{newline}}}{{/enumVars}}{{/allowableValues}}    }
+    @Serializable
+    enum class {{enumName}}() {
+{{#allowableValues}}{{#enumVars}}        @SerialName({{{value}}}) {{&name}}{{^-last}},{{/-last}}{{{newline}}}{{/enumVars}}{{/allowableValues}}    }
 {{/isEnum}}{{/vars}}}{{/hasEnums}}{{/hasVars}}

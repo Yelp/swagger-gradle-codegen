@@ -3,13 +3,11 @@ package com.yelp.codegen.generatecodesamples
 import com.yelp.codegen.generatecodesamples.apis.ResourceApi
 import com.yelp.codegen.generatecodesamples.models.FormatResponses
 import com.yelp.codegen.generatecodesamples.tools.MockServerApiRule
+import kotlinx.datetime.LocalDate
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZonedDateTime
 
 class FormatEndpointTest {
 
@@ -45,7 +43,7 @@ class FormatEndpointTest {
         )
 
         val returned = rule.getApi<ResourceApi>().getFormatEndpoint("date").blockingGet()
-        assertEquals(LocalDate.of(1970, 1, 1), returned.dateProperty)
+        assertEquals(LocalDate(1970, 1, 1), returned.dateProperty)
     }
 
     @Test
@@ -61,7 +59,7 @@ class FormatEndpointTest {
         )
 
         val returned = rule.getApi<ResourceApi>().getFormatEndpoint("datetime_with_timezone").blockingGet()
-        assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("+01:00")), returned.datetimeProperty)
+        assertEquals("1969-12-31T23:00:00Z", returned.datetimeProperty.toString())
     }
 
     @Test
@@ -77,7 +75,7 @@ class FormatEndpointTest {
         )
 
         val returned = rule.getApi<ResourceApi>().getFormatEndpoint("datetime_with_utc").blockingGet()
-        assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 0, ZoneId.of("Z")), returned.datetimeProperty)
+        assertEquals("1970-01-01T00:00:00Z", returned.datetimeProperty.toString())
     }
 
     @Test
@@ -95,7 +93,7 @@ class FormatEndpointTest {
         // 10000000 nanoseconds == 0.01 seconds.
         val returned = rule.getApi<ResourceApi>()
             .getFormatEndpoint("datetime_with_fractionalsec_and_timezone").blockingGet()
-        assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 10000000, ZoneId.of("+01:00")), returned.datetimeProperty)
+        assertEquals("1969-12-31T23:00:00.010Z", returned.datetimeProperty.toString())
     }
 
     @Test
@@ -112,6 +110,6 @@ class FormatEndpointTest {
 
         // 10000000 nanoseconds == 0.01 seconds.
         val returned = rule.getApi<ResourceApi>().getFormatEndpoint("datetime_with_fractionalsec_and_utc").blockingGet()
-        assertEquals(ZonedDateTime.of(1970, 1, 1, 0, 0, 0, 10000000, ZoneId.of("Z")), returned.datetimeProperty)
+        assertEquals("1970-01-01T00:00:00.010Z", returned.datetimeProperty.toString())
     }
 }

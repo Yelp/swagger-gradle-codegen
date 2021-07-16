@@ -33,7 +33,7 @@ class RequiredTypeEndpointTest {
         assertEquals("string", returned.stringProperty)
         assertEquals(true, returned.booleanProperty)
         assertEquals(1, returned.integerProperty)
-        assertEquals(1.2.toBigDecimal(), returned.numberProperty)
+        assertEquals(1.2, returned.numberProperty, Double.MIN_VALUE)
         assertEquals(RequiredTypeResponses.EnumPropertyEnum.VALUE1, returned.enumProperty)
     }
 }

@@ -6,18 +6,18 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import java.math.BigDecimal
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
 
 /**
  * @property numberMap
  * @property objectMap
  * @property stringMap
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class PropertyMap(
-    @Json(name = "number_map") @field:Json(name = "number_map") var numberMap: Map<String, BigDecimal>? = null,
-    @Json(name = "object_map") @field:Json(name = "object_map") var objectMap: Map<String, Any?>? = null,
-    @Json(name = "string_map") @field:Json(name = "string_map") var stringMap: Map<String, String>? = null
+    @SerialName("number_map") var numberMap: Map<String, Double>? = null,
+    @SerialName("object_map") var objectMap: JsonObject? = null,
+    @SerialName("string_map") var stringMap: Map<String, String>? = null
 )

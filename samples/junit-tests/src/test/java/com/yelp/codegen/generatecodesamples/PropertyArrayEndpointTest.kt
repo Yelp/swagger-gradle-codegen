@@ -101,7 +101,7 @@ class PropertyArrayEndpointTest {
         assertNotNull(returned.numberArray)
 
         assertEquals(2, returned.numberArray?.size)
-        assertEquals(1.1.toBigDecimal(), returned.numberArray?.get(0))
-        assertEquals(2.2.toBigDecimal(), returned.numberArray?.get(1))
+        assertEquals(1.1, returned.numberArray?.get(0))
+        assertEquals(2.2, returned.numberArray?.get(1))
     }
 }

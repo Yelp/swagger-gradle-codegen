@@ -48,8 +48,8 @@ class KotlinGeneratorTest {
 
         KotlinGenerator().addRequiredImports(model)
 
-        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
-        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertTrue(model.imports.contains("kotlinx.serialization.Serializable"))
+        assertTrue(model.imports.contains("kotlinx.serialization.SerialName"))
         assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
@@ -60,8 +60,8 @@ class KotlinGeneratorTest {
 
         KotlinGenerator().addRequiredImports(model)
 
-        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
-        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertTrue(model.imports.contains("kotlinx.serialization.Serializable"))
+        assertTrue(model.imports.contains("kotlinx.serialization.SerialName"))
         assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
@@ -72,8 +72,8 @@ class KotlinGeneratorTest {
 
         KotlinGenerator().addRequiredImports(model)
 
-        assertFalse(model.imports.contains("com.squareup.moshi.Json"))
-        assertFalse(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertFalse(model.imports.contains("kotlinx.serialization.Serializable"))
+        assertFalse(model.imports.contains("kotlinx.serialization.Serializable"))
         assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
@@ -90,8 +90,8 @@ class KotlinGeneratorTest {
 
         generator.addRequiredImports(model)
 
-        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
-        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertTrue(model.imports.contains("kotlinx.serialization.Serializable"))
+        assertTrue(model.imports.contains("kotlinx.serialization.SerialName"))
         assertTrue(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 

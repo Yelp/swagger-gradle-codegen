@@ -96,7 +96,7 @@ class XnullableRequiredPropertyArrayEndpointTest {
         assertEquals(2, returned.numberArray?.size)
         assertEquals(2, returned.stringArray?.size)
 
-        assertEquals(1.1.toBigDecimal(), returned.numberArray?.get(0))
+        assertEquals(1.1, returned.numberArray?.get(0))
         assertEquals("value1", returned.stringArray?.get(0))
 
         assertNull(returned.numberArray?.get(1))

@@ -6,20 +6,20 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 import com.yelp.codegen.generatecodesamples.tools.XNullable
-import java.time.LocalDate
-import java.time.ZonedDateTime
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @property dateProperty
  * @property datetimeProperty
  * @property doubleProperty
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class XnullableFormatResponses(
-    @Json(name = "date_property") @field:Json(name = "date_property") @XNullable var dateProperty: LocalDate? = null,
-    @Json(name = "datetime_property") @field:Json(name = "datetime_property") @XNullable var datetimeProperty: ZonedDateTime? = null,
-    @Json(name = "double_property") @field:Json(name = "double_property") @XNullable var doubleProperty: Double? = null
+    @SerialName("date_property") @XNullable var dateProperty: LocalDate? = null,
+    @SerialName("datetime_property") @XNullable var datetimeProperty: Instant? = null,
+    @SerialName("double_property") @XNullable var doubleProperty: Double? = null
 )

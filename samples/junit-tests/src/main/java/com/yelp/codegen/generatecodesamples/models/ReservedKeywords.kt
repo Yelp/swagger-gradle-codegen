@@ -6,8 +6,8 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @property `class`
@@ -18,13 +18,13 @@ import com.squareup.moshi.JsonClass
  * @property `var`
  * @property `when`
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class ReservedKeywords(
-    @Json(name = "class") @field:Json(name = "class") var `class`: String? = null,
-    @Json(name = "data") @field:Json(name = "data") var `data`: String? = null,
-    @Json(name = "for") @field:Json(name = "for") var `for`: String? = null,
-    @Json(name = "operator") @field:Json(name = "operator") var `operator`: String? = null,
-    @Json(name = "val") @field:Json(name = "val") var `val`: String? = null,
-    @Json(name = "var") @field:Json(name = "var") var `var`: String? = null,
-    @Json(name = "when") @field:Json(name = "when") var `when`: String? = null
+    @SerialName("class") var `class`: String? = null,
+    @SerialName("data") var `data`: String? = null,
+    @SerialName("for") var `for`: String? = null,
+    @SerialName("operator") var `operator`: String? = null,
+    @SerialName("val") var `val`: String? = null,
+    @SerialName("var") var `var`: String? = null,
+    @SerialName("when") var `when`: String? = null
 )

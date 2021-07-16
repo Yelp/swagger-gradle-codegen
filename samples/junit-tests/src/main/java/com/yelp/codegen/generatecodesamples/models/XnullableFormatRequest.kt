@@ -6,6 +6,7 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
+import com.yelp.codegen.generatecodesamples.tools.XNullable
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.SerialName
@@ -14,20 +15,17 @@ import kotlinx.serialization.Serializable
 /**
  * @property dateProperty
  * @property datetimeProperty
- * @property enumProperty
+ * @property doubleProperty
+ * @property xnullableDateProperty
+ * @property xnullableDatetimeProperty
+ * @property xnullableDoubleProperty
  */
 @Serializable
-data class FormatResponses(
+data class XnullableFormatRequest(
     @SerialName("date_property") var dateProperty: LocalDate? = null,
     @SerialName("datetime_property") var datetimeProperty: Instant? = null,
-    @SerialName("enum_property") var enumProperty: FormatResponses.EnumPropertyEnum? = null
-) {
-    /**
-     * Values: VALUE1, VALUE2
-     */
-    @Serializable
-    enum class EnumPropertyEnum() {
-        @SerialName("VALUE1") VALUE1,
-        @SerialName("VALUE2") VALUE2
-    }
-}
+    @SerialName("double_property") var doubleProperty: Double? = null,
+    @SerialName("xnullable_date_property") @XNullable var xnullableDateProperty: LocalDate? = null,
+    @SerialName("xnullable_datetime_property") @XNullable var xnullableDatetimeProperty: Instant? = null,
+    @SerialName("xnullable_double_property") @XNullable var xnullableDoubleProperty: Double? = null
+)

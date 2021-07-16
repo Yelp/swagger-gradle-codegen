@@ -6,9 +6,9 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
 /**
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 class EmptyModel

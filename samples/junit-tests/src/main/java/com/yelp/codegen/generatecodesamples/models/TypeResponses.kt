@@ -6,9 +6,8 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import java.math.BigDecimal
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @property booleanProperty
@@ -16,10 +15,10 @@ import java.math.BigDecimal
  * @property numberProperty
  * @property stringProperty
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class TypeResponses(
-    @Json(name = "boolean_property") @field:Json(name = "boolean_property") var booleanProperty: Boolean? = null,
-    @Json(name = "integer_property") @field:Json(name = "integer_property") var integerProperty: Int? = null,
-    @Json(name = "number_property") @field:Json(name = "number_property") var numberProperty: BigDecimal? = null,
-    @Json(name = "string_property") @field:Json(name = "string_property") var stringProperty: String? = null
+    @SerialName("boolean_property") var booleanProperty: Boolean? = null,
+    @SerialName("integer_property") var integerProperty: Int? = null,
+    @SerialName("number_property") var numberProperty: Double? = null,
+    @SerialName("string_property") var stringProperty: String? = null
 )

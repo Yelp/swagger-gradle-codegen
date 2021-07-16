@@ -6,14 +6,14 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
 * Values: VALUE1,VALUE2
 */
-@JsonClass(generateAdapter = false)
-enum class TopLevelEnum(val value: String) {
-    @Json(name = "TOP_LEVEL_VALUE1") VALUE1("TOP_LEVEL_VALUE1"),
-    @Json(name = "TOP_LEVEL_VALUE2") VALUE2("TOP_LEVEL_VALUE2")
+@Serializable
+enum class TopLevelEnum() {
+    @SerialName("TOP_LEVEL_VALUE1") VALUE1,
+    @SerialName("TOP_LEVEL_VALUE2") VALUE2
 }

@@ -73,6 +73,6 @@ class TypeEndpointTest {
         )
 
         val returned = rule.getApi<ResourceApi>().getTypeEndpoint("number").blockingGet()
-        assertEquals(1.2.toBigDecimal(), returned.numberProperty)
+        assertEquals(1.2, returned.numberProperty)
     }
 }

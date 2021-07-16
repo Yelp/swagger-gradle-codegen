@@ -178,6 +178,39 @@
             "type": "object",
             "x-model": "type_responses"
         },
+        "xnullable_format_request": {
+            "properties": {
+                "date_property": {
+                    "format": "date",
+                    "type": "string"
+                },
+                "datetime_property": {
+                    "format": "date-time",
+                    "type": "string"
+                },
+                "double_property": {
+                    "format": "double",
+                    "type": "number"
+                },
+                "xnullable_date_property": {
+                    "format": "date",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "xnullable_datetime_property": {
+                    "format": "date-time",
+                    "type": "string",
+                    "x-nullable": true
+                },
+                "xnullable_double_property": {
+                    "format": "double",
+                    "type": "number",
+                    "x-nullable": true
+                }
+            },
+            "type": "object",
+            "x-model": "xnullable_format_request"
+        },
         "xnullable_format_responses": {
             "properties": {
                 "date_property": {
@@ -930,6 +963,27 @@
                         "schema": {
                             "$ref": "#/definitions/xnullable_format_responses"
                         }
+                    }
+                },
+                "tags": [
+                    "xnullable"
+                ]
+            },
+            "post": {
+                "operationId": "post_xnullable_format_endpoint",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "property_format",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/xnullable_format_request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
                     }
                 },
                 "tags": [

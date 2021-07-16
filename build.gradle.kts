@@ -58,7 +58,12 @@ plugins {
     id("com.android.library").version("4.0.1").apply(false)
     id("com.yelp.codegen.plugin").version("1.4.1").apply(false)
     id("io.gitlab.arturbosch.detekt").version("1.14.2").apply(false)
-    kotlin("android").version("1.3.72").apply(false)
+    kotlin("android").version("1.5.20").apply(false)
+    id("org.jetbrains.kotlin.plugin.serialization").version("1.5.20").apply(false)
+}
+
+project.extra.apply {
+    set("kotlinVersion", "1.5.20")
 }
 
 subprojects {
