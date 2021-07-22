@@ -6,7 +6,6 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.yelp.codegen.generatecodesamples.tools.XNullable
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
@@ -18,7 +17,7 @@ import kotlinx.serialization.json.JsonObject
  */
 @Serializable
 data class XnullableRequiredPropertyMap(
-    @SerialName("number_map") @XNullable var numberMap: Map<String, Double?>? = null,
-    @SerialName("object_map") @XNullable var objectMap: JsonObject? = null,
-    @SerialName("string_map") @XNullable var stringMap: Map<String, String?>? = null
+    @SerialName("number_map") var numberMap: Map<String, Double?>? = null,
+    @SerialName("object_map") var objectMap: JsonObject? = null,
+    @SerialName("string_map") var stringMap: Map<String, String?>? = null
 )

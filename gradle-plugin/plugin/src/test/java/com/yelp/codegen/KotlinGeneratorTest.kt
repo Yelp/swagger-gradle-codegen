@@ -78,24 +78,6 @@ class KotlinGeneratorTest {
     }
 
     @Test
-    fun addRequiredImports_withXNullable() {
-        val generator = KotlinGenerator()
-        generator.additionalProperties()[GROUP_ID] = "com.yelp"
-        generator.additionalProperties()[ARTIFACT_ID] = "test"
-        val model = CodegenModel()
-        val xNullableProperty = CodegenProperty()
-        xNullableProperty.vendorExtensions = mutableMapOf()
-        xNullableProperty.vendorExtensions[X_NULLABLE] = true
-        model.allVars.add(xNullableProperty)
-
-        generator.addRequiredImports(model)
-
-        assertTrue(model.imports.contains("kotlinx.serialization.Serializable"))
-        assertTrue(model.imports.contains("kotlinx.serialization.SerialName"))
-        assertTrue(model.imports.contains("com.yelp.test.tools.XNullable"))
-    }
-
-    @Test
     fun postProcessModelProperty() {
         val generator = KotlinGenerator()
         val model = CodegenModel()

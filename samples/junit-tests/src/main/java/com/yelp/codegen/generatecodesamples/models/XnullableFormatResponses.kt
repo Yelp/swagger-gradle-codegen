@@ -6,7 +6,6 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.yelp.codegen.generatecodesamples.tools.XNullable
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.SerialName
@@ -19,7 +18,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class XnullableFormatResponses(
-    @SerialName("date_property") @XNullable var dateProperty: LocalDate? = null,
-    @SerialName("datetime_property") @XNullable var datetimeProperty: Instant? = null,
-    @SerialName("double_property") @XNullable var doubleProperty: Double? = null
+    @SerialName("date_property") var dateProperty: LocalDate? = null,
+    @SerialName("datetime_property") var datetimeProperty: Instant? = null,
+    @SerialName("double_property") var doubleProperty: Double? = null
 )

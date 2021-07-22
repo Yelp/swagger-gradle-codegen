@@ -125,10 +125,7 @@ open class KotlinGenerator : SharedCodegen() {
                 "CollectionFormats.kt",
                 "EnumToValueConverterFactory.kt",
                 "GeneratedCodeConverters.kt",
-                "TypesAdapters.kt",
-                "WrapperConverterFactory.kt",
-                "XNullable.kt",
-                "XNullableAdapterFactory.kt"
+                "WrapperConverterFactory.kt"
             )
             supportingFiles.addAll(toolsFiles.map { SupportingFile("tools/$it.mustache", toolsFolder, it) })
             return supportingFiles
@@ -214,14 +211,6 @@ open class KotlinGenerator : SharedCodegen() {
             // If we are rendering a model (or enum) we are annotating it with @JsonClass,
             // so we need to make sure that we're importing it
             codegenModel.imports.add("kotlinx.serialization.Serializable")
-        }
-
-        // Add import for @XNullable annotation if there are any XNullable properties
-        for (property in codegenModel.allVars) {
-            if (X_NULLABLE in property.vendorExtensions) {
-                codegenModel.imports.add("$toolsPackage.XNullable")
-                break
-            }
         }
     }
 

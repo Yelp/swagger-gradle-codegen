@@ -6,7 +6,6 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.yelp.codegen.generatecodesamples.tools.XNullable
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,6 +15,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class XnullablePropertyArray(
-    @SerialName("number_array") @XNullable var numberArray: List<Double?>? = null,
-    @SerialName("string_array") @XNullable var stringArray: List<String?>? = null
+    @SerialName("number_array") var numberArray: List<Double?>? = null,
+    @SerialName("string_array") var stringArray: List<String?>? = null
 )

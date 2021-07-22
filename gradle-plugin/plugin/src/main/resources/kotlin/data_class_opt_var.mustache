@@ -1,1 +1,1 @@
-    @SerialName("{{{baseName}}}") {{#vendorExtensions.x-nullable}}@XNullable {{/vendorExtensions.x-nullable}}var {{{name}}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}} = {{#defaultvalue}}{{defaultvalue}}{{/defaultvalue}}{{^defaultvalue}}null{{/defaultvalue}}
+    @SerialName("{{{baseName}}}") var {{{name}}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{datatype}}}{{/isEnum}} = {{#defaultvalue}}{{defaultvalue}}{{/defaultvalue}}{{^defaultvalue}}null{{/defaultvalue}}

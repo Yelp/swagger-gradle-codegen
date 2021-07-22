@@ -6,7 +6,6 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.yelp.codegen.generatecodesamples.tools.XNullable
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,11 +18,11 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class XnullableRequiredTypeResponses(
-    @SerialName("boolean_property") @XNullable var booleanProperty: Boolean? = null,
-    @SerialName("enum_property") @XNullable var enumProperty: XnullableRequiredTypeResponses.EnumPropertyEnum? = null,
-    @SerialName("integer_property") @XNullable var integerProperty: Int? = null,
-    @SerialName("number_property") @XNullable var numberProperty: Double? = null,
-    @SerialName("string_property") @XNullable var stringProperty: String? = null
+    @SerialName("boolean_property") var booleanProperty: Boolean? = null,
+    @SerialName("enum_property") var enumProperty: XnullableRequiredTypeResponses.EnumPropertyEnum? = null,
+    @SerialName("integer_property") var integerProperty: Int? = null,
+    @SerialName("number_property") var numberProperty: Double? = null,
+    @SerialName("string_property") var stringProperty: String? = null
 ) {
     /**
      * Values: VALUE1, VALUE2

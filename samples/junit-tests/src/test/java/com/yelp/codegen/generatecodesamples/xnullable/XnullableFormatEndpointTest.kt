@@ -15,25 +15,6 @@ class XnullableFormatEndpointTest {
     val rule = MockServerApiRule()
 
     @Test
-    fun formatEndpoint_withEnumFormat() {
-        rule.server.enqueue(
-            MockResponse().setBody(
-                """
-                {
-                    "double_property": null
-                }
-                """.trimIndent()
-            )
-        )
-
-        val returned = rule.getApi<XnullableApi>().getXnullableFormatEndpoint("double").blockingGet()
-
-        assertNull(returned.doubleProperty)
-        assertNull(returned.datetimeProperty)
-        assertNull(returned.dateProperty)
-    }
-
-    @Test
     fun formatEndpoint_somResponse() {
         rule.server.enqueue(
             MockResponse().setResponseCode(201)
