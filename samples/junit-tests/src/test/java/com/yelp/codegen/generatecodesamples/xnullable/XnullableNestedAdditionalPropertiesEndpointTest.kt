@@ -8,6 +8,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
@@ -16,6 +17,7 @@ class XnullableNestedAdditionalPropertiesEndpointTest {
     @get:Rule
     val rule = MockServerApiRule()
 
+    @Ignore
     @Test
     fun xNullableNestedAdditionalProperties() {
         rule.server.enqueue(

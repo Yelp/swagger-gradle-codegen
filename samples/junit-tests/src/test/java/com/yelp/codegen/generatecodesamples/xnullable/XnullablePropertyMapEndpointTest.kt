@@ -2,6 +2,11 @@ package com.yelp.codegen.generatecodesamples.xnullable
 
 import com.yelp.codegen.generatecodesamples.apis.XnullableApi
 import com.yelp.codegen.generatecodesamples.tools.MockServerApiRule
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.double
+import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -205,7 +210,7 @@ class XnullablePropertyMapEndpointTest {
         assertNotNull(returned.objectMap)
 
         assertEquals(1, returned.objectMap?.size)
-        assertNull(returned.objectMap?.get("key1"))
+        assertTrue(returned.objectMap?.get("key1") is JsonNull)
     }
 
     @Test
@@ -256,7 +261,7 @@ class XnullablePropertyMapEndpointTest {
         assertNotNull(returned.numberMap)
 
         assertEquals(2, returned.numberMap?.size)
-        assertEquals(1.1.toBigDecimal(), returned.numberMap?.get("key1"))
+        assertEquals(1.1, returned.numberMap?.get("key1"))
         assertNull(returned.numberMap?.get("key2"))
     }
 
@@ -282,8 +287,8 @@ class XnullablePropertyMapEndpointTest {
         assertNotNull(returned.objectMap)
 
         assertEquals(2, returned.objectMap?.size)
-        assertEquals("1", returned.objectMap?.get("key1") as String)
-        assertNull(returned.objectMap?.get("key2"))
+        assertEquals("1", returned.objectMap?.get("key1")?.jsonPrimitive?.content)
+        assertTrue(returned.objectMap?.get("key2") is JsonNull)
     }
 
     @Test
@@ -316,20 +321,18 @@ class XnullablePropertyMapEndpointTest {
 
         assertEquals(5, returned.objectMap?.size)
 
-        assertEquals("1", returned.objectMap?.get("key1") as String)
-        assertEquals(2.0, returned.objectMap?.get("key2") as Double, 0.0)
+        assertEquals("1", returned.objectMap?.get("key1")?.jsonPrimitive?.content)
+        assertEquals(2.0, returned.objectMap?.get("key2")?.jsonPrimitive?.double)
 
-        assertFalse((returned.objectMap?.get("key3") as List<*>).isEmpty())
-        assertEquals("array_value1", (returned.objectMap?.get("key3") as List<*>)[0])
+        with(returned.objectMap?.get("key3") as JsonArray) {
+            assertFalse(isEmpty())
+            assertEquals("array_value1", first().jsonPrimitive.content)
+        }
 
-        assertFalse((returned.objectMap?.get("key4") as Map<*, *>).isEmpty())
-        assertEquals(
-            "map_value1",
-            (
-                @Suppress("UNCHECKED_CAST")
-                (returned.objectMap?.get("key4") as Map<String, Any>)
-                )["map_key1"]
-        )
-        assertNull(returned.objectMap?.get("key5"))
+        with(returned.objectMap?.get("key4") as JsonObject) {
+            assertEquals("map_value1", get("map_key1")?.jsonPrimitive?.content)
+        }
+
+        assertTrue(returned.objectMap?.get("key5") is JsonNull)
     }
 }

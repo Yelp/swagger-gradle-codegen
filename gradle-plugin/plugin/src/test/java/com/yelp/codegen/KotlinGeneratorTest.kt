@@ -48,8 +48,8 @@ class KotlinGeneratorTest {
 
         KotlinGenerator().addRequiredImports(model)
 
-        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
-        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertTrue(model.imports.contains("kotlinx.serialization.Serializable"))
+        assertTrue(model.imports.contains("kotlinx.serialization.SerialName"))
         assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
@@ -60,8 +60,8 @@ class KotlinGeneratorTest {
 
         KotlinGenerator().addRequiredImports(model)
 
-        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
-        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertTrue(model.imports.contains("kotlinx.serialization.Serializable"))
+        assertTrue(model.imports.contains("kotlinx.serialization.SerialName"))
         assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
@@ -72,27 +72,9 @@ class KotlinGeneratorTest {
 
         KotlinGenerator().addRequiredImports(model)
 
-        assertFalse(model.imports.contains("com.squareup.moshi.Json"))
-        assertFalse(model.imports.contains("com.squareup.moshi.JsonClass"))
+        assertFalse(model.imports.contains("kotlinx.serialization.Serializable"))
+        assertFalse(model.imports.contains("kotlinx.serialization.Serializable"))
         assertFalse(model.imports.contains("com.yelp.test.tools.XNullable"))
-    }
-
-    @Test
-    fun addRequiredImports_withXNullable() {
-        val generator = KotlinGenerator()
-        generator.additionalProperties()[GROUP_ID] = "com.yelp"
-        generator.additionalProperties()[ARTIFACT_ID] = "test"
-        val model = CodegenModel()
-        val xNullableProperty = CodegenProperty()
-        xNullableProperty.vendorExtensions = mutableMapOf()
-        xNullableProperty.vendorExtensions[X_NULLABLE] = true
-        model.allVars.add(xNullableProperty)
-
-        generator.addRequiredImports(model)
-
-        assertTrue(model.imports.contains("com.squareup.moshi.Json"))
-        assertTrue(model.imports.contains("com.squareup.moshi.JsonClass"))
-        assertTrue(model.imports.contains("com.yelp.test.tools.XNullable"))
     }
 
     @Test

@@ -6,28 +6,28 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import java.time.LocalDate
-import java.time.ZonedDateTime
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @property dateProperty
  * @property datetimeProperty
  * @property enumProperty
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class FormatResponses(
-    @Json(name = "date_property") @field:Json(name = "date_property") var dateProperty: LocalDate? = null,
-    @Json(name = "datetime_property") @field:Json(name = "datetime_property") var datetimeProperty: ZonedDateTime? = null,
-    @Json(name = "enum_property") @field:Json(name = "enum_property") var enumProperty: FormatResponses.EnumPropertyEnum? = null
+    @SerialName("date_property") var dateProperty: LocalDate? = null,
+    @SerialName("datetime_property") var datetimeProperty: Instant? = null,
+    @SerialName("enum_property") var enumProperty: FormatResponses.EnumPropertyEnum? = null
 ) {
     /**
      * Values: VALUE1, VALUE2
      */
-    @JsonClass(generateAdapter = false)
-    enum class EnumPropertyEnum(val value: String) {
-        @Json(name = "VALUE1") VALUE1("VALUE1"),
-        @Json(name = "VALUE2") VALUE2("VALUE2")
+    @Serializable
+    enum class EnumPropertyEnum() {
+        @SerialName("VALUE1") VALUE1,
+        @SerialName("VALUE2") VALUE2
     }
 }

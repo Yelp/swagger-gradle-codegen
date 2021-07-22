@@ -112,15 +112,15 @@ object KotlinLangUtils {
         "float" to "Float",
         "long" to "Long",
         "double" to "Double",
-        "number" to "BigDecimal",
+        "number" to "Double",
         "date" to "LocalDate",
-        "DateTime" to "ZonedDateTime",
-        "date-time" to "ZonedDateTime",
+        "DateTime" to "Instant",
+        "date-time" to "Instant",
         "file" to "File",
         "array" to "List",
         "list" to "List",
         "map" to "Map",
-        "object" to "Map<String, Any?>",
+        "object" to "JsonObject",
         "binary" to "List<Byte>"
     )
 
@@ -137,14 +137,13 @@ object KotlinLangUtils {
         "Float" to "kotlin.Float",
         "Long" to "kotlin.Long",
         "Double" to "kotlin.Double",
-        "BigDecimal" to "java.math.BigDecimal",
-        "LocalDate" to "java.time.LocalDate",
-        "ZonedDateTime" to "java.time.ZonedDateTime",
+        "LocalDate" to "kotlinx.datetime.LocalDate",
+        "Instant" to "kotlinx.datetime.Instant",
         "File" to "java.io.File",
         "List" to "kotlin.collections.List",
         "List<Byte>" to "kotlin.collections.List",
         "Map" to "kotlin.collections.Map",
-        "Map<String, Any?>" to "kotlin.collections.Map",
+        "JsonObject" to "kotlinx.serialization.json.JsonObject",
         "Timestamp" to "java.sql.Timestamp",
         "UUID" to "java.util.UUID"
     )

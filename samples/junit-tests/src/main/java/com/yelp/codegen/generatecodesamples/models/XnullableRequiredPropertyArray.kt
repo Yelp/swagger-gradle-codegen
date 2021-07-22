@@ -6,17 +6,15 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import com.yelp.codegen.generatecodesamples.tools.XNullable
-import java.math.BigDecimal
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @property numberArray
  * @property stringArray
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class XnullableRequiredPropertyArray(
-    @Json(name = "number_array") @field:Json(name = "number_array") @XNullable var numberArray: List<BigDecimal?>? = null,
-    @Json(name = "string_array") @field:Json(name = "string_array") @XNullable var stringArray: List<String?>? = null
+    @SerialName("number_array") var numberArray: List<Double?>? = null,
+    @SerialName("string_array") var stringArray: List<String?>? = null
 )

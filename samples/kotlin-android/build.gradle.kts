@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("com.yelp.codegen.plugin")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -19,17 +20,21 @@ android {
     }
 }
 
+val kotlinVersion: String by rootProject.extra
+
 dependencies {
     // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion")
+    // api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
 
-    // Moshi + OkHttp + Retrofit
-    implementation("com.squareup.moshi:moshi:1.11.0")
-    implementation("com.squareup.moshi:moshi-adapters:1.11.0")
+    // OkHttp + Retrofit
     implementation("com.squareup.okhttp3:okhttp:3.12.12")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
     // Date Support via Desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.10")

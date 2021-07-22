@@ -1,15 +1,12 @@
 package {{packageName}}.tools
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.squareup.moshi.Moshi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import retrofit2.Converter
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 object GeneratedCodeConverters {
-    private val moshi = Moshi.Builder()
-        .add(XNullableAdapterFactory())
-        .add(TypesAdapterFactory())
-        .build()
-
     /**
      * Creates everything needed for retrofit to make it work with the client lib, including a
      * [Moshi] instance. If you want to use your own instance of moshi, use
@@ -18,19 +15,11 @@ object GeneratedCodeConverters {
      */
     @JvmStatic
     fun converterFactory(): Converter.Factory {
+        val contentType = MediaType.get("application/json")
         return WrapperConverterFactory(
             CollectionFormatConverterFactory(),
             EnumToValueConverterFactory(),
-            MoshiConverterFactory.create(moshi)
-        )
-    }
-
-    @JvmStatic
-    fun converterFactory(moshi: Moshi): Converter.Factory {
-        return WrapperConverterFactory(
-            CollectionFormatConverterFactory(),
-            EnumToValueConverterFactory(),
-            MoshiConverterFactory.create(moshi)
+            Json.asConverterFactory(contentType)
         )
     }
 }

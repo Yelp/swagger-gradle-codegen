@@ -6,22 +6,22 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @property xmodelOnly
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class ModelWithOnlyXModel(
-    @Json(name = "xmodel_only") @field:Json(name = "xmodel_only") var xmodelOnly: ModelWithOnlyXModel.XmodelOnlyEnum? = null
+    @SerialName("xmodel_only") var xmodelOnly: ModelWithOnlyXModel.XmodelOnlyEnum? = null
 ) {
     /**
      * Values: VAL1, VAL2
      */
-    @JsonClass(generateAdapter = false)
-    enum class XmodelOnlyEnum(val value: String) {
-        @Json(name = "val1") VAL1("val1"),
-        @Json(name = "val2") VAL2("val2")
+    @Serializable
+    enum class XmodelOnlyEnum() {
+        @SerialName("val1") VAL1,
+        @SerialName("val2") VAL2
     }
 }

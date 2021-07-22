@@ -2,6 +2,9 @@ package com.yelp.codegen.generatecodesamples.xnullable
 
 import com.yelp.codegen.generatecodesamples.apis.XnullableApi
 import com.yelp.codegen.generatecodesamples.tools.MockServerApiRule
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.mockwebserver.MockResponse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -88,7 +91,7 @@ class XnullableRequiredPropertyMapEndpointTest {
         assertEquals(1, returned.stringMap?.size)
 
         assertNull(returned.numberMap?.get("key1"))
-        assertNull(returned.objectMap?.get("key1"))
+        assertTrue(returned.objectMap?.get("key1") is JsonNull)
         assertNull(returned.stringMap?.get("key1"))
     }
 
@@ -123,12 +126,12 @@ class XnullableRequiredPropertyMapEndpointTest {
         assertEquals(2, returned.objectMap?.size)
         assertEquals(2, returned.stringMap?.size)
 
-        assertEquals(1.1.toBigDecimal(), returned.numberMap?.get("key1"))
-        assertEquals("value1", (returned.objectMap?.get("key1") as List<*>)[0])
+        assertEquals(1.1, returned.numberMap?.get("key1"))
+        assertEquals("value1", returned.objectMap?.get("key1")?.jsonArray?.first()?.jsonPrimitive?.content)
         assertEquals("value1", returned.stringMap?.get("key1"))
 
         assertNull(returned.numberMap?.get("key2"))
-        assertNull(returned.objectMap?.get("key2"))
+        assertTrue(returned.objectMap?.get("key2") is JsonNull)
         assertNull(returned.stringMap?.get("key2"))
     }
 }

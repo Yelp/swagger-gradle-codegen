@@ -6,6 +6,7 @@
 
 package com.yelp.codegen.generatecodesamples.apis
 
+import com.yelp.codegen.generatecodesamples.models.XnullableFormatRequest
 import com.yelp.codegen.generatecodesamples.models.XnullableFormatResponses
 import com.yelp.codegen.generatecodesamples.models.XnullableNestedAdditionalProperties
 import com.yelp.codegen.generatecodesamples.models.XnullablePropertyArray
@@ -14,9 +15,11 @@ import com.yelp.codegen.generatecodesamples.models.XnullableRequiredPropertyArra
 import com.yelp.codegen.generatecodesamples.models.XnullableRequiredPropertyMap
 import com.yelp.codegen.generatecodesamples.models.XnullableRequiredTypeResponses
 import com.yelp.codegen.generatecodesamples.models.XnullableTypeResponses
+import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.POST
 
 @JvmSuppressWildcards
 interface XnullableApi {
@@ -109,4 +112,15 @@ interface XnullableApi {
     fun getXnullableTypeEndpoint(
         @retrofit2.http.Path("property_type") propertyType: String
     ): Single<XnullableTypeResponses>
+    /**
+     * The endpoint is owned by junittests service owner
+     * @param propertyFormat (required)
+     */
+    @Headers(
+        "X-Operation-ID: post_xnullable_format_endpoint"
+    )
+    @POST("/xnullable/format_endpoint/{property_format}")
+    fun postXnullableFormatEndpoint(
+        @retrofit2.http.Body propertyFormat: XnullableFormatRequest
+    ): Completable
 }

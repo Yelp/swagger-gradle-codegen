@@ -6,10 +6,8 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import com.yelp.codegen.generatecodesamples.tools.XNullable
-import java.math.BigDecimal
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * @property booleanProperty
@@ -18,20 +16,20 @@ import java.math.BigDecimal
  * @property numberProperty
  * @property stringProperty
  */
-@JsonClass(generateAdapter = true)
+@Serializable
 data class XnullableRequiredTypeResponses(
-    @Json(name = "boolean_property") @field:Json(name = "boolean_property") @XNullable var booleanProperty: Boolean? = null,
-    @Json(name = "enum_property") @field:Json(name = "enum_property") @XNullable var enumProperty: XnullableRequiredTypeResponses.EnumPropertyEnum? = null,
-    @Json(name = "integer_property") @field:Json(name = "integer_property") @XNullable var integerProperty: Int? = null,
-    @Json(name = "number_property") @field:Json(name = "number_property") @XNullable var numberProperty: BigDecimal? = null,
-    @Json(name = "string_property") @field:Json(name = "string_property") @XNullable var stringProperty: String? = null
+    @SerialName("boolean_property") var booleanProperty: Boolean? = null,
+    @SerialName("enum_property") var enumProperty: XnullableRequiredTypeResponses.EnumPropertyEnum? = null,
+    @SerialName("integer_property") var integerProperty: Int? = null,
+    @SerialName("number_property") var numberProperty: Double? = null,
+    @SerialName("string_property") var stringProperty: String? = null
 ) {
     /**
      * Values: VALUE1, VALUE2
      */
-    @JsonClass(generateAdapter = false)
-    enum class EnumPropertyEnum(val value: String) {
-        @Json(name = "VALUE1") VALUE1("VALUE1"),
-        @Json(name = "VALUE2") VALUE2("VALUE2")
+    @Serializable
+    enum class EnumPropertyEnum() {
+        @SerialName("VALUE1") VALUE1,
+        @SerialName("VALUE2") VALUE2
     }
 }
