@@ -15,6 +15,15 @@ import org.apache.commons.cli.Options
 import java.io.File
 
 fun main(args: Array<String>) {
+
+    operator fun CommandLine.get(opt: Char): String? {
+        return getOptionValue(opt, null)
+    }
+
+    operator fun CommandLine.get(opt: String): String? {
+        return getOptionValue(opt, null)
+    }
+
     val options = Options()
     options.addRequiredOption(
         "p",
@@ -90,12 +99,4 @@ fun main(args: Array<String>) {
 fun copySpec(inputSpec: String, outputDirectory: String) {
     val swagger = SwaggerParser().read(inputSpec)
     Json.mapper().writer(null as PrettyPrinter?).writeValue(File("$outputDirectory/swagger.json"), swagger)
-}
-
-private operator fun CommandLine.get(opt: Char): String? {
-    return getOptionValue(opt, null)
-}
-
-private operator fun CommandLine.get(opt: String): String? {
-    return getOptionValue(opt, null)
 }

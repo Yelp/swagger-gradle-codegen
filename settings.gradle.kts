@@ -4,7 +4,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        jcenter()
         google()
     }
 

@@ -5,11 +5,7 @@ buildscript {
         maven {
             url = uri("../../../build/localMaven")
         }
-        jcenter {
-            content {
-                excludeGroup("com.yelp.codegen")
-            }
-        }
+        mavenCentral()
     }
     dependencies {
         // Always take the latest version from the local test repo
