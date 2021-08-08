@@ -58,7 +58,7 @@ plugins {
     id("com.yelp.codegen.plugin").version("1.4.1").apply(false)
     id("io.gitlab.arturbosch.detekt").version("1.17.1").apply(false)
     id("com.github.ben-manes.versions") version "0.39.0"
-    kotlin("android").version("1.3.72").apply(false)
+    kotlin("android").version("1.4.32").apply(false)
 }
 
 subprojects {
