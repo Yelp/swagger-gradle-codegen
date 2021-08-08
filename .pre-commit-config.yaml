@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v3.4.0
+  rev: v4.0.1
   hooks:
   - id: check-merge-conflict
   - id: trailing-whitespace
@@ -12,7 +12,7 @@ repos:
     exclude: ^samples/[^/]+/src/main/java/swagger.json$
   - id: check-yaml
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.0.0
+  rev: v2.1.0
   hooks:
   - id: pretty-format-java
     args: [--autofix]
@@ -22,7 +22,7 @@ repos:
     args: [--autofix, --indent, '2']
     exclude: ^config/detekt/detekt\.yml$
 - repo: https://github.com/Yelp/detect-secrets
-  rev: v0.14.3
+  rev: v1.1.0
   hooks:
   - id: detect-secrets
     args: [--baseline, .secrets.baseline]

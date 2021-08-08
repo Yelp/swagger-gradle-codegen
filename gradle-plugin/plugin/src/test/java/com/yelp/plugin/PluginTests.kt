@@ -34,13 +34,13 @@ class PluginTests {
     }
 
     @Test
-    fun testMinSupportdGradleVersion() {
+    fun testMinSupportedGradleVersion() {
         val projectDir = temporaryFolder.newFolder("project")
         File("src/test/testProject").copyRecursively(projectDir)
 
         val result = GradleRunner.create()
             .withProjectDir(projectDir)
-            .withGradleVersion("5.4.1")
+            .withGradleVersion("6.8")
             .forwardStdOutput(System.out.writer())
             .forwardStdError(System.err.writer())
             .withArguments("generateSwagger")

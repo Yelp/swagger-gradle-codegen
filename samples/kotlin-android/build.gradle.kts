@@ -5,37 +5,32 @@ plugins {
 }
 
 android {
-    compileSdkVersion(28)
+    compileSdkVersion(31)
     defaultConfig {
         minSdkVersion(21)
-        targetSdkVersion(28)
-        versionCode = 1
-        versionName = "1.0"
+        targetSdkVersion(31)
     }
     compileOptions {
-        coreLibraryDesugaringEnabled = true
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
 dependencies {
-    // Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
-
     // Moshi + OkHttp + Retrofit
-    implementation("com.squareup.moshi:moshi:1.11.0")
-    implementation("com.squareup.moshi:moshi-adapters:1.11.0")
-    implementation("com.squareup.okhttp3:okhttp:3.12.12")
+    implementation("com.squareup.moshi:moshi:1.12.0")
+    implementation("com.squareup.moshi:moshi-adapters:1.12.0")
+    implementation("com.squareup.okhttp3:okhttp:3.12.13")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
 
     // Date Support via Desugaring
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.10")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     // RxJava
-    implementation("io.reactivex.rxjava2:rxjava:2.2.20")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 }
 
