@@ -61,6 +61,8 @@ open class KotlinGenerator : SharedCodegen() {
         outputFolder = "generated-code${File.separator}android-kotlin-client"
         modelTemplateFiles["model.mustache"] = ".kt"
         apiTemplateFiles["retrofit2/api.mustache"] = ".kt"
+
+        supportsInheritance = true
     }
 
     /*
@@ -125,6 +127,8 @@ open class KotlinGenerator : SharedCodegen() {
                 "CollectionFormats.kt",
                 "EnumToValueConverterFactory.kt",
                 "GeneratedCodeConverters.kt",
+                "OptimisticHashCode.kt",
+                "PolymorphicAdapterFactory.kt",
                 "TypesAdapters.kt",
                 "WrapperConverterFactory.kt",
                 "XNullable.kt",
@@ -202,14 +206,13 @@ open class KotlinGenerator : SharedCodegen() {
         return codegenModel
     }
 
-    @VisibleForTesting
-    internal fun addRequiredImports(codegenModel: CodegenModel) {
+    override fun addRequiredImports(codegenModel: CodegenModel) {
         // If there are any vars, we will mark them with the @Json annotation so we have to make sure to import it
         if (codegenModel.allVars.isNotEmpty() || codegenModel.isEnum) {
             codegenModel.imports.add("com.squareup.moshi.Json")
         }
 
-        if (!codegenModel.isAlias) {
+        if (!codegenModel.isAlias || codegenModel.parent != null) {
             // If we are rendering a model (or enum) we are annotating it with @JsonClass,
             // so we need to make sure that we're importing it
             codegenModel.imports.add("com.squareup.moshi.JsonClass")
@@ -222,34 +225,11 @@ open class KotlinGenerator : SharedCodegen() {
                 break
             }
         }
-    }
 
-    override fun postProcessModelProperty(model: CodegenModel, property: CodegenProperty) {
-        super.postProcessModelProperty(model, property)
-
-        if (property.isEnum) {
-            property.datatypeWithEnum = postProcessDataTypeWithEnum(model.classname, property)
-        }
-    }
-
-    /**
-     * When handling inner enums, we want to prefix their class name, when using them, with their containing class,
-     * to avoid name conflicts.
-     */
-    private fun postProcessDataTypeWithEnum(modelClassName: String, codegenProperty: CodegenProperty): String {
-        val name = "$modelClassName.${codegenProperty.enumName}"
-
-        val baseType = if (codegenProperty.isContainer) {
-            val type = checkNotNull(typeMapping[codegenProperty.containerType])
-            "$type<$name>"
-        } else {
-            name
-        }
-
-        return if (codegenProperty.isNullable()) {
-            nullableTypeWrapper(baseType)
-        } else {
-            baseType
+        if (supportsInheritance && codegenModel.discriminator != null) {
+            // Import JsonClass annotation to enable Adapters generations via Kotlin Annotation Processor
+            codegenModel.imports.add("$toolsPackage.optimisticHashCode")
+            codegenModel.imports.add("$toolsPackage.Polymorphic")
         }
     }
 
