@@ -30,7 +30,7 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
 
     // Date Support via Desugaring
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.0.10")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     // RxJava
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
