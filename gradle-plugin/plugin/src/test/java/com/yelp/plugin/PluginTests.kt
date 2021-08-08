@@ -34,7 +34,7 @@ class PluginTests {
     }
 
     @Test
-    fun testMinSupportdGradleVersion() {
+    fun testMinSupportedGradleVersion() {
         val projectDir = temporaryFolder.newFolder("project")
         File("src/test/testProject").copyRecursively(projectDir)
 
