@@ -27,7 +27,13 @@ dependencies {
     implementation(gradleApi())
 
     implementation("commons-cli:commons-cli:1.4")
-    implementation("io.swagger:swagger-codegen:2.4.16")
+    implementation("com.google.guava:guava") {
+        version {
+            // We force the version otherwise we get a -android version that will break when used with AGP.
+            strictly("28.2-jre")
+        }
+    }
+    implementation("io.swagger:swagger-codegen:2.4.21")
 
     testImplementation("junit:junit:4.13.2")
 }
