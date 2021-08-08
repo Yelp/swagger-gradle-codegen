@@ -76,7 +76,7 @@ subprojects {
  * Python `venv/bin` folder is different based on OS.
  * On Windows it's inside the `venv/Scripts` folder.
  */
-val binFolder : String get() = if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+val binFolder: String get() = if (System.getProperty("os.name").toLowerCase().contains("windows")) {
     "Scripts"
 } else {
     "bin"
