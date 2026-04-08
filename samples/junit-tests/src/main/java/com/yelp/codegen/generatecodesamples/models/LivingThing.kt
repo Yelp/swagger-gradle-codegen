@@ -6,9 +6,14 @@
 
 package com.yelp.codegen.generatecodesamples.models
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 /**
+ * This is a base class of `animal`. Created to verify that multiple parents are properly dealt with
+ * @property name
  */
 @JsonClass(generateAdapter = true)
-class NestedAdditionalPropertiesCustomDescription
+data class LivingThing(
+    @Json(name = "name") @field:Json(name = "name") var name: String
+)

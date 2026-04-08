@@ -1,9 +1,12 @@
 package com.yelp.codegen
 
+import com.google.common.annotations.VisibleForTesting
+import com.yelp.codegen.utils.CodegenModelVar
 import com.yelp.codegen.utils.safeSuffix
 import io.swagger.codegen.CodegenConfig
 import io.swagger.codegen.CodegenModel
 import io.swagger.codegen.CodegenOperation
+import io.swagger.codegen.CodegenParameter
 import io.swagger.codegen.CodegenProperty
 import io.swagger.codegen.CodegenType
 import io.swagger.codegen.DefaultCodegen
@@ -80,8 +83,8 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
     /**
      * Returns the /main/resources directory to access the .mustache files
      */
-    protected val resourcesDirectory: File
-        get() = File(this.javaClass.classLoader.getResource(templateDir).path.safeSuffix(File.separator))
+    protected val resourcesDirectory: File?
+        get() = javaClass.classLoader.getResource(templateDir)?.path?.safeSuffix(File.separator)?.let { File(it) }
 
     override fun processOpts() {
         super.processOpts()
@@ -259,6 +262,27 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         }
 
         handleXNullable(codegenModel)
+
+        // Update all enum properties datatypeWithEnum to use "BaseClass.InnerEnumClass" to reduce ambiguity
+        CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties ->
+            properties.filter { it.isEnum }
+                .onEach { it.datatypeWithEnum = postProcessDataTypeWithEnum(codegenModel, it) }
+        }
+
+        // Fix presence of duplicated variables into CodegenModel instances.
+        // Apparently swagger-codegen does not really play well with such properties if
+        // inheritance is enable and models have `allOf` attribute.
+        CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties ->
+            val seenProperties = mutableSetOf<CodegenProperty>()
+            val propertiesIterator = properties.iterator()
+            while (propertiesIterator.hasNext()) {
+                val property = propertiesIterator.next()
+                if (!seenProperties.add(property)) {
+                    propertiesIterator.remove()
+                }
+            }
+        }
+
         return codegenModel
     }
 
@@ -281,6 +305,116 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         if (codegenModel.requiredVars.isEmpty()) {
             codegenModel.hasRequired = false
         }
+    }
+
+    /**
+     * Codegen does use the same [CodegenProperty] in the child models, is the property is inherited
+     *
+     * This method allows the creation of clones of the [CodegenProperty] instances in case they are
+     * present due to inheritance.
+     *
+     * This additional computation is needed to allow further customisation of the child model
+     * property definitions without parent model property modifications.
+     * One example of use-case is the update of isInherited attribute of [CodegenProperty]
+     */
+    private fun decoupleParentProperties(codegenModel: CodegenModel) {
+        val nameToParentClone = codegenModel.parentVars.map {
+            it.name to it.clone()
+        }.toMap()
+        CodegenModelVar.forEachVarAttribute(codegenModel) { type, properties ->
+            if (type != CodegenModelVar.PARENT_VARS) {
+                properties.forEachIndexed { index, property ->
+                    nameToParentClone[property.name]?.let {
+                        properties[index] = it
+                    }
+                }
+            }
+        }
+    }
+
+    override fun postProcessAllModels(objs: Map<String, Any>): Map<String, Any> {
+        val postProcessedModels = super.postProcessAllModels(objs)
+
+        // postProcessedModel does contain a map like Map<ModelName, ContentOfTheModelAsPassedToMustache>
+        // ContentOfTheModelAsPassedToMustache would look like the following
+        //      {
+        //        <model_name>: {
+        //          <codegen constants>
+        //          "models": [
+        //            {
+        //              "importPath": <String instance>,
+        //              "model": <CodegenModel instance>
+        //            }
+        //          ]
+        //        }
+        //      }
+        postProcessedModels.values
+            .asSequence()
+            .filterIsInstance<Map<String, Any>>()
+            .mapNotNull { it["models"] }
+            .filterIsInstance<List<Map<String, Any>>>()
+            .mapNotNull { it[0]["model"] }
+            .filterIsInstance<CodegenModel>()
+            .forEach { codegenModel ->
+                if (
+                    supportsInheritance &&
+                    // Having a single child usually means override of description or attributes that do not change the model
+                    // So we should NOT mark the model with hasChildren
+                    (codegenModel.children?.size ?: 0) > 1
+                ) {
+
+                    // Codegen does update the children attribute but does not keep hasChildren consistent
+                    codegenModel.hasChildren = true
+                }
+
+                if (codegenModel.parentModel == null) {
+                    codegenModel.allVars?.forEach { it.isInherited = false }
+                }
+
+                if (supportsInheritance && codegenModel.parentModel != null) {
+                    val parentPropertyNames = codegenModel.parentModel.allVars.map { it.name }.toSet()
+
+                    // Update parentVars (as codegen does not do it while updating the parents)
+                    codegenModel.parentVars?.addAll(
+                        codegenModel.parentModel.allVars.map {
+                            val clonedProperty = it.clone()
+                            clonedProperty.isInherited = true
+                            clonedProperty
+                        }
+                    )
+
+                    decoupleParentProperties(codegenModel)
+
+                    // Update all the *Vars attributes to keep track of parent-inherited parameters
+                    CodegenModelVar.forEachVarAttribute(codegenModel) { type, properties ->
+                        if (type != CodegenModelVar.PARENT_VARS) {
+                            properties.forEach {
+                                it.isInherited = it.name in parentPropertyNames
+                            }
+                        }
+                    }
+                    // Objects with a single item in allOf are recognized as aliases, as this is usually done
+                    // to override the content of metadata (ie. description).
+                    // The tool does already help avoid a new type creation by creating a type alias
+                    // In the case of Polymorphism this is actually a problem as the user would expect an
+                    // instance of a different class, even if the content is the same of the parent class
+                    if (codegenModel.isAlias) {
+                        codegenModel.isAlias = false
+                        codegenModel.hasVars = codegenModel.allVars.isNotEmpty()
+                        addRequiredImports(codegenModel)
+                    }
+
+                    // codegenModel.hasEnums will be set to true even if the current model does not specify
+                    // an enum value but the parent does.
+                    // In order to avoid to consider this model as a model with enums we're re-evaluating it.
+                    codegenModel.hasEnums = codegenModel.vars.any { it.isEnum }
+                }
+
+                // Ensure that after all the processing done on the CodegenModel.*Vars, hasMore does still make sense
+                CodegenModelVar.forEachVarAttribute(codegenModel) { _, properties -> properties.fixHasMoreProperty() }
+            }
+
+        return postProcessedModels
     }
 
     /**
@@ -368,7 +502,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
         }
 
         // If we removed the last parameter of the Operation, we should update the `hasMore` flag.
-        codegenOperation.allParams.lastOrNull()?.hasMore = false
+        codegenOperation.allParams.fixHasMoreParameter()
     }
 
     /**
@@ -412,7 +546,7 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      *  or `items` at the top level (Arrays).
      *  Their returned type would be a `Map<String, Any?>` or `List<Any?>`, where `Any?` will be the aliased type.
      *
-     *  The method will call [KotlinAndroidGenerator.resolvePropertyType] that will perform a check if the model
+     *  The method will call [KotlinGenerator.resolvePropertyType] that will perform a check if the model
      *  is aliasing to a 'x-nullable' annotated model and compute the proper type (adding a `?` if needed).
      *
      *  ```
@@ -562,6 +696,13 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      */
     protected abstract fun nullableTypeWrapper(baseType: String): String
 
+    /**
+     * Hook that allows to add the needed imports for a given [CodegenModel]
+     * This is needed as we might be modifying models in [postProcessAllModels]
+     */
+    @VisibleForTesting
+    internal abstract fun addRequiredImports(codegenModel: CodegenModel)
+
     private fun defaultListType() = typeMapping["list"] ?: ""
 
     private fun defaultMapType() = typeMapping["map"] ?: ""
@@ -584,4 +725,53 @@ abstract class SharedCodegen : DefaultCodegen(), CodegenConfig {
      * Nullable type are either not required or x-nullable annotated properties.
      */
     internal fun CodegenProperty.isNullable() = !this.required || this.vendorExtensions[X_NULLABLE] == true
+
+    override fun postProcessModelProperty(model: CodegenModel, property: CodegenProperty) {
+        super.postProcessModelProperty(model, property)
+
+        if (property.isEnum) {
+            property.datatypeWithEnum = this.postProcessDataTypeWithEnum(model, property)
+        }
+    }
+
+    /**
+     * When handling inner enums, we want to prefix their class name, when using them, with their containing class,
+     * to avoid name conflicts.
+     */
+    private fun postProcessDataTypeWithEnum(codegenModel: CodegenModel, codegenProperty: CodegenProperty): String {
+        val name = "${codegenModel.classname}.${codegenProperty.enumName}"
+
+        val baseType = if (codegenProperty.isContainer) {
+            val type = checkNotNull(typeMapping[codegenProperty.containerType])
+            "$type<$name>"
+        } else {
+            name
+        }
+
+        return if (codegenProperty.isNullable()) {
+            nullableTypeWrapper(baseType)
+        } else {
+            baseType
+        }
+    }
+}
+
+/**
+ * Small helper to ensurer that the hasMore attribute is properly
+ * defined within a list of [CodegenProperty]s
+ */
+internal fun List<CodegenProperty>.fixHasMoreProperty() {
+    this.forEachIndexed { index, item ->
+        item.hasMore = index != (this.size - 1)
+    }
+}
+
+/**
+ * Small helper to ensurer that the hasMore attribute is properly
+ * defined within a list of [CodegenParameter]s
+ */
+internal fun List<CodegenParameter>.fixHasMoreParameter() {
+    this.forEachIndexed { index, item ->
+        item.hasMore = index != (this.size - 1)
+    }
 }

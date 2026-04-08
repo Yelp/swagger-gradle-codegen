@@ -1,0 +1,52 @@
+/**{{#description}}
+ * {{{description}}}{{/description}}
+{{#allVars}}
+ * @property {{{name}}}{{#description}} {{description}}{{/description}}
+{{/allVars}}
+ */
+@JsonClass(generateAdapter = true)
+{{#hasChildren}}
+@Polymorphic(
+    discriminatorField = "{{discriminator}}",
+    discriminatedValues = [{{#children}}"{{title}}"{{^-last}}, {{/-last}}{{/children}}],
+    discriminatedClasses = [{{#children}}{{classname}}::class{{^-last}}, {{/-last}}{{/children}}]
+)
+{{/hasChildren}}
+open class {{classname}}(
+{{#requiredVars}}
+{{>data_class_req_var}}{{^-last}},
+{{/-last}}{{/requiredVars}}{{#hasRequired}}{{#hasOptional}},
+{{/hasOptional}}{{/hasRequired}}{{#optionalVars}}{{>data_class_opt_var}}{{^-last}},
+{{/-last}}{{/optionalVars}}
+) {
+    override fun toString(): String {
+        return "{{classname}}(" +{{#allVars}}
+            "{{name}}=${{name}}{{^-last}},{{/-last}}" +{{/allVars}}
+            ")"
+    }
+
+    override fun hashCode(): Int {
+        var resultHashCode = 0{{#allVars}}
+        resultHashCode = resultHashCode * 31 + this.{{name}}.optimisticHashCode(){{/allVars}}
+        return resultHashCode
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return if (this === other) {
+            true
+        } else {
+            other is {{classname}}{{#allVars}} &&
+                this.{{name}} == other.{{name}}{{/allVars}}
+        }
+    }
+
+{{#vars}}
+{{#isEnum}}
+    /**{{#description}}
+     * {{{description}}}{{/description}}
+     * Values:{{#allowableValues}} {{#enumVars}}{{&name}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}
+     */
+    @JsonClass(generateAdapter = false)
+    enum class {{enumName}}(val value: {{complexType}}) {
+{{#allowableValues}}{{#enumVars}}        @Json(name = {{{value}}}) {{&name}}({{{value}}}){{^-last}},{{/-last}}{{{newline}}}{{/enumVars}}{{/allowableValues}}    }
+{{/isEnum}}{{/vars}}}
